@@ -8,6 +8,7 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 import Image from 'next/image';
+import HeroContent from './HeroContent';
 
 interface HeroScrubProps {
   imageSrc?: string;
@@ -43,6 +44,7 @@ export default function HeroScrub({
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
+  const gradientOverlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [, setForceReadyState] = useState(false);
@@ -161,7 +163,7 @@ export default function HeroScrub({
       }
 
       // 4. Poster image fade:
-      // Keep visible until video is ready. Once ready, smoothly fade away during the first 3-5% of scroll.
+      // Keep visible until video is ready. Once ready, smoothly fade away during first 3-5% of scroll.
       if (imageOverlayRef.current) {
         if (!isVideoReadyRef.current) {
           imageOverlayRef.current.style.opacity = '1';
@@ -173,13 +175,40 @@ export default function HeroScrub({
         }
       }
 
-      // 5. Hero content drift and fade (z-30)
+      // 5. Hero content editorial transition:
+      // 0%–5%: hero remains almost unchanged
+      // 5%–18%: headline, description and buttons smoothly fade and move slightly upward
+      // Around 20%: hero foreground content is completely gone
       if (contentRef.current) {
-        const textOpacity = Math.max(0, 1 - nextProgress * 4.5);
-        const translateY = nextProgress * -45;
-        contentRef.current.style.opacity = String(textOpacity);
-        contentRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
-        contentRef.current.style.visibility = textOpacity <= 0 ? 'hidden' : 'visible';
+        let contentOpacity = 1;
+        let translateY = 0;
+        let scale = 1;
+
+        if (nextProgress <= 0.05) {
+          contentOpacity = 1;
+          translateY = 0;
+          scale = 1;
+        } else if (nextProgress < 0.20) {
+          const t = (nextProgress - 0.05) / (0.20 - 0.05); // 0.0 at 5%, 1.0 at 20%
+          contentOpacity = Math.max(0, 1 - t);
+          translateY = -t * 28; // moves slightly upward by 28px
+          scale = 1 - t * 0.015; // very subtle scale (1.0 -> 0.985)
+        } else {
+          contentOpacity = 0;
+          translateY = -30;
+          scale = 0.98;
+        }
+
+        contentRef.current.style.opacity = String(contentOpacity);
+        contentRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+        contentRef.current.style.visibility = contentOpacity <= 0 ? 'hidden' : 'visible';
+        contentRef.current.style.pointerEvents = contentOpacity <= 0.1 ? 'none' : 'auto';
+      }
+
+      // 6. Subtle gradient overlay transition (softens so video transition is 100% visible)
+      if (gradientOverlayRef.current) {
+        const gradOpacity = nextProgress <= 0.05 ? 1 : Math.max(0.25, 1 - (nextProgress - 0.05) * 3);
+        gradientOverlayRef.current.style.opacity = String(gradOpacity);
       }
 
       rafId = requestAnimationFrame(tick);
@@ -203,7 +232,7 @@ export default function HeroScrub({
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
 
-    // Initial positioning
+    // Initial calculation
     handleScroll();
 
     return () => {
@@ -257,48 +286,15 @@ export default function HeroScrub({
           />
         </div>
 
-        {/* Layer 3: Cinematic Gradient Vignette (z-20) */}
+        {/* Layer 3: Cinematic Vignette (z-20) */}
         <div
-          className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-black/80 via-black/20 to-black/50"
+          ref={gradientOverlayRef}
+          className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-black/85 via-black/30 to-black/50 transition-opacity duration-300"
           aria-hidden="true"
         />
 
-        {/* Layer 4: Foreground Hero Content (z-30) */}
-        <div
-          ref={contentRef}
-          className="relative z-30 flex h-full w-full flex-col items-center justify-between px-6 py-12 text-center text-white select-none will-change-transform"
-          style={{ opacity: 1, transform: 'translate3d(0, 0, 0)' }}
-        >
-          {/* Top Badge */}
-          <div className="pt-4">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Digital Studio
-            </span>
-          </div>
-
-          {/* Center Title & Tagline */}
-          <div className="max-w-3xl space-y-4">
-            <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl">
-              ADMAKI
-            </h1>
-            <p className="text-lg font-light tracking-wide text-zinc-300 sm:text-2xl md:text-3xl">
-              Digital Experiences
-            </p>
-          </div>
-
-          {/* Bottom Scroll Indicator */}
-          {!prefersReducedMotion ? (
-            <div className="flex flex-col items-center gap-2 pb-6 text-xs uppercase tracking-widest text-zinc-400">
-              <span>Scroll to explore</span>
-              <div className="relative h-10 w-5 rounded-full border border-white/30 p-1">
-                <div className="h-2 w-1.5 rounded-full bg-white animate-bounce mx-auto" />
-              </div>
-            </div>
-          ) : (
-            <div className="pb-6" />
-          )}
-        </div>
+        {/* Layer 4: Final Asymmetric Editorial Hero Interface (z-30) */}
+        <HeroContent ref={contentRef} />
       </div>
     </section>
   );
