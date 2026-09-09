@@ -3,6 +3,7 @@
 import React, {
   useEffect,
   useRef,
+  useState,
   useCallback,
   useSyncExternalStore,
 } from 'react';
@@ -39,37 +40,47 @@ export default function HeroScrub({
   const imageOverlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
   const prefersReducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
     getReducedMotionServerSnapshot
   );
 
-  // High-performance scrub tracking refs (avoids React re-render overhead on 60/120Hz scroll)
-  const targetProgressRef = useRef<number>(0);
-  const currentProgressRef = useRef<number>(0);
-  const isSeekingRef = useRef<boolean>(false);
-  const rafIdRef = useRef<number | null>(null);
+  const scrollProgressRef = useRef<number>(0);
   const videoDurationRef = useRef<number>(0);
 
-  // Initialize and prime video metadata
+  // Mark video as ready and ensure paused state
+  const handleReady = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+
+    if (video.duration && !Number.isNaN(video.duration)) {
+      videoDurationRef.current = video.duration;
+    }
+
+    setIsVideoReady(true);
+  }, []);
+
+  // When metadata loads: save duration, set currentTime = 0, pause()
   const handleLoadedMetadata = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    video.pause();
+    video.currentTime = 0;
+
     if (video.duration && !Number.isNaN(video.duration)) {
       videoDurationRef.current = video.duration;
-
-      // Prime video decoder to the first frame
-      try {
-        video.currentTime = 0.001;
-      } catch {
-        // Fallback for strict browser media policies
-      }
     }
+
+    setIsVideoReady(true);
   }, []);
 
-  // Update target progress from window scroll
+  // Calculate scroll progress directly from container
   const updateScrollProgress = useCallback(() => {
     if (prefersReducedMotion) return;
 
@@ -82,91 +93,77 @@ export default function HeroScrub({
 
     if (totalScrollable <= 0) return;
 
-    // Progress from 0 (top) to 1 (when scrub section ends)
+    // Direct scroll progress from 0 to 1
     const scrolled = -rect.top;
     const progress = Math.min(Math.max(scrolled / totalScrollable, 0), 1);
-    targetProgressRef.current = progress;
+    scrollProgressRef.current = progress;
   }, [prefersReducedMotion]);
 
-  // Main animation / render loop running on requestAnimationFrame
+  // Main animation frame loop:
+  // - Direct control: video.currentTime = scrollProgress * video.duration
+  // - No seek locks or waiting for seeked event
+  // - Smooth fade of poster image during first 3-5% of scroll once video is ready
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    let isRunning = true;
+    let rafId: number;
 
-    const renderLoop = () => {
-      if (!isRunning) return;
-
-      const target = targetProgressRef.current;
-      const current = currentProgressRef.current;
-      const diff = target - current;
-
-      // Smooth lerp (factor 0.20 provides instantaneous response without stutter)
-      if (Math.abs(diff) > 0.0005) {
-        currentProgressRef.current += diff * 0.20;
-      } else {
-        currentProgressRef.current = target;
-      }
-
-      const p = currentProgressRef.current;
-
-      // 1. Video scrub synchronization
+    const tick = () => {
       const video = videoRef.current;
-      const duration = videoDurationRef.current;
+      const progress = scrollProgressRef.current;
+      const duration = videoDurationRef.current || (video ? video.duration : 0);
 
-      if (video && duration > 0 && video.readyState >= 2 && !isSeekingRef.current) {
-        const targetTime = p * duration;
-        if (Math.abs(video.currentTime - targetTime) > 0.02) {
-          isSeekingRef.current = true;
-          video.currentTime = Math.min(Math.max(targetTime, 0), duration);
+      // 1. Direct scroll control of video.currentTime
+      if (video && duration > 0) {
+        const targetTime = progress * duration;
+
+        // Update currentTime if different from current video position
+        if (Math.abs(video.currentTime - targetTime) > 0.005) {
+          video.currentTime = targetTime;
+
+          // Temporary debugging log requested by user
+          console.log({
+            scrollProgress: Number(progress.toFixed(4)),
+            duration: Number(duration.toFixed(2)),
+            currentTime: Number(video.currentTime.toFixed(4)),
+            readyState: video.readyState,
+          });
         }
       }
 
-      // 2. Seamless image fade:
-      // Image remains 100% visible initially. In the first 6% of scroll (0 to 0.06),
-      // it seamlessly blends into the video. First frame visually matches the image.
+      // 2. Poster image fade:
+      // - Do not hide poster image until video is ready
+      // - When scrolling starts and video is ready: fade poster away during first 3–5% of scroll
       if (imageOverlayRef.current) {
-        const imgOpacity = p <= 0 ? 1 : Math.max(0, 1 - p * 16);
-        imageOverlayRef.current.style.opacity = String(imgOpacity);
-        imageOverlayRef.current.style.visibility = imgOpacity <= 0 ? 'hidden' : 'visible';
+        if (!isVideoReady) {
+          imageOverlayRef.current.style.opacity = '1';
+          imageOverlayRef.current.style.visibility = 'visible';
+        } else {
+          // Fade from progress 0.0 to 0.04 (first 4% of scroll)
+          const imgOpacity = progress <= 0 ? 1 : Math.max(0, 1 - progress / 0.04);
+          imageOverlayRef.current.style.opacity = String(imgOpacity);
+          imageOverlayRef.current.style.visibility = imgOpacity <= 0 ? 'hidden' : 'visible';
+        }
       }
 
-      // 3. Hero content fade and drift
+      // 3. Hero content fade & drift (z-30)
       if (contentRef.current) {
-        const textOpacity = Math.max(0, 1 - p * 4.5);
-        const translateY = p * -45;
+        const textOpacity = Math.max(0, 1 - progress * 4.5);
+        const translateY = progress * -45;
         contentRef.current.style.opacity = String(textOpacity);
         contentRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
         contentRef.current.style.visibility = textOpacity <= 0 ? 'hidden' : 'visible';
       }
 
-      rafIdRef.current = requestAnimationFrame(renderLoop);
+      rafId = requestAnimationFrame(tick);
     };
 
-    rafIdRef.current = requestAnimationFrame(renderLoop);
+    rafId = requestAnimationFrame(tick);
 
     return () => {
-      isRunning = false;
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
+      cancelAnimationFrame(rafId);
     };
-  }, [prefersReducedMotion]);
-
-  // Video seek completed listener
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onSeeked = () => {
-      isSeekingRef.current = false;
-    };
-
-    video.addEventListener('seeked', onSeeked);
-    return () => {
-      video.removeEventListener('seeked', onSeeked);
-    };
-  }, []);
+  }, [prefersReducedMotion, isVideoReady]);
 
   // Passive scroll and resize listeners
   useEffect(() => {
@@ -175,7 +172,7 @@ export default function HeroScrub({
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
     window.addEventListener('resize', updateScrollProgress, { passive: true });
 
-    // Initial positioning
+    // Initial calculation
     updateScrollProgress();
 
     return () => {
@@ -194,7 +191,7 @@ export default function HeroScrub({
     >
       {/* Sticky Fullscreen Viewport */}
       <div className="sticky top-0 h-screen min-h-[100dvh] w-full overflow-hidden bg-black">
-        {/* Background Video */}
+        {/* Layer 1: Background Video (z-0) */}
         {!prefersReducedMotion && (
           <video
             ref={videoRef}
@@ -205,15 +202,18 @@ export default function HeroScrub({
             disablePictureInPicture
             disableRemotePlayback
             onLoadedMetadata={handleLoadedMetadata}
-            className="absolute inset-0 h-full w-full object-cover pointer-events-none select-none will-change-transform"
+            onCanPlay={handleReady}
+            onLoadedData={handleReady}
+            onPlay={(e) => (e.currentTarget as HTMLVideoElement).pause()}
+            className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none select-none will-change-transform"
             aria-hidden="true"
           />
         )}
 
-        {/* Hero Poster / Starting Image Layer */}
+        {/* Layer 2: Hero Poster Image (z-10 initially, then fades to 0) */}
         <div
           ref={imageOverlayRef}
-          className="absolute inset-0 h-full w-full pointer-events-none select-none will-change-opacity transition-opacity duration-75"
+          className="absolute inset-0 z-10 h-full w-full pointer-events-none select-none will-change-opacity transition-opacity duration-75"
           style={{ opacity: 1 }}
         >
           <Image
@@ -227,16 +227,16 @@ export default function HeroScrub({
           />
         </div>
 
-        {/* Subtle cinematic gradient vignette for text legibility */}
+        {/* Layer 3: Cinematic Gradient Vignette (z-20) */}
         <div
-          className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-black/20 to-black/50"
+          className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-black/80 via-black/20 to-black/50"
           aria-hidden="true"
         />
 
-        {/* Foreground Content */}
+        {/* Layer 4: Foreground Hero Content (z-30) */}
         <div
           ref={contentRef}
-          className="relative z-10 flex h-full w-full flex-col items-center justify-between px-6 py-12 text-center text-white select-none will-change-transform"
+          className="relative z-30 flex h-full w-full flex-col items-center justify-between px-6 py-12 text-center text-white select-none will-change-transform"
           style={{ opacity: 1, transform: 'translate3d(0, 0, 0)' }}
         >
           {/* Top Badge */}
