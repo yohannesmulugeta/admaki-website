@@ -4,6 +4,8 @@ import ServicesReveal from "@/components/sections/ServicesReveal";
 import SelectedWork from "@/components/sections/SelectedWork";
 import About from "@/components/sections/About";
 import Process from "@/components/sections/Process";
+import Contact from "@/components/sections/Contact";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
@@ -25,6 +27,12 @@ export default function Home() {
 
       {/* Process: From Problem To Product */}
       <Process />
+
+      {/* Contact: Let's Build Something Useful */}
+      <Contact />
+
+      {/* Site Footer */}
+      <Footer />
     </main>
   );
 }

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 const coreCapabilities = [
   { id: '01', title: 'STRATEGY', desc: 'Problem definition, brand position & roadmap' },
@@ -53,7 +53,7 @@ export default function About() {
             <div className="pt-4 flex items-center gap-4 text-[11px] font-mono tracking-widest text-zinc-500 uppercase">
               <span>DIGITAL STUDIO</span>
               <span className="h-1 w-1 rounded-full bg-zinc-700" />
-              <span>EST. FOR IMPACT</span>
+              <span>CREATIVE + TECHNOLOGY</span>
             </div>
           </div>
 

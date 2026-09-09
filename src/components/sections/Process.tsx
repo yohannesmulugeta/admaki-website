@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
@@ -101,8 +101,7 @@ export default function Process() {
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-zinc-400 font-light max-w-xl leading-relaxed">
-            A battle-tested 4-step engineering and creative process designed to turn complex business
-            challenges into reliable, high-impact systems.
+            A practical 4-step creative and technical process designed to turn business challenges into useful digital solutions.
           </p>
         </div>
 
