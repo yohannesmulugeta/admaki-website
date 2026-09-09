@@ -2,6 +2,8 @@ import Header from "@/components/layout/Header";
 import HeroScrub from "@/components/sections/HeroScrub";
 import ServicesReveal from "@/components/sections/ServicesReveal";
 import SelectedWork from "@/components/sections/SelectedWork";
+import About from "@/components/sections/About";
+import Process from "@/components/sections/Process";
 
 export default function Home() {
   return (
@@ -17,6 +19,12 @@ export default function Home() {
 
       {/* Selected Work: Editorial Case Studies */}
       <SelectedWork />
+
+      {/* About ADMAKI: Creative Thinking. Technical Execution. */}
+      <About />
+
+      {/* Process: From Problem To Product */}
+      <Process />
     </main>
   );
 }
