@@ -1,0 +1,36 @@
+﻿<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#07080b"/>
+  <!-- Ambient glow -->
+  <circle cx="600" cy="400" r="320" fill="url(#glow2)" opacity="0.4"/>
+  <defs>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
+      <stop offset="65%" stop-color="#38bdf8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#grid2)"/>
+  
+  <rect x="60" y="60" width="1080" height="680" rx="16" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+  <text x="600" y="470" font-family="system-ui, -apple-system, sans-serif" font-size="280" font-weight="900" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2" text-anchor="middle" letter-spacing="-0.05em">02</text>
+  
+  <!-- Browser-like interface geometry -->
+  <rect x="340" y="240" width="520" height="320" rx="10" stroke="rgba(99,102,241,0.4)" stroke-width="1.2" fill="rgba(255,255,255,0.015)"/>
+  <path d="M 340 280 L 860 280" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <circle cx="365" cy="260" r="3.5" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="380" cy="260" r="3.5" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="395" cy="260" r="3.5" fill="rgba(255,255,255,0.3)"/>
+  
+  <!-- Geometric perspective blocks inside -->
+  <rect x="375" y="310" width="180" height="210" rx="6" stroke="rgba(56,189,248,0.3)" stroke-width="1" fill="none"/>
+  <rect x="580" y="310" width="245" height="95" rx="6" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+  <rect x="580" y="425" width="245" height="95" rx="6" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+  
+  <text x="100" y="110" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.4)" letter-spacing="0.2em">ARCHIVE REF // CASE_02</text>
+  <text x="1100" y="110" font-family="monospace" font-size="12" fill="#818cf8" text-anchor="end" letter-spacing="0.2em">INTERACTIVE WEBSITE</text>
+  <text x="100" y="700" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)" letter-spacing="0.15em">ARCHITECTURE: NEXT.JS • TURBOPACK</text>
+  <text x="1100" y="700" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)" text-anchor="end" letter-spacing="0.15em">[ ADMAKI STUDIO ]</text>
+</svg>

@@ -1,0 +1,44 @@
+﻿<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#07080b"/>
+  <!-- Ambient glow -->
+  <circle cx="600" cy="400" r="320" fill="url(#glow4)" opacity="0.4"/>
+  <defs>
+    <radialGradient id="glow4" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="60%" stop-color="#a855f7" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid4" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#grid4)"/>
+  
+  <rect x="60" y="60" width="1080" height="680" rx="16" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+  <text x="600" y="470" font-family="system-ui, -apple-system, sans-serif" font-size="280" font-weight="900" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2" text-anchor="middle" letter-spacing="-0.05em">04</text>
+  
+  <!-- Automation flow graph -->
+  <g transform="translate(380, 240)">
+    <!-- Central Node -->
+    <circle cx="220" cy="80" r="45" stroke="#06b6d4" stroke-width="1.5" fill="rgba(6,182,212,0.08)"/>
+    <text x="220" y="85" font-family="monospace" font-size="11" fill="#06b6d4" text-anchor="middle">BOT_ENGINE</text>
+    
+    <!-- Connectors -->
+    <path d="M 185 105 L 100 200" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <path d="M 255 105 L 340 200" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-dasharray="3 3"/>
+    
+    <!-- Child Nodes -->
+    <rect x="30" y="200" width="140" height="70" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(0,0,0,0.5)"/>
+    <text x="100" y="235" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle">WEBHOOK_IN</text>
+    <text x="100" y="252" font-family="monospace" font-size="9" fill="#34d399" text-anchor="middle">&lt; 14ms LATENCY</text>
+    
+    <rect x="270" y="200" width="140" height="70" rx="8" stroke="rgba(168,85,247,0.4)" stroke-width="1" fill="rgba(168,85,247,0.05)"/>
+    <text x="340" y="235" font-family="monospace" font-size="10" fill="#ffffff" text-anchor="middle">AI_DISPATCH</text>
+    <text x="340" y="252" font-family="monospace" font-size="9" fill="#c084fc" text-anchor="middle">ASYNC QUEUE</text>
+  </g>
+  
+  <text x="100" y="110" font-family="monospace" font-size="12" fill="rgba(255,255,255,0.4)" letter-spacing="0.2em">ARCHIVE REF // CASE_04</text>
+  <text x="1100" y="110" font-family="monospace" font-size="12" fill="#06b6d4" text-anchor="end" letter-spacing="0.2em">TELEGRAM AUTOMATION</text>
+  <text x="100" y="700" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)" letter-spacing="0.15em">FLOW: TELEGRAM BOT API • FASTAPI • WORKFLOW</text>
+  <text x="1100" y="700" font-family="monospace" font-size="11" fill="rgba(255,255,255,0.3)" text-anchor="end" letter-spacing="0.15em">[ ADMAKI STUDIO ]</text>
+</svg>
