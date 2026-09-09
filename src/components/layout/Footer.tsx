@@ -1,13 +1,13 @@
 ﻿import React from 'react';
 
-const serviceLinks = [
+const services = [
   { label: 'Social Media', href: '#services' },
   { label: 'Web Development', href: '#services' },
   { label: 'Custom Software', href: '#services' },
   { label: 'Telegram Bots', href: '#services' },
 ];
 
-const navLinks = [
+const navigation = [
   { label: 'Work', href: '#work' },
   { label: 'Services', href: '#services' },
   { label: 'About', href: '#about' },
@@ -18,13 +18,13 @@ export default function Footer() {
   return (
     <footer
       className="relative w-full bg-black text-white border-t border-white/10 pt-16 pb-12 overflow-hidden"
-      aria-label="ADMAKI Site Footer"
+      aria-label="ADMAKI Footer"
     >
       <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
-        {/* Main Footer Columns */}
+        {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-14 border-b border-white/[0.08]">
-          {/* Left Column: Brand & Manifesto */}
-          <div className="md:col-span-5 flex flex-col items-start space-y-4">
+          {/* Brand & Statement */}
+          <div className="md:col-span-6 flex flex-col items-start space-y-4">
             <a
               href="#"
               className="group flex items-center gap-2.5 text-white tracking-tighter focus:outline-none"
@@ -48,13 +48,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Center Column: Core Capabilities */}
-          <div className="md:col-span-4 flex flex-col space-y-4">
+          {/* Services Column */}
+          <div className="md:col-span-3 flex flex-col space-y-4">
             <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-zinc-500 font-semibold">
-              Capabilities
+              Services
             </span>
             <ul className="space-y-2.5">
-              {serviceLinks.map((item) => (
+              {services.map((item) => (
                 <li key={item.label}>
                   <a
                     href={item.href}
@@ -67,13 +67,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Right Column: Navigation */}
+          {/* Navigation Column */}
           <div className="md:col-span-3 flex flex-col space-y-4">
             <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-zinc-500 font-semibold">
               Navigation
             </span>
             <ul className="space-y-2.5">
-              {navLinks.map((item) => (
+              {navigation.map((item) => (
                 <li key={item.label}>
                   <a
                     href={item.href}
@@ -87,10 +87,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Minimal Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
           <div>
-            © ADMAKI. All rights reserved.
+            © ADMAKI
           </div>
 
           <div className="flex items-center gap-6 text-[11px] tracking-wider text-zinc-500">
