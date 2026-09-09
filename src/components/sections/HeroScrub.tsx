@@ -14,6 +14,11 @@ interface HeroScrubProps {
   videoSrc?: string;
 }
 
+type VideoWithRVFC = HTMLVideoElement & {
+  requestVideoFrameCallback?: (callback: (now: DOMHighResTimeStamp, metadata: unknown) => void) => number;
+  cancelVideoFrameCallback?: (id: number) => void;
+};
+
 // SSR-safe subscription for prefers-reduced-motion
 function subscribeReducedMotion(callback: () => void) {
   if (typeof window === 'undefined') return () => {};
@@ -33,14 +38,14 @@ function getReducedMotionServerSnapshot() {
 
 export default function HeroScrub({
   imageSrc = '/images/hero/hero-main.webp',
-  videoSrc = '/videos/hero-transition.mp4',
+  videoSrc = '/videos/hero-transition-scrub.mp4',
 }: HeroScrubProps) {
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [, setForceReadyState] = useState(false);
 
   const prefersReducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -48,10 +53,13 @@ export default function HeroScrub({
     getReducedMotionServerSnapshot
   );
 
-  const scrollProgressRef = useRef<number>(0);
+  // Pure ref-based state during scroll (zero React re-renders while scrolling)
+  const targetProgressRef = useRef<number>(0);
+  const smoothProgressRef = useRef<number>(0);
   const videoDurationRef = useRef<number>(0);
+  const isVideoReadyRef = useRef<boolean>(false);
 
-  // Mark video as ready and ensure paused state
+  // Mark video as ready and ensure strictly paused state
   const handleReady = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -62,7 +70,8 @@ export default function HeroScrub({
       videoDurationRef.current = video.duration;
     }
 
-    setIsVideoReady(true);
+    isVideoReadyRef.current = true;
+    setForceReadyState(true);
   }, []);
 
   // When metadata loads: save duration, set currentTime = 0, pause()
@@ -77,11 +86,12 @@ export default function HeroScrub({
       videoDurationRef.current = video.duration;
     }
 
-    setIsVideoReady(true);
+    isVideoReadyRef.current = true;
+    setForceReadyState(true);
   }, []);
 
-  // Calculate scroll progress directly from container
-  const updateScrollProgress = useCallback(() => {
+  // Raw scroll position tracker (updates targetProgressRef only, no setState)
+  const handleScroll = useCallback(() => {
     if (prefersReducedMotion) return;
 
     const container = containerRef.current;
@@ -93,63 +103,80 @@ export default function HeroScrub({
 
     if (totalScrollable <= 0) return;
 
-    // Direct scroll progress from 0 to 1
     const scrolled = -rect.top;
-    const progress = Math.min(Math.max(scrolled / totalScrollable, 0), 1);
-    scrollProgressRef.current = progress;
+    const rawProgress = Math.min(Math.max(scrolled / totalScrollable, 0), 1);
+    targetProgressRef.current = rawProgress;
   }, [prefersReducedMotion]);
 
-  // Main animation frame loop:
-  // - Direct control: video.currentTime = scrollProgress * video.duration
-  // - No seek locks or waiting for seeked event
-  // - Smooth fade of poster image during first 3-5% of scroll once video is ready
+  // Main animation / render loop running on requestAnimationFrame with smooth interpolation
   useEffect(() => {
     if (prefersReducedMotion) return;
 
     let rafId: number;
+    let isRunning = true;
+
+    // Optional requestVideoFrameCallback listener for synchronization
+    const video = videoRef.current as VideoWithRVFC | null;
+    let rvfcId: number | null = null;
+    const hasRVFC = Boolean(video && typeof video.requestVideoFrameCallback === 'function');
+
+    const onVideoFrame = () => {
+      if (!isRunning) return;
+      if (video && hasRVFC && video.requestVideoFrameCallback) {
+        rvfcId = video.requestVideoFrameCallback(onVideoFrame);
+      }
+    };
+
+    if (video && hasRVFC && video.requestVideoFrameCallback) {
+      rvfcId = video.requestVideoFrameCallback(onVideoFrame);
+    }
 
     const tick = () => {
-      const video = videoRef.current;
-      const progress = scrollProgressRef.current;
-      const duration = videoDurationRef.current || (video ? video.duration : 0);
+      if (!isRunning) return;
 
-      // 1. Direct scroll control of video.currentTime
-      if (video && duration > 0) {
-        const targetTime = progress * duration;
+      const videoEl = videoRef.current;
+      const target = targetProgressRef.current;
+      const current = smoothProgressRef.current;
 
-        // Update currentTime if different from current video position
-        if (Math.abs(video.currentTime - targetTime) > 0.005) {
-          video.currentTime = targetTime;
+      // 1. Smooth interpolation: smoothProgress += (targetProgress - smoothProgress) * 0.08
+      const nextProgress = current + (target - current) * 0.08;
+      smoothProgressRef.current = nextProgress;
 
-          // Temporary debugging log requested by user
-          console.log({
-            scrollProgress: Number(progress.toFixed(4)),
-            duration: Number(duration.toFixed(2)),
-            currentTime: Number(video.currentTime.toFixed(4)),
-            readyState: video.readyState,
-          });
+      // 2. Softer beginning (0%–5%) and ending (95%–100%):
+      const normalized =
+        nextProgress < 0.05
+          ? 0
+          : nextProgress > 0.95
+            ? 1
+            : (nextProgress - 0.05) / 0.90;
+
+      // 3. Direct video seek when difference is meaningful (> 0.015s)
+      const duration = videoDurationRef.current || (videoEl ? videoEl.duration : 0);
+      if (videoEl && duration > 0) {
+        const targetTime = normalized * duration;
+
+        if (Math.abs(videoEl.currentTime - targetTime) > 0.015) {
+          videoEl.currentTime = targetTime;
         }
       }
 
-      // 2. Poster image fade:
-      // - Do not hide poster image until video is ready
-      // - When scrolling starts and video is ready: fade poster away during first 3–5% of scroll
+      // 4. Poster image fade:
+      // Keep visible until video is ready. Once ready, smoothly fade away during the first 3-5% of scroll.
       if (imageOverlayRef.current) {
-        if (!isVideoReady) {
+        if (!isVideoReadyRef.current) {
           imageOverlayRef.current.style.opacity = '1';
           imageOverlayRef.current.style.visibility = 'visible';
         } else {
-          // Fade from progress 0.0 to 0.04 (first 4% of scroll)
-          const imgOpacity = progress <= 0 ? 1 : Math.max(0, 1 - progress / 0.04);
+          const imgOpacity = nextProgress <= 0 ? 1 : Math.max(0, 1 - nextProgress / 0.04);
           imageOverlayRef.current.style.opacity = String(imgOpacity);
           imageOverlayRef.current.style.visibility = imgOpacity <= 0 ? 'hidden' : 'visible';
         }
       }
 
-      // 3. Hero content fade & drift (z-30)
+      // 5. Hero content drift and fade (z-30)
       if (contentRef.current) {
-        const textOpacity = Math.max(0, 1 - progress * 4.5);
-        const translateY = progress * -45;
+        const textOpacity = Math.max(0, 1 - nextProgress * 4.5);
+        const translateY = nextProgress * -45;
         contentRef.current.style.opacity = String(textOpacity);
         contentRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
         contentRef.current.style.visibility = textOpacity <= 0 ? 'hidden' : 'visible';
@@ -161,31 +188,35 @@ export default function HeroScrub({
     rafId = requestAnimationFrame(tick);
 
     return () => {
+      isRunning = false;
       cancelAnimationFrame(rafId);
+      if (video && hasRVFC && rvfcId !== null && video.cancelVideoFrameCallback) {
+        video.cancelVideoFrameCallback(rvfcId);
+      }
     };
-  }, [prefersReducedMotion, isVideoReady]);
+  }, [prefersReducedMotion]);
 
   // Passive scroll and resize listeners
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    window.addEventListener('scroll', updateScrollProgress, { passive: true });
-    window.addEventListener('resize', updateScrollProgress, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
 
-    // Initial calculation
-    updateScrollProgress();
+    // Initial positioning
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', updateScrollProgress);
-      window.removeEventListener('resize', updateScrollProgress);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
-  }, [updateScrollProgress, prefersReducedMotion]);
+  }, [handleScroll, prefersReducedMotion]);
 
   return (
     <section
       ref={containerRef}
       className={`relative w-full ${
-        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[350vh]'
+        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[450vh]'
       }`}
       aria-label="ADMAKI Hero"
     >
@@ -223,7 +254,6 @@ export default function HeroScrub({
             priority
             sizes="100vw"
             className="object-cover"
-            quality={90}
           />
         </div>
 
