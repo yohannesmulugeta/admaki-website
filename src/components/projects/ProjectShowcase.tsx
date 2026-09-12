@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Project } from '@/data/projects';
 
 interface ProjectShowcaseProps {
@@ -19,7 +20,7 @@ function ProjectVisual({
   aspectClass?: string;
 }) {
   return (
-    <a
+    <Link
       href={project.href || '#'}
       className="group relative w-full block rounded-2xl border border-white/10 bg-zinc-950/80 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
       aria-label={`View Case Study for ${project.title}`}
@@ -50,7 +51,7 @@ function ProjectVisual({
           <span className="text-cyan-400">→</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -117,7 +118,7 @@ function ProjectDetails({ project }: { project: Project }) {
 
       {/* Primary Case Study CTA Button */}
       <div className="pt-4">
-        <a
+        <Link
           href={project.href || '#'}
           className="group/cta inline-flex items-center gap-3 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] font-semibold text-white hover:text-cyan-300 transition-colors duration-200"
         >
@@ -127,7 +128,7 @@ function ProjectDetails({ project }: { project: Project }) {
           <span className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1.5 text-cyan-400">
             →
           </span>
-        </a>
+        </Link>
       </div>
     </div>
   );

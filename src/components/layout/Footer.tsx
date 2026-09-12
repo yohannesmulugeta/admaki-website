@@ -1,17 +1,18 @@
-﻿import React from 'react';
+import React from 'react';
+import Link from 'next/link';
 
 const services = [
-  { label: 'Social Media', href: '#services' },
-  { label: 'Web Development', href: '#services' },
-  { label: 'Custom Software', href: '#services' },
-  { label: 'Telegram Bots', href: '#services' },
+  { label: 'Social Media', href: '/#services' },
+  { label: 'Web Development', href: '/#services' },
+  { label: 'Custom Software', href: '/#services' },
+  { label: 'Telegram Bots', href: '/#services' },
 ];
 
 const navigation = [
-  { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Services', href: '/#services' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export default function Footer() {
@@ -25,8 +26,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-14 border-b border-white/[0.08]">
           {/* Brand & Statement */}
           <div className="md:col-span-6 flex flex-col items-start space-y-4">
-            <a
-              href="#"
+            <Link
+              href="/"
               className="group flex items-center gap-2.5 text-white tracking-tighter focus:outline-none"
               aria-label="ADMAKI Home"
             >
@@ -34,7 +35,7 @@ export default function Footer() {
               <span className="font-black text-2xl tracking-[0.2em] uppercase font-sans">
                 ADMAKI
               </span>
-            </a>
+            </Link>
 
             <p className="text-xs sm:text-sm text-zinc-400 font-light max-w-sm leading-relaxed">
               Creative communication, digital design, software development and automation built to
