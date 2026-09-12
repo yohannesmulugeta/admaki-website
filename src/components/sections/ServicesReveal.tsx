@@ -116,7 +116,7 @@ export default function ServicesReveal() {
       serviceRefs.current.forEach((el, index) => {
         if (!el) return;
         const weight = getWeight(next, index);
-        const offset = (1 - weight) * (next > (index + 0.5) / 4 ? -22 : 22);
+        const offset = (1 - weight) * (next > (index + 0.5) / 4 ? -18 : 18);
         el.style.opacity = String(weight);
         el.style.visibility = weight < 0.02 ? 'hidden' : 'visible';
         el.style.transform = `translate3d(0, ${offset}px, 0)`;
@@ -161,17 +161,17 @@ export default function ServicesReveal() {
       className="relative w-full bg-[#f0ede5] text-[#111315]"
       aria-label="Capabilities Showcase"
     >
-      <div className={`${prefersReducedMotion ? 'hidden' : 'hidden md:block'} relative h-[235vh]`}>
-        <div className="sticky top-0 h-screen min-h-[100dvh] overflow-hidden">
+      <div className={`${prefersReducedMotion ? 'hidden' : 'hidden md:block'} relative h-[220vh]`}>
+        <div className="sticky top-0 h-[100dvh] overflow-hidden">
           <div className="absolute inset-0 studio-grid-light opacity-30 pointer-events-none" />
 
-          <div className="relative z-10 h-full w-full max-w-[1480px] mx-auto px-8 lg:px-16 py-8 lg:py-10 flex flex-col">
-            <div className="flex items-start justify-between gap-8 border-t border-black/18 pt-5">
+          <div className="relative z-10 h-full w-full max-w-[1480px] mx-auto px-8 lg:px-16 pt-28 pb-5 flex flex-col">
+            <div className="flex items-start justify-between gap-8 border-t border-black/18 pt-4 shrink-0">
               <div>
                 <span className="text-[10px] lg:text-xs font-mono tracking-[0.28em] uppercase text-[#0f8195]">
                   01 / CAPABILITIES
                 </span>
-                <p className="mt-3 text-sm text-black/50 max-w-sm">
+                <p className="mt-2 text-sm text-black/50 max-w-sm leading-snug">
                   Four disciplines brought together around one business problem.
                 </p>
               </div>
@@ -182,18 +182,18 @@ export default function ServicesReveal() {
               </div>
             </div>
 
-            <div className="relative flex-1 min-h-0 mt-8 lg:mt-10">
+            <div className="relative flex-1 min-h-0 mt-4 lg:mt-5">
               {servicesData.map((service, index) => (
                 <div
                   key={service.id}
                   ref={(el) => {
                     serviceRefs.current[index] = el;
                   }}
-                  className="absolute inset-0 grid grid-cols-12 gap-8 lg:gap-16 items-center will-change-transform"
+                  className="absolute inset-0 grid grid-cols-12 gap-8 lg:gap-14 items-center will-change-transform"
                   style={{ opacity: index === 0 ? 1 : 0, visibility: index === 0 ? 'visible' : 'hidden' }}
                 >
-                  <div className="col-span-7 xl:col-span-6">
-                    <div className="flex items-center gap-4 mb-7">
+                  <div className="col-span-7 xl:col-span-6 self-center">
+                    <div className="flex items-center gap-4 mb-4 lg:mb-5">
                       <span className="text-sm font-mono text-[#0f8195]">{service.num}</span>
                       <span className="h-px flex-1 bg-black/15" />
                       <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-black/45">
@@ -201,19 +201,19 @@ export default function ServicesReveal() {
                       </span>
                     </div>
 
-                    <h2 className="text-[clamp(4rem,7.6vw,8rem)] font-semibold tracking-[-0.065em] leading-[0.82] text-[#111315]">
+                    <h2 className="text-[clamp(3.6rem,6.4vw,6.8rem)] font-semibold tracking-[-0.065em] leading-[0.84] text-[#111315]">
                       {service.title}
                     </h2>
 
-                    <p className="mt-8 max-w-xl text-base lg:text-lg text-black/58 leading-relaxed">
+                    <p className="mt-5 max-w-xl text-[15px] lg:text-[17px] text-black/58 leading-relaxed">
                       {service.description}
                     </p>
 
-                    <div className="mt-10 border-t border-black/16">
+                    <div className="mt-6 border-t border-black/16">
                       {service.capabilities.map((capability, capIndex) => (
                         <div
                           key={capability}
-                          className="grid grid-cols-[2.5rem_1fr] py-3 border-b border-black/12 text-sm"
+                          className="grid grid-cols-[2.5rem_1fr] py-2.5 border-b border-black/12 text-sm"
                         >
                           <span className="text-[10px] font-mono text-black/35">0{capIndex + 1}</span>
                           <span className="text-black/72">{capability}</span>
@@ -222,8 +222,8 @@ export default function ServicesReveal() {
                     </div>
                   </div>
 
-                  <div className="col-span-5 xl:col-span-6 flex items-center justify-center pl-4 lg:pl-8">
-                    <div className="w-full max-w-[34rem]">
+                  <div className="col-span-5 xl:col-span-6 flex items-center justify-center pl-3 lg:pl-6">
+                    <div className="w-full max-w-[31rem] max-h-[58vh]">
                       <ServiceVisual index={index} />
                     </div>
                   </div>
@@ -231,7 +231,7 @@ export default function ServicesReveal() {
               ))}
             </div>
 
-            <div className="border-t border-black/16 pt-4">
+            <div className="border-t border-black/16 pt-3 shrink-0 bg-[#f0ede5]/90">
               <div className="h-px w-full bg-black/10 overflow-hidden origin-left">
                 <div
                   ref={progressRef}
@@ -239,7 +239,7 @@ export default function ServicesReveal() {
                   style={{ transform: 'scaleX(0.03)' }}
                 />
               </div>
-              <div className="mt-3 flex items-center justify-between text-[10px] font-mono tracking-[0.16em] uppercase text-black/40">
+              <div className="mt-2 flex items-center justify-between text-[10px] font-mono tracking-[0.16em] uppercase text-black/40">
                 <span>Scroll to explore</span>
                 <span>Strategy → Delivery</span>
               </div>
