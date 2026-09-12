@@ -11,6 +11,13 @@ interface ProjectShowcaseProps {
   index: number;
 }
 
+function getAssetSrc(src: string) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  if (!src.startsWith('/') || src.startsWith('//')) return src;
+  if (basePath && src.startsWith(`${basePath}/`)) return src;
+  return `${basePath}${src}`;
+}
+
 function ProjectVisual({
   project,
   aspectClass = 'aspect-[16/10]',
@@ -18,6 +25,8 @@ function ProjectVisual({
   project: Project;
   aspectClass?: string;
 }) {
+  const imageSrc = getAssetSrc(project.image);
+
   return (
     <Link
       href={project.href || '#'}
@@ -27,7 +36,7 @@ function ProjectVisual({
       <div className={`relative w-full ${aspectClass} overflow-hidden`}>
         {project.image && (
           <Image
-            src={project.image}
+            src={imageSrc}
             alt={project.title}
             fill
             sizes="(max-width: 1024px) 100vw, 65vw"
@@ -102,7 +111,7 @@ function ProjectDetails({ project }: { project: Project }) {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
         <Link
           href={project.href || '#'}
           className="group inline-flex items-center gap-4 text-xs sm:text-sm font-mono uppercase tracking-[0.18em] text-white transition-colors hover:text-[#83e3ef]"
@@ -112,6 +121,18 @@ function ProjectDetails({ project }: { project: Project }) {
           </span>
           <span className="transition-transform duration-300 group-hover:translate-x-1.5">↗</span>
         </Link>
+
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 rounded-full border border-[#69dceb]/35 bg-[#69dceb]/[0.06] px-4 py-2.5 text-[10px] sm:text-xs font-mono uppercase tracking-[0.16em] text-[#8be7f2] transition-all hover:border-[#8be7f2] hover:bg-[#69dceb]/[0.12] hover:text-white"
+          >
+            <span>Live Site</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+          </a>
+        )}
       </div>
     </div>
   );
