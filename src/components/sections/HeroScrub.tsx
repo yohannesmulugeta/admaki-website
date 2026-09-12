@@ -1,11 +1,6 @@
 'use client';
 
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import HeroContent from './HeroContent';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -14,6 +9,8 @@ interface HeroScrubProps {
   imageSrc?: string;
   videoSrc?: string;
 }
+
+const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
 
 export default function HeroScrub({
   imageSrc = '/images/hero/hero-main.webp',
@@ -29,15 +26,27 @@ export default function HeroScrub({
   const gradientOverlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [, setForceReadyState] = useState(false);
   const [isInViewport, setIsInViewport] = useState(true);
   const prefersReducedMotion = useReducedMotion();
 
-  // Pure ref-based state during scroll (zero React re-renders while scrolling)
-  const targetProgressRef = useRef<number>(0);
-  const smoothProgressRef = useRef<number>(0);
-  const videoDurationRef = useRef<number>(0);
-  const isVideoReadyRef = useRef<boolean>(false);
+  const targetProgressRef = useRef(0);
+  const smoothProgressRef = useRef(0);
+  const desiredVideoTimeRef = useRef(0);
+  const videoDurationRef = useRef(0);
+  const isVideoReadyRef = useRef(false);
+  const isSeekingRef = useRef(false);
+  const isMobileRef = useRef(false);
+
+  useEffect(() => {
+    isMobileRef.current = window.matchMedia('(max-width: 767px)').matches;
+
+    const handleBreakpointChange = () => {
+      isMobileRef.current = window.matchMedia('(max-width: 767px)').matches;
+    };
+
+    window.addEventListener('resize', handleBreakpointChange, { passive: true });
+    return () => window.removeEventListener('resize', handleBreakpointChange);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -45,29 +54,13 @@ export default function HeroScrub({
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInViewport(entry.isIntersecting),
-      { rootMargin: '200px 0px' }
+      { rootMargin: '160px 0px' }
     );
 
     observer.observe(container);
     return () => observer.disconnect();
   }, []);
 
-  // Mark video as ready and ensure strictly paused state
-  const handleReady = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.pause();
-
-    if (video.duration && !Number.isNaN(video.duration)) {
-      videoDurationRef.current = video.duration;
-    }
-
-    isVideoReadyRef.current = true;
-    setForceReadyState(true);
-  }, []);
-
-  // When metadata loads: save duration, set currentTime = 0, pause()
   const handleLoadedMetadata = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -75,15 +68,42 @@ export default function HeroScrub({
     video.pause();
     video.currentTime = 0;
 
-    if (video.duration && !Number.isNaN(video.duration)) {
+    if (video.duration && Number.isFinite(video.duration)) {
+      videoDurationRef.current = video.duration;
+    }
+  }, []);
+
+  const handleReady = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+
+    if (video.duration && Number.isFinite(video.duration)) {
       videoDurationRef.current = video.duration;
     }
 
     isVideoReadyRef.current = true;
-    setForceReadyState(true);
   }, []);
 
-  // Raw scroll position tracker (updates targetProgressRef only, no setState)
+  const requestNextSeek = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !isVideoReadyRef.current || isSeekingRef.current) return;
+
+    const threshold = isMobileRef.current ? 0.075 : 0.035;
+    const desiredTime = desiredVideoTimeRef.current;
+
+    if (Math.abs(video.currentTime - desiredTime) <= threshold) return;
+
+    isSeekingRef.current = true;
+    video.currentTime = desiredTime;
+  }, []);
+
+  const handleSeeked = useCallback(() => {
+    isSeekingRef.current = false;
+    requestNextSeek();
+  }, [requestNextSeek]);
+
   const handleScroll = useCallback(() => {
     if (prefersReducedMotion) return;
 
@@ -91,120 +111,87 @@ export default function HeroScrub({
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    const totalScrollable = container.offsetHeight - windowHeight;
-
+    const totalScrollable = container.offsetHeight - window.innerHeight;
     if (totalScrollable <= 0) return;
 
-    const scrolled = -rect.top;
-    const rawProgress = Math.min(Math.max(scrolled / totalScrollable, 0), 1);
-    targetProgressRef.current = rawProgress;
+    targetProgressRef.current = clamp01(-rect.top / totalScrollable);
   }, [prefersReducedMotion]);
 
-  // Main animation / render loop running on requestAnimationFrame with smooth interpolation
   useEffect(() => {
     if (prefersReducedMotion || !isInViewport) return;
 
-    let rafId: number;
-    let isRunning = true;
+    let rafId = 0;
+    let running = true;
 
     const tick = () => {
-      if (!isRunning) return;
+      if (!running) return;
 
-      const videoEl = videoRef.current;
       const target = targetProgressRef.current;
       const current = smoothProgressRef.current;
+      const ease = isMobileRef.current ? 0.22 : 0.16;
+      let nextProgress = current + (target - current) * ease;
 
-      // 1. Smooth interpolation: smoothProgress += (targetProgress - smoothProgress) * 0.08
-      const nextProgress = current + (target - current) * 0.08;
-      smoothProgressRef.current = nextProgress;
-
-      // 2. Softer beginning (0%–5%) and ending (95%–100%):
-      const normalized =
-        nextProgress < 0.05
-          ? 0
-          : nextProgress > 0.95
-            ? 1
-            : (nextProgress - 0.05) / 0.90;
-
-      // 3. Direct video seek when difference is meaningful (> 0.015s)
-      const duration = videoDurationRef.current || (videoEl ? videoEl.duration : 0);
-      if (videoEl && duration > 0) {
-        const targetTime = normalized * duration;
-
-        if (Math.abs(videoEl.currentTime - targetTime) > 0.015) {
-          videoEl.currentTime = targetTime;
-        }
+      if (Math.abs(target - nextProgress) < 0.0005) {
+        nextProgress = target;
       }
 
-      // 4. Poster image fade:
-      // Keep visible until video is ready. Once ready, smoothly fade away during first 3-5% of scroll.
+      smoothProgressRef.current = nextProgress;
+
+      const videoProgress = clamp01((nextProgress - 0.025) / 0.95);
+      const duration = videoDurationRef.current;
+
+      if (duration > 0) {
+        desiredVideoTimeRef.current = videoProgress * duration;
+        requestNextSeek();
+      }
+
       if (imageOverlayRef.current) {
         if (!isVideoReadyRef.current) {
           imageOverlayRef.current.style.opacity = '1';
           imageOverlayRef.current.style.visibility = 'visible';
         } else {
-          const imgOpacity = nextProgress <= 0 ? 1 : Math.max(0, 1 - nextProgress / 0.04);
-          imageOverlayRef.current.style.opacity = String(imgOpacity);
-          imageOverlayRef.current.style.visibility = imgOpacity <= 0 ? 'hidden' : 'visible';
+          const imageOpacity = clamp01(1 - nextProgress / 0.075);
+          imageOverlayRef.current.style.opacity = String(imageOpacity);
+          imageOverlayRef.current.style.visibility = imageOpacity < 0.01 ? 'hidden' : 'visible';
         }
       }
 
-      // 5. Hero content editorial transition:
-      // 0%–5%: hero remains almost unchanged
-      // 5%–18%: headline, description and buttons smoothly fade and move slightly upward
-      // Around 20%: hero foreground content is completely gone
       if (contentRef.current) {
-        let contentOpacity = 1;
-        let translateY = 0;
-        let scale = 1;
-
-        if (nextProgress <= 0.05) {
-          contentOpacity = 1;
-          translateY = 0;
-          scale = 1;
-        } else if (nextProgress < 0.20) {
-          const t = (nextProgress - 0.05) / (0.20 - 0.05); // 0.0 at 5%, 1.0 at 20%
-          contentOpacity = Math.max(0, 1 - t);
-          translateY = -t * 28; // moves slightly upward by 28px
-          scale = 1 - t * 0.015; // very subtle scale (1.0 -> 0.985)
-        } else {
-          contentOpacity = 0;
-          translateY = -30;
-          scale = 0.98;
-        }
+        const fadeStart = 0.07;
+        const fadeEnd = 0.27;
+        const fadeProgress = clamp01((nextProgress - fadeStart) / (fadeEnd - fadeStart));
+        const contentOpacity = 1 - fadeProgress;
+        const translateY = -fadeProgress * 22;
+        const scale = 1 - fadeProgress * 0.012;
 
         contentRef.current.style.opacity = String(contentOpacity);
         contentRef.current.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale})`;
-        contentRef.current.style.visibility = contentOpacity <= 0 ? 'hidden' : 'visible';
-        contentRef.current.style.pointerEvents = contentOpacity <= 0.1 ? 'none' : 'auto';
+        contentRef.current.style.visibility = contentOpacity < 0.01 ? 'hidden' : 'visible';
+        contentRef.current.style.pointerEvents = contentOpacity < 0.08 ? 'none' : 'auto';
       }
 
-      // 6. Subtle gradient overlay transition (softens so video transition is 100% visible)
       if (gradientOverlayRef.current) {
-        const gradOpacity = nextProgress <= 0.05 ? 1 : Math.max(0.25, 1 - (nextProgress - 0.05) * 3);
-        gradientOverlayRef.current.style.opacity = String(gradOpacity);
+        const gradientOpacity = Math.max(0.34, 1 - nextProgress * 1.45);
+        gradientOverlayRef.current.style.opacity = String(gradientOpacity);
       }
 
       rafId = requestAnimationFrame(tick);
     };
 
+    handleScroll();
     rafId = requestAnimationFrame(tick);
 
     return () => {
-      isRunning = false;
+      running = false;
       cancelAnimationFrame(rafId);
     };
-  }, [isInViewport, prefersReducedMotion]);
+  }, [handleScroll, isInViewport, prefersReducedMotion, requestNextSeek]);
 
-  // Passive scroll and resize listeners
   useEffect(() => {
     if (prefersReducedMotion || !isInViewport) return;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
-
-    // Initial calculation
     handleScroll();
 
     return () => {
@@ -217,35 +204,33 @@ export default function HeroScrub({
     <section
       ref={containerRef}
       className={`relative w-full ${
-        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[220vh] sm:h-[260vh]'
+        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[175vh] sm:h-[195vh] lg:h-[205vh]'
       }`}
       aria-label="ADMAKI Hero"
     >
-      {/* Sticky Fullscreen Viewport */}
       <div className="sticky top-0 h-screen min-h-[100dvh] w-full overflow-hidden bg-black">
-        {/* Layer 1: Background Video (z-0) */}
         {!prefersReducedMotion && (
           <video
             ref={videoRef}
             src={effectiveVideoSrc}
             playsInline
             muted
-            preload="metadata"
+            preload="auto"
             disablePictureInPicture
             disableRemotePlayback
             onLoadedMetadata={handleLoadedMetadata}
             onCanPlay={handleReady}
             onLoadedData={handleReady}
-            onPlay={(e) => (e.currentTarget as HTMLVideoElement).pause()}
-            className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none select-none will-change-transform"
+            onSeeked={handleSeeked}
+            onPlay={(event) => event.currentTarget.pause()}
+            className="absolute inset-0 z-0 h-full w-full object-cover pointer-events-none select-none [transform:translateZ(0)] [backface-visibility:hidden]"
             aria-hidden="true"
           />
         )}
 
-        {/* Layer 2: Hero Poster Image (z-10 initially, then fades to 0) */}
         <div
           ref={imageOverlayRef}
-          className="absolute inset-0 z-10 h-full w-full pointer-events-none select-none will-change-opacity transition-opacity duration-75"
+          className="absolute inset-0 z-10 h-full w-full pointer-events-none select-none will-change-opacity"
           style={{ opacity: 1 }}
         >
           <Image
@@ -258,14 +243,12 @@ export default function HeroScrub({
           />
         </div>
 
-        {/* Layer 3: Cinematic Vignette (z-20) */}
         <div
           ref={gradientOverlayRef}
-          className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-black/85 via-black/30 to-black/50 transition-opacity duration-300"
+          className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-t from-black/85 via-black/30 to-black/50 will-change-opacity"
           aria-hidden="true"
         />
 
-        {/* Layer 4: Final Asymmetric Editorial Hero Interface (z-30) */}
         <HeroContent ref={contentRef} />
       </div>
     </section>
