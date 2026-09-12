@@ -189,7 +189,7 @@ export default function TelegramBotSimulator() {
 
         <button
           onClick={resetChat}
-          className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 hover:text-white px-2.5 py-1 rounded border border-white/5 hover:border-white/20 transition-colors"
+          className="text-xs font-mono uppercase tracking-wider text-zinc-400 hover:text-white px-2.5 py-1 rounded border border-white/10 hover:border-white/25 transition-colors"
           title="Reset conversation"
         >
           Reset

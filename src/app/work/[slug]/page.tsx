@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!project) {
     return {
-      title: 'Project Not Found | ADMAKI',
+      title: 'Project Not Found',
     };
   }
 
   return {
-    title: `${project.title} — Case Study | ADMAKI`,
+    title: `${project.title} — Case Study`,
     description: project.description,
     openGraph: {
       title: `${project.title} | ADMAKI Digital Studio`,
@@ -210,7 +210,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-transparent to-black/20" />
                 <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs font-mono text-zinc-400 bg-black/60 backdrop-blur-md px-4 py-3 rounded-lg border border-white/10">
                   <span>Architecture Schematic: {project.title}</span>
-                  <span className="text-cyan-400">PRODUCTION VERIFIED</span>
+                  <span className="text-cyan-300">PROJECT SHOWCASE</span>
                 </div>
               </div>
             )}
@@ -248,7 +248,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 </p>
 
                 <div className="space-y-4">
-                  <span className="text-[11px] font-mono tracking-widest text-zinc-500 uppercase block">
+                  <span className="text-xs font-mono tracking-wider text-zinc-400 uppercase block">
                     Core Bottlenecks
                   </span>
                   <ul className="space-y-3">
@@ -275,7 +275,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 </p>
 
                 <div className="space-y-4">
-                  <span className="text-[11px] font-mono tracking-widest text-zinc-500 uppercase block">
+                  <span className="text-xs font-mono tracking-wider text-zinc-400 uppercase block">
                     Key Implementations
                   </span>
                   <ul className="space-y-3">
@@ -304,7 +304,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
             {/* Architecture Flow Box */}
             <div className="p-6 sm:p-8 rounded-xl border border-white/10 bg-zinc-950/80 mb-12 font-mono text-xs sm:text-sm text-zinc-300 leading-relaxed overflow-x-auto">
-              <div className="text-[10px] tracking-widest text-zinc-500 uppercase mb-3">
+              <div className="text-xs tracking-wider text-zinc-400 uppercase mb-3">
                 Pipeline Diagram
               </div>
               <div className="text-cyan-300">
@@ -319,7 +319,7 @@ export default async function ProjectPage({ params }: PageProps) {
                   key={idx}
                   className="p-6 rounded-xl border border-white/[0.06] bg-black/40 flex items-start gap-4"
                 >
-                  <span className="text-xs font-mono text-zinc-500">0{idx + 1}</span>
+                  <span className="text-xs font-mono text-zinc-400">0{idx + 1}</span>
                   <p className="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed">
                     {item}
                   </p>

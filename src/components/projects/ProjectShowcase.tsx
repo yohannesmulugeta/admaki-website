@@ -61,35 +61,35 @@ function ProjectDetails({ project }: { project: Project }) {
     <div className="flex flex-col justify-center space-y-6">
       {/* Category & Project Index Header */}
       <div className="flex items-center gap-3">
-        <span className="text-4xl sm:text-5xl font-mono font-black text-cyan-400/90 tracking-tighter">
+        <span className="text-4xl sm:text-5xl font-mono font-black text-cyan-700 tracking-tighter">
           {project.number}
         </span>
-        <div className="h-4 w-px bg-white/20" />
-        <span className="text-xs font-mono tracking-[0.25em] text-zinc-400 uppercase font-semibold">
+        <div className="h-4 w-px bg-slate-300" />
+        <span className="text-xs font-mono tracking-[0.25em] text-slate-500 uppercase font-semibold">
           PROJECT {project.number} {'//'} {project.category}
         </span>
       </div>
 
       {/* Main Project Title */}
-      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[-0.03em] leading-[1.05] text-white">
+      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[-0.03em] leading-[1.05] text-slate-950">
         {project.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm sm:text-base text-zinc-400 font-light leading-relaxed max-w-xl">
+      <p className="text-sm sm:text-base text-slate-600 font-light leading-relaxed max-w-xl">
         {project.description}
       </p>
 
       {/* Capabilities / Services Provided */}
       <div className="space-y-3 pt-2">
-        <span className="text-[10px] font-mono tracking-[0.2em] text-zinc-500 uppercase block">
+        <span className="text-xs font-mono tracking-[0.18em] text-slate-500 uppercase block">
           Scope of Execution
         </span>
         <div className="flex flex-wrap gap-2">
           {project.services.map((svc) => (
             <span
               key={svc}
-              className="px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-zinc-300"
+              className="px-3 py-1 rounded-full border border-slate-300 bg-white/70 text-xs font-mono text-slate-700"
             >
               {svc}
             </span>
@@ -100,14 +100,14 @@ function ProjectDetails({ project }: { project: Project }) {
       {/* Technologies Used */}
       {project.technologies && project.technologies.length > 0 && (
         <div className="space-y-2">
-          <span className="text-[10px] font-mono tracking-[0.2em] text-zinc-500 uppercase block">
+          <span className="text-xs font-mono tracking-[0.18em] text-slate-500 uppercase block">
             Core Technology
           </span>
           <div className="flex flex-wrap gap-2">
             {project.technologies.map((tech) => (
               <span
                 key={tech}
-                className="px-2.5 py-0.5 rounded border border-cyan-500/20 bg-cyan-500/5 text-[11px] font-mono text-cyan-300"
+                className="px-2.5 py-0.5 rounded border border-cyan-700/20 bg-cyan-700/5 text-[11px] font-mono text-cyan-800"
               >
                 {tech}
               </span>
@@ -120,12 +120,12 @@ function ProjectDetails({ project }: { project: Project }) {
       <div className="pt-4">
         <Link
           href={project.href || '#'}
-          className="group/cta inline-flex items-center gap-3 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] font-semibold text-white hover:text-cyan-300 transition-colors duration-200"
+          className="group/cta inline-flex items-center gap-3 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] font-semibold text-slate-950 hover:text-cyan-800 transition-colors duration-200"
         >
-          <span className="border-b border-white/30 pb-0.5 group-hover/cta:border-cyan-400 transition-colors">
+          <span className="border-b border-slate-400 pb-0.5 group-hover/cta:border-cyan-700 transition-colors">
             View Case Study
           </span>
-          <span className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1.5 text-cyan-400">
+          <span className="transition-transform duration-300 ease-out group-hover/cta:translate-x-1.5 text-cyan-700">
             →
           </span>
         </Link>
@@ -165,15 +165,15 @@ export default function ProjectShowcase({
   return (
     <article
       ref={containerRef}
-      className={`relative w-full min-h-[75vh] lg:min-h-[85vh] flex items-center py-12 lg:py-20 border-t border-white/[0.06] transition-all duration-700 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-80 translate-y-6 scale-[0.98]'
+      className={`relative w-full min-h-[75vh] lg:min-h-[85vh] flex items-center py-12 lg:py-20 border-t border-slate-300/80 transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-100 translate-y-6 scale-[0.99]'
       }`}
       aria-label={`Case Study: ${project.title}`}
     >
       {/* Ambient background shift per project */}
       <div
         className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 ${
-          isVisible ? 'opacity-30' : 'opacity-0'
+          isVisible ? 'opacity-45' : 'opacity-0'
         } ${
           index % 2 === 0
             ? 'bg-[radial-gradient(circle_at_30%_50%,rgba(56,189,248,0.08),transparent_60%)]'
@@ -213,7 +213,7 @@ export default function ProjectShowcase({
               <ProjectVisual project={project} aspectClass="aspect-[16/9] sm:aspect-[21/9]" />
             </div>
 
-            <div className="mt-8 lg:mt-0 lg:absolute lg:bottom-8 lg:left-8 lg:max-w-xl lg:p-8 lg:rounded-2xl lg:border lg:border-white/15 lg:bg-black/85 lg:backdrop-blur-xl lg:shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
+            <div className="mt-8 lg:mt-0 lg:absolute lg:bottom-8 lg:left-8 lg:max-w-xl lg:p-8 lg:rounded-2xl lg:border lg:border-slate-200 lg:bg-white/95 lg:backdrop-blur-xl lg:shadow-[0_20px_55px_rgba(15,23,42,0.16)]">
               <ProjectDetails project={project} />
             </div>
           </div>

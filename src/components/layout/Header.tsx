@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 
@@ -19,6 +19,7 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -49,6 +50,26 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
   // Fade navigation subtly as video scrub reaches high intensity (e.g. after 35%),
   // or keep it minimal and crisp.
   const navOpacity = Math.max(0.2, 1 - (scrollProgress > 0.25 ? (scrollProgress - 0.25) * 2 : 0));
@@ -66,7 +87,7 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'py-3.5 bg-black/50 backdrop-blur-xl border-b border-white/[0.08]'
+            ? 'py-3.5 bg-[#08111c]/95 backdrop-blur-xl border-b border-white/[0.1] shadow-[0_8px_30px_rgba(8,17,28,0.12)]'
             : 'py-5 sm:py-7 bg-transparent'
         }`}
         style={{ opacity: navOpacity }}
@@ -124,7 +145,9 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
 
           {/* Mobile Menu Button with 44x44px minimum touch target */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            ref={menuButtonRef}
+            type="button"
+            onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
             className="md:hidden flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 gap-1.5 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg -mr-2"
             aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
             aria-expanded={mobileMenuOpen}
@@ -154,7 +177,7 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
             id="mobile-navigation"
             role="navigation"
             aria-label="Mobile Navigation"
-            className="md:hidden fixed inset-x-0 top-full bg-black/95 backdrop-blur-2xl border-b border-white/10 px-6 py-8 flex flex-col gap-5 text-sm uppercase tracking-[0.25em] text-zinc-300 shadow-2xl"
+            className="md:hidden fixed inset-x-0 top-full max-h-[calc(100dvh-72px)] overflow-y-auto bg-[#050608]/98 backdrop-blur-2xl border-b border-white/12 px-6 py-8 flex flex-col gap-5 text-sm uppercase tracking-[0.2em] text-zinc-200 shadow-2xl"
           >
             {navItems.map((item) => (
               <a

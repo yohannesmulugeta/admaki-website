@@ -11,7 +11,7 @@ export default function ServiceVisual({ index }: ServiceVisualProps) {
       <div className="absolute inset-0 rounded-3xl bg-radial from-cyan-500/10 via-indigo-500/5 to-transparent blur-2xl" />
 
       {/* Outer framing container */}
-      <div className="relative w-full h-full rounded-2xl border border-white/10 bg-zinc-950/60 backdrop-blur-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] flex items-center justify-center">
+      <div aria-hidden="true" className="relative w-full h-full rounded-2xl border border-slate-700/70 bg-[#08111c]/95 backdrop-blur-xl overflow-hidden shadow-[0_20px_50px_rgba(15,23,42,0.28)] flex items-center justify-center">
         {/* Subtle grid pattern inside */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
 

@@ -75,7 +75,7 @@ export default function Process() {
 
   return (
     <section
-      className="relative w-full bg-black text-white py-24 sm:py-36 border-t border-white/[0.06] overflow-hidden"
+      className="section-surface-muted relative w-full text-white py-20 sm:py-28 border-t border-white/[0.08] overflow-hidden"
       aria-label="How I Work - Process"
     >
       {/* Background subtle spatial glow */}
@@ -121,7 +121,7 @@ export default function Process() {
           </div>
 
           {/* Steps Sequence */}
-          <div className="space-y-10 sm:space-y-14 md:pl-24">
+          <div className="space-y-8 sm:space-y-10 md:pl-24">
             {processSteps.map((step, index) => {
               const isActive = activeStep === index;
               const isPast = activeStep > index;
@@ -136,8 +136,8 @@ export default function Process() {
                     isActive
                       ? 'border-cyan-400/30 bg-zinc-900/60 shadow-[0_0_45px_rgba(56,189,248,0.12)] scale-100 opacity-100'
                       : isPast
-                        ? 'border-white/10 bg-white/[0.015] scale-[0.99] opacity-60'
-                        : 'border-white/5 bg-transparent scale-[0.97] opacity-35'
+                        ? 'border-white/12 bg-white/[0.025] scale-[0.995]'
+                        : 'border-white/10 bg-black/20 scale-[0.995]'
                   }`}
                 >
                   {/* Timeline Rail Marker Node (Desktop only) */}
@@ -158,7 +158,7 @@ export default function Process() {
                     <div className="flex items-baseline gap-4">
                       <span
                         className={`text-5xl sm:text-6xl font-mono font-black tracking-tighter transition-colors duration-300 ${
-                          isActive ? 'text-cyan-400' : 'text-zinc-600'
+                          isActive ? 'text-cyan-400' : 'text-zinc-400'
                         }`}
                       >
                         {step.number}
@@ -168,7 +168,7 @@ export default function Process() {
                       </h3>
                     </div>
 
-                    <span className="text-[11px] font-mono tracking-[0.25em] text-zinc-500 uppercase">
+                    <span className="text-xs font-mono tracking-[0.2em] text-zinc-300 uppercase">
                       {'//'} {step.tagline}
                     </span>
                   </div>
@@ -186,7 +186,7 @@ export default function Process() {
                         className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors duration-300 ${
                           isActive
                             ? 'border border-cyan-400/25 bg-cyan-400/5 text-cyan-200'
-                            : 'border border-white/10 bg-white/[0.02] text-zinc-400'
+                            : 'border border-white/12 bg-white/[0.03] text-zinc-300'
                         }`}
                       >
                         {item}
@@ -202,7 +202,7 @@ export default function Process() {
         {/* ========================================================================= */}
         {/* SECTION END CTA                                                           */}
         {/* ========================================================================= */}
-        <div className="pt-24 sm:pt-36">
+        <div className="pt-20 sm:pt-28">
           <div className="relative rounded-3xl border border-white/10 bg-gradient-to-b from-zinc-900/80 via-black to-zinc-950 p-10 sm:p-16 lg:p-20 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl">
             {/* Ambient center glow */}
             <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(56,189,248,0.15)_0%,rgba(99,102,241,0.08)_40%,transparent_70%)]" />
@@ -224,7 +224,7 @@ export default function Process() {
                 href="#contact"
                 variant="primary"
                 size="lg"
-                className="shadow-[0_0_35px_rgba(255,255,255,0.25)] text-sm sm:text-base tracking-wider"
+                className="shadow-[0_0_22px_rgba(103,232,249,0.16)] text-sm sm:text-base tracking-wide"
               >
                 <span>Start a Conversation</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1 text-black">

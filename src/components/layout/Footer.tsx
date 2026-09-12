@@ -18,7 +18,7 @@ const navigation = [
 export default function Footer() {
   return (
     <footer
-      className="relative w-full bg-black text-white border-t border-white/10 pt-16 pb-12 overflow-hidden"
+      className="section-surface relative w-full text-white border-t border-white/10 pt-16 pb-12 overflow-hidden"
       aria-label="ADMAKI Footer"
     >
       <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
@@ -51,7 +51,7 @@ export default function Footer() {
 
           {/* Services Column */}
           <div className="md:col-span-3 flex flex-col space-y-4">
-            <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-zinc-500 font-semibold">
+            <span className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-400 font-semibold">
               Services
             </span>
             <ul className="space-y-2.5">
@@ -70,7 +70,7 @@ export default function Footer() {
 
           {/* Navigation Column */}
           <div className="md:col-span-3 flex flex-col space-y-4">
-            <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-zinc-500 font-semibold">
+            <span className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-400 font-semibold">
               Navigation
             </span>
             <ul className="space-y-2.5">
@@ -89,12 +89,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Minimal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
           <div>
             © ADMAKI
           </div>
 
-          <div className="flex items-center gap-6 text-[11px] tracking-wider text-zinc-500">
+          <div className="flex items-center gap-6 text-xs tracking-wider text-zinc-400">
             <span>DIGITAL STUDIO</span>
             <span>•</span>
             <a href="#" className="hover:text-zinc-300 transition-colors">

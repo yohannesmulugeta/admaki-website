@@ -32,7 +32,7 @@ const HeroContent = forwardRef<HTMLDivElement, HeroContentProps>(function HeroCo
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-3 sm:mb-4">
             <span className="h-px w-6 sm:w-8 bg-emerald-400" />
-            <span className="text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-emerald-400/90 font-medium">
+            <span className="text-xs font-mono tracking-[0.22em] uppercase text-cyan-300 font-medium">
               DIGITAL • CREATIVE • TECHNOLOGY
             </span>
           </div>
@@ -62,7 +62,7 @@ const HeroContent = forwardRef<HTMLDivElement, HeroContentProps>(function HeroCo
               href="#work"
               variant="primary"
               size="lg"
-              className="w-full sm:w-auto shadow-[0_0_25px_rgba(255,255,255,0.2)]"
+              className="w-full sm:w-auto shadow-[0_0_20px_rgba(103,232,249,0.16)]"
             >
               <span>Explore My Work</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -83,7 +83,7 @@ const HeroContent = forwardRef<HTMLDivElement, HeroContentProps>(function HeroCo
         {/* Right Column: Editorial Service Micro-List */}
         <div className="w-full lg:w-auto flex flex-col items-start lg:items-end border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-[10px] font-mono tracking-[0.25em] text-zinc-500 uppercase">
+            <span className="text-xs font-mono tracking-[0.2em] text-zinc-300 uppercase">
               Core Capabilities
             </span>
           </div>
@@ -95,10 +95,10 @@ const HeroContent = forwardRef<HTMLDivElement, HeroContentProps>(function HeroCo
                 className="group flex flex-col lg:items-end text-left lg:text-right"
               >
                 <div className="flex items-center lg:justify-end gap-2 text-xs font-mono uppercase tracking-[0.2em] text-zinc-300 group-hover:text-white transition-colors duration-200">
-                  <span className="text-[10px] text-emerald-400/80 font-semibold">{svc.id}</span>
+                  <span className="text-xs text-cyan-300 font-semibold">{svc.id}</span>
                   <span className="font-semibold">{svc.title}</span>
                 </div>
-                <span className="text-[10px] tracking-wider text-zinc-500 hidden sm:block">
+                <span className="text-xs tracking-wider text-zinc-400 hidden sm:block">
                   {svc.desc}
                 </span>
               </li>

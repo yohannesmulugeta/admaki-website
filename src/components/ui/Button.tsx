@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'accent' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   asLink?: boolean;
   href?: string;
@@ -32,9 +32,11 @@ export default function Button({
 
   const variantStyles = {
     primary:
-      'bg-white text-black hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:-translate-y-0.5 font-semibold',
+      'bg-white text-black hover:bg-cyan-50 hover:shadow-[0_0_20px_rgba(103,232,249,0.22)] hover:-translate-y-0.5 font-semibold',
+    accent:
+      'bg-[#08111c] text-white hover:bg-cyan-800 hover:shadow-[0_12px_28px_rgba(8,145,178,0.2)] hover:-translate-y-0.5 font-semibold',
     secondary:
-      'bg-white/[0.06] text-white/90 border border-white/20 backdrop-blur-md hover:bg-white/[0.12] hover:border-white/40 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:-translate-y-0.5',
+      'bg-white/[0.06] text-white border border-white/20 backdrop-blur-md hover:bg-cyan-400/[0.08] hover:border-cyan-300/50 hover:text-cyan-50 hover:-translate-y-0.5',
     ghost:
       'bg-transparent text-zinc-300 hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/10 hover:-translate-y-0.5',
   };

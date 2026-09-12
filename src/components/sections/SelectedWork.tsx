@@ -14,35 +14,35 @@ export default function SelectedWork() {
   return (
     <section
       id="work"
-      className="relative w-full bg-black text-white py-24 sm:py-32"
+      className="section-light-muted relative w-full text-slate-950 py-20 sm:py-28"
       aria-label="Selected Work"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-0 inset-x-0 h-96 pointer-events-none bg-gradient-to-b from-black via-zinc-950 to-black" />
+      <div className="absolute top-0 inset-x-0 h-96 pointer-events-none bg-gradient-to-b from-[#f7f6f2] via-white/40 to-transparent" />
 
       {/* ========================================================================= */}
       {/* SECTION INTRO HEADER                                                      */}
       {/* ========================================================================= */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12 mb-16 sm:mb-24">
-        <div className="flex flex-col items-start border-b border-white/10 pb-10 sm:pb-14">
+        <div className="flex flex-col items-start border-b border-slate-300 pb-10 sm:pb-14">
           {/* Eyebrow */}
           <div className="flex items-center gap-3 mb-4">
-            <span className="h-px w-6 bg-cyan-400" />
-            <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-400 font-semibold">
+            <span className="h-px w-6 bg-cyan-700" />
+            <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-700 font-semibold">
               SELECTED WORK
             </span>
           </div>
 
           {/* Headline */}
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-[0.95] max-w-4xl">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-950 leading-[0.95] max-w-4xl">
             DIGITAL WORK <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-slate-700 to-slate-500">
               BUILT FOR REAL BUSINESS.
             </span>
           </h2>
 
           {/* Supporting Text */}
-          <p className="mt-5 text-sm sm:text-base lg:text-lg text-zinc-400 font-light leading-relaxed max-w-2xl">
+          <p className="mt-5 text-sm sm:text-base lg:text-lg text-slate-600 font-light leading-relaxed max-w-2xl">
             A selection of websites, software systems, automation tools and digital experiences.
           </p>
         </div>
@@ -65,13 +65,13 @@ export default function SelectedWork() {
       {/* ========================================================================= */}
       {/* SECTION END CTA                                                           */}
       {/* ========================================================================= */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 md:px-12 pt-28 sm:pt-36">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 md:px-12 pt-20 sm:pt-28">
         <div className="relative rounded-3xl border border-white/10 bg-gradient-to-b from-zinc-900/60 to-black p-10 sm:p-16 lg:p-20 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl">
           {/* Subtle central glow */}
           <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(56,189,248,0.12)_0%,rgba(99,102,241,0.06)_45%,transparent_70%)]" />
 
           {/* Eyebrow */}
-          <span className="relative z-10 text-xs font-mono tracking-[0.3em] uppercase text-emerald-400 font-semibold mb-4">
+          <span className="relative z-10 text-xs font-mono tracking-[0.3em] uppercase text-cyan-300 font-semibold mb-4">
             NEXT STEP // ENGAGEMENT
           </span>
 
@@ -90,7 +90,7 @@ export default function SelectedWork() {
               href="#contact"
               variant="primary"
               size="lg"
-              className="shadow-[0_0_35px_rgba(255,255,255,0.25)] text-sm sm:text-base tracking-wider"
+              className="shadow-[0_0_22px_rgba(103,232,249,0.16)] text-sm sm:text-base tracking-wide"
             >
               <span>Start a Project</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1 text-black">

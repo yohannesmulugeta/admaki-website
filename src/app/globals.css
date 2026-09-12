@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
+  --background: #030405;
+  --surface: #06080a;
+  --surface-muted: #0a0c0f;
   --foreground: #f4f4f5;
+  --muted: #a1a1aa;
+  --light-background: #f7f6f2;
+  --light-surface: #ffffff;
+  --light-muted: #edf2f5;
+  --light-border: #dce3e8;
+  --ink: #111827;
+  --ink-muted: #5f6b7a;
+  --accent: #0891b2;
+  --accent-strong: #0e7490;
+  --blue: #2563eb;
 }
 
 @theme inline {
@@ -15,7 +27,27 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: #000000;
+  background-color: var(--background);
+}
+
+.section-surface {
+  background: var(--surface);
+}
+
+.section-surface-muted {
+  background: var(--surface-muted);
+}
+
+.section-light {
+  background: var(--light-background);
+  color: var(--ink);
+  color-scheme: light;
+}
+
+.section-light-muted {
+  background: var(--light-muted);
+  color: var(--ink);
+  color-scheme: light;
 }
 
 body {
@@ -29,7 +61,7 @@ body {
 
 /* Accessible focus ring defaults */
 :focus-visible {
-  outline: 2px solid #22d3ee;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -56,7 +88,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -69,6 +101,6 @@ body {
 }
 
 ::selection {
-  background: #ffffff;
-  color: #000000;
+  background: #67e8f9;
+  color: #061014;
 }

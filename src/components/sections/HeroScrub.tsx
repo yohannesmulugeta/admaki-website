@@ -5,36 +5,14 @@ import React, {
   useRef,
   useState,
   useCallback,
-  useSyncExternalStore,
 } from 'react';
 import Image from 'next/image';
 import HeroContent from './HeroContent';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface HeroScrubProps {
   imageSrc?: string;
   videoSrc?: string;
-}
-
-type VideoWithRVFC = HTMLVideoElement & {
-  requestVideoFrameCallback?: (callback: (now: DOMHighResTimeStamp, metadata: unknown) => void) => number;
-  cancelVideoFrameCallback?: (id: number) => void;
-};
-
-// SSR-safe subscription for prefers-reduced-motion
-function subscribeReducedMotion(callback: () => void) {
-  if (typeof window === 'undefined') return () => {};
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  mediaQuery.addEventListener('change', callback);
-  return () => mediaQuery.removeEventListener('change', callback);
-}
-
-function getReducedMotionSnapshot() {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
-function getReducedMotionServerSnapshot() {
-  return false;
 }
 
 export default function HeroScrub({
@@ -48,18 +26,27 @@ export default function HeroScrub({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [, setForceReadyState] = useState(false);
-
-  const prefersReducedMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot
-  );
+  const [isInViewport, setIsInViewport] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
 
   // Pure ref-based state during scroll (zero React re-renders while scrolling)
   const targetProgressRef = useRef<number>(0);
   const smoothProgressRef = useRef<number>(0);
   const videoDurationRef = useRef<number>(0);
   const isVideoReadyRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { rootMargin: '200px 0px' }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   // Mark video as ready and ensure strictly paused state
   const handleReady = useCallback(() => {
@@ -112,26 +99,10 @@ export default function HeroScrub({
 
   // Main animation / render loop running on requestAnimationFrame with smooth interpolation
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !isInViewport) return;
 
     let rafId: number;
     let isRunning = true;
-
-    // Optional requestVideoFrameCallback listener for synchronization
-    const video = videoRef.current as VideoWithRVFC | null;
-    let rvfcId: number | null = null;
-    const hasRVFC = Boolean(video && typeof video.requestVideoFrameCallback === 'function');
-
-    const onVideoFrame = () => {
-      if (!isRunning) return;
-      if (video && hasRVFC && video.requestVideoFrameCallback) {
-        rvfcId = video.requestVideoFrameCallback(onVideoFrame);
-      }
-    };
-
-    if (video && hasRVFC && video.requestVideoFrameCallback) {
-      rvfcId = video.requestVideoFrameCallback(onVideoFrame);
-    }
 
     const tick = () => {
       if (!isRunning) return;
@@ -219,15 +190,12 @@ export default function HeroScrub({
     return () => {
       isRunning = false;
       cancelAnimationFrame(rafId);
-      if (video && hasRVFC && rvfcId !== null && video.cancelVideoFrameCallback) {
-        video.cancelVideoFrameCallback(rvfcId);
-      }
     };
-  }, [prefersReducedMotion]);
+  }, [isInViewport, prefersReducedMotion]);
 
   // Passive scroll and resize listeners
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !isInViewport) return;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
@@ -239,13 +207,13 @@ export default function HeroScrub({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [handleScroll, prefersReducedMotion]);
+  }, [handleScroll, isInViewport, prefersReducedMotion]);
 
   return (
     <section
       ref={containerRef}
       className={`relative w-full ${
-        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[450vh]'
+        prefersReducedMotion ? 'h-screen min-h-[100dvh]' : 'h-[220vh] sm:h-[260vh]'
       }`}
       aria-label="ADMAKI Hero"
     >
@@ -258,7 +226,7 @@ export default function HeroScrub({
             src={videoSrc}
             playsInline
             muted
-            preload="auto"
+            preload="metadata"
             disablePictureInPicture
             disableRemotePlayback
             onLoadedMetadata={handleLoadedMetadata}

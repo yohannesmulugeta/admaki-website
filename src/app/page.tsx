@@ -9,7 +9,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main id="main-content" className="w-full bg-black text-white selection:bg-white selection:text-black">
+    <main id="main-content" className="w-full bg-[#08111c] text-white selection:bg-cyan-200 selection:text-slate-950">
       {/* Floating Navigation */}
       <Header />
 
@@ -36,5 +36,4 @@ export default function Home() {
     </main>
   );
 }
-
 
