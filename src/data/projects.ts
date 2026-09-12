@@ -35,13 +35,126 @@
   image: string;
   video?: string;
   href: string;
+  liveUrl?: string;
 };
 
 export const projectsData: Project[] = [
   {
     id: 'project-01',
-    slug: 'social-media-campaign',
+    slug: 'hayked-coffee-warehouse-erp',
     number: '01',
+    title: 'Hayked Coffee Warehouse ERP',
+    category: 'CUSTOM SOFTWARE',
+    tagline: 'Warehouse Operations, Traceability & Client Custody',
+    year: '2026',
+    clientType: 'Coffee Warehouse Operations',
+    description:
+      'End-to-end warehouse management for Ethiopian coffee, covering goods receipt, lots, processing, stock, client custody, movements, reporting and operational traceability.',
+    overview:
+      'Hayked Coffee Warehouse ERP was designed around real third-party coffee warehouse operations. The system replaces fragmented records with one operational flow from goods receipt through lot custody, processing, movement history, stock reporting and controlled release.',
+    challenge: {
+      title: 'Warehouse Accuracy Across Multiple Owners and Lots',
+      description:
+        'Coffee warehouse operations require accurate custody records, clear lot identity and controlled stock movement while different clients, processing states and receipts are handled at the same time.',
+      points: [
+        'Goods receipts and lot identities must remain traceable from arrival onward',
+        'Client-owned stock must stay separated and visible throughout warehouse operations',
+        'Processing and stock movements need controls that prevent invalid or negative inventory states',
+      ],
+    },
+    solution: {
+      title: 'One Controlled Warehouse Workflow',
+      description:
+        'The ERP connects receipt, lot management, processing, inventory, movement history and reporting in one workflow built around practical warehouse controls.',
+      points: [
+        'Database-generated GRN and lot references with printable operational records',
+        'Client-to-lot custody and processing workflows with stock-limit validation',
+        'Movement history, stock views and lot detail pages for day-to-day traceability',
+      ],
+    },
+    architecture: {
+      title: 'Warehouse Operations Flow',
+      description:
+        'Goods Receipt → Lot Ledger → Processing / Movements → Client Stock → Reports & Traceability',
+      highlights: [
+        'Receipt-to-lot traceability for warehouse coffee',
+        'Controlled processing source eligibility and stock validation',
+        'Printable GRN, lot-tag and operational reporting workflows',
+      ],
+    },
+    technicalHighlights: [
+      'Role-aware warehouse workflows',
+      'Lot-level stock and movement history',
+      'Controlled processing and completion rules',
+      'Responsive operational tables and printable documents',
+    ],
+    metricsOrOutcomes: [],
+    services: ['ERP Design', 'Warehouse Workflow', 'Inventory & Traceability', 'Reporting'],
+    technologies: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
+    image: '/images/projects/hayked-coffee-warehouse-erp.webp',
+    href: '/work/hayked-coffee-warehouse-erp',
+    liveUrl: 'https://hayked-coffee-warehouse-erp.vercel.app/',
+  },
+  {
+    id: 'project-02',
+    slug: 'beanledger',
+    number: '02',
+    title: 'BeanLedger',
+    category: 'CUSTOM SOFTWARE',
+    tagline: 'Coffee Export ERP from Purchase to Shipment',
+    year: '2026',
+    clientType: 'Coffee Export & Operations',
+    description:
+      'A unified coffee ERP connecting supplier purchases, warehouse receipts, processing, bag inventory, export contracts, reports and document workflows.',
+    overview:
+      'BeanLedger brings the core coffee export operation into one system. Purchasing, warehouse activity, processing, bag tracking, export contracts, reporting and operational letters are connected so teams can follow the same source of truth from incoming coffee to shipment preparation.',
+    challenge: {
+      title: 'Disconnected Coffee Operations and Documents',
+      description:
+        'Purchase records, warehouse balances, processing activity, bags, export contracts and operational documents can quickly drift apart when they are managed in separate spreadsheets or manual files.',
+      points: [
+        'Purchases and warehouse receipts need a consistent lot and stock trail',
+        'Processing outputs and bag movements must reconcile with available coffee',
+        'Export contracts, reports and issued documents need to stay linked to operations',
+      ],
+    },
+    solution: {
+      title: 'A Connected Coffee Operations Ledger',
+      description:
+        'BeanLedger combines the operational modules into one traceable flow with controlled stock rules, reporting and document generation.',
+      points: [
+        'Supplier purchases, warehouse receipts and processing logs connected to stock',
+        'Bag ledger and export contract workflows designed around operational balances',
+        'Reporting and letter/document workflows integrated into the same system',
+      ],
+    },
+    architecture: {
+      title: 'Coffee Export Operations Flow',
+      description:
+        'Purchases → Warehouse → Processing → Bag Ledger → Export Contracts → Reports / Letters',
+      highlights: [
+        'Traceable stock flow across purchase, warehouse and processing modules',
+        'Operational bag and export contract management',
+        'Reporting, audit-oriented workflows and document output in one product',
+      ],
+    },
+    technicalHighlights: [
+      'Coffee-specific inventory and processing workflows',
+      'Role-based operational modules',
+      'Export, bag and stock reporting',
+      'Integrated letter and document workflows',
+    ],
+    metricsOrOutcomes: [],
+    services: ['ERP Product Design', 'Operations Workflow', 'Inventory & Export', 'Document Automation'],
+    technologies: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
+    image: '/images/projects/beanledger-coffee-export-erp.webp',
+    href: '/work/beanledger',
+    liveUrl: 'https://bean-ledger-five.vercel.app/login',
+  },
+  {
+    id: 'project-03',
+    slug: 'social-media-campaign',
+    number: '03',
     title: 'Social Media Campaign',
     category: 'SOCIAL MEDIA',
     tagline: 'High-Retention Editorial Growth Engine',
@@ -98,9 +211,9 @@ export const projectsData: Project[] = [
     href: '/work/social-media-campaign',
   },
   {
-    id: 'project-02',
+    id: 'project-04',
     slug: 'interactive-website',
-    number: '02',
+    number: '04',
     title: 'Interactive Website',
     category: 'WEBSITE',
     tagline: 'Cinematic High-Performance Web Platform',
@@ -157,68 +270,9 @@ export const projectsData: Project[] = [
     href: '/work/interactive-website',
   },
   {
-    id: 'project-03',
-    slug: 'business-management-system',
-    number: '03',
-    title: 'Business Management System',
-    category: 'CUSTOM SOFTWARE',
-    tagline: 'Mission-Critical Internal ERP & Telemetry',
-    year: '2026',
-    clientType: 'Enterprise Logistics & Operations',
-    description:
-      'Mission-critical internal enterprise software integrating live telemetry, inventory management, multi-role RBAC security, and automated reporting pipelines.',
-    overview:
-      'A bespoke enterprise management platform engineered to replace disorganized spreadsheets and slow legacy software. The system centralizes real-time inventory tracking, staff dispatch, and financial auditing into a unified, high-security operational interface.',
-    challenge: {
-      title: 'Data Inconsistency & Operational Blind Spots',
-      description:
-        'Growing operational complexity led to synchronization delays between warehouse floors, administrative offices, and accounting departments.',
-      points: [
-        'Slow database queries causing sluggish dashboard load times during peak hours',
-        'Lack of role-based permissions leading to accidental data overrides',
-        'Inability to audit historic state transitions across multi-step order pipelines',
-      ],
-    },
-    solution: {
-      title: 'Event-Driven Real-Time Data Fabric',
-      description:
-        'We architected a high-concurrency system combining PostgreSQL for ACID-compliant persistence, Redis caching for instant telemetry queries, and WebSocket streams for live floor updates.',
-      points: [
-        'Fine-grained Role-Based Access Control (RBAC) across administrative tiers',
-        'Real-time WebSocket event bus broadcasting state changes with sub-15ms latency',
-        'Automated immutable audit logging recording every ledger and inventory event',
-      ],
-    },
-    architecture: {
-      title: 'System Topology',
-      description:
-        'Client Dashboard ↔ API Gateway (Node.js/FastAPI) ↔ Redis Pub/Sub ↔ PostgreSQL Cluster ↔ Asynchronous Worker Workers.',
-      highlights: [
-        'Sub-15ms median query response time with intelligent Redis layer',
-        'ACID transactions ensuring zero inventory double-allocation',
-        'Modular microservice layout ready for containerized scaling',
-      ],
-    },
-    technicalHighlights: [
-      'PostgreSQL with connection pooling and automated replication',
-      'Redis distributed caching and WebSocket pub/sub streams',
-      'JWT and session-based authentication with cryptographic signing',
-      'Comprehensive REST and GraphQL data querying interfaces',
-    ],
-    metricsOrOutcomes: [
-      { label: 'Query Latency', value: '< 15ms', detail: 'Median database query response' },
-      { label: 'Data Accuracy', value: '100%', detail: 'Zero inventory allocation discrepancies' },
-      { label: 'Uptime SLA', value: '99.99%', detail: 'High-availability cluster reliability' },
-    ],
-    services: ['System Architecture', 'Database Design', 'Backend Engineering', 'Internal Tooling'],
-    technologies: ['PostgreSQL', 'Redis', 'Node.js', 'REST / GraphQL'],
-    image: '/images/projects/project-03.svg',
-    href: '/work/business-management-system',
-  },
-  {
-    id: 'project-04',
+    id: 'project-05',
     slug: 'telegram-automation',
-    number: '04',
+    number: '05',
     title: 'Telegram Automation',
     category: 'AUTOMATION',
     tagline: 'Autonomous 24/7 Bot & Webhook Gateway',
