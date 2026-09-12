@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, {
   useEffect,
@@ -19,6 +19,10 @@ export default function HeroScrub({
   imageSrc = '/images/hero/hero-main.webp',
   videoSrc = '/videos/hero-transition-scrub.mp4',
 }: HeroScrubProps) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const effectiveVideoSrc =
+    videoSrc.startsWith('/') && basePath ? `${basePath}${videoSrc}` : videoSrc;
+
   const containerRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const imageOverlayRef = useRef<HTMLDivElement>(null);
@@ -223,7 +227,7 @@ export default function HeroScrub({
         {!prefersReducedMotion && (
           <video
             ref={videoRef}
-            src={videoSrc}
+            src={effectiveVideoSrc}
             playsInline
             muted
             preload="metadata"

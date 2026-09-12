@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { projectsData } from '@/data/projects';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://admaki.com';
 
