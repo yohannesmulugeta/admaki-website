@@ -213,14 +213,14 @@ export default function TelegramBotSimulator() {
               {msg.badge && (
                 <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-[9px] font-mono text-cyan-400 font-semibold tracking-wider">
                   <span>{msg.badge}</span>
-                  <span className="text-zinc-500">{msg.timestamp}</span>
+                  <span className="text-zinc-400">{msg.timestamp}</span>
                 </div>
               )}
 
-              <div className="whitespace-pre-line font-mono text-xs sm:text-sm">{msg.text}</div>
+              <div className="whitespace-pre-line font-mono text-xs sm:text-sm leading-relaxed">{msg.text}</div>
 
               {msg.telemetry && (
-                <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap items-center gap-3 text-[9px] font-mono text-zinc-500">
+                <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap items-center gap-3 text-[9px] font-mono text-zinc-400">
                   <span>Latency: {msg.telemetry.latency}</span>
                   <span>•</span>
                   <span className="text-emerald-400">{msg.telemetry.status}</span>
@@ -228,14 +228,14 @@ export default function TelegramBotSimulator() {
               )}
             </div>
 
-            <span className="text-[9px] font-mono text-zinc-600 px-1 mt-1">
+            <span className="text-[9px] font-mono text-zinc-400 px-1 mt-1">
               {msg.timestamp}
             </span>
           </div>
         ))}
 
         {isTyping && (
-          <div className="flex items-center gap-2 text-zinc-500 text-xs font-mono py-2">
+          <div className="flex items-center gap-2 text-zinc-400 text-xs font-mono py-2">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
             <span>ADMAKI Bot is processing payload...</span>
           </div>
@@ -246,33 +246,37 @@ export default function TelegramBotSimulator() {
 
       {/* Interactive Quick Command Buttons */}
       <div className="px-5 py-3 border-t border-white/10 bg-zinc-900/30 flex flex-wrap items-center gap-2">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mr-1 hidden sm:inline">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mr-1 hidden sm:inline">
           Quick Commands:
         </span>
         {commands.map((c) => (
           <button
             key={c.cmd}
+            type="button"
             onClick={() => handleCommand(c.cmd)}
-            className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-cyan-500/10 hover:border-cyan-400/40 text-xs font-mono text-zinc-300 hover:text-white transition-all duration-200 flex items-center gap-1.5"
+            className="px-3.5 py-2 min-h-[40px] rounded-lg border border-white/10 bg-white/[0.03] hover:bg-cyan-500/10 hover:border-cyan-400/40 text-xs font-mono text-zinc-300 hover:text-white transition-all duration-200 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95"
+            aria-label={`Run command ${c.cmd}`}
           >
             <span className="text-cyan-400 font-bold">{c.cmd}</span>
-            <span className="text-[10px] text-zinc-500 hidden md:inline">{c.desc}</span>
+            <span className="text-[10px] text-zinc-400 hidden md:inline">{c.desc}</span>
           </button>
         ))}
       </div>
 
       {/* Input Prompt Form */}
-      <form onSubmit={handleSend} className="p-3 border-t border-white/10 bg-black/60 flex items-center gap-2">
+      <form onSubmit={handleSend} className="p-3 border-t border-white/10 bg-black/60 flex items-center gap-2" aria-label="Simulated command entry">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Type a command (e.g. /workflow, /audit)..."
-          className="flex-1 bg-zinc-900/70 border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400/60 transition-colors"
+          aria-label="Command input for Telegram Bot simulation"
+          className="flex-1 bg-zinc-900/70 border border-white/10 rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400/60 focus-visible:ring-1 focus-visible:ring-cyan-400 transition-colors"
         />
         <button
           type="submit"
-          className="px-5 py-2.5 rounded-xl bg-white text-black font-mono font-bold text-xs hover:bg-cyan-300 transition-colors cursor-pointer select-none"
+          className="px-5 py-2.5 min-h-[44px] rounded-xl bg-white text-black font-mono font-bold text-xs hover:bg-cyan-300 transition-colors cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 active:scale-95"
+          aria-label="Send command to bot"
         >
           Send
         </button>

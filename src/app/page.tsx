@@ -9,7 +9,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="w-full bg-black text-white selection:bg-white selection:text-black">
+    <main id="main-content" className="w-full bg-black text-white selection:bg-white selection:text-black">
       {/* Floating Navigation */}
       <Header />
 

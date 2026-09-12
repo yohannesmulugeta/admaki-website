@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: PageProps) {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4 sm:py-5 flex items-center justify-between">
           <Link
             href="/#work"
-            className="group inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-zinc-400 hover:text-white uppercase transition-colors"
+            className="group inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-zinc-400 hover:text-white uppercase transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-md py-1 px-2 -ml-2"
           >
             <span className="transition-transform duration-200 group-hover:-translate-x-1 text-cyan-400">
               ←
@@ -82,7 +82,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <Link
             href="/"
-            className="flex items-center gap-2 text-sm font-mono font-bold tracking-[0.2em] uppercase text-white hover:text-cyan-300 transition-colors"
+            className="flex items-center gap-2 text-sm font-mono font-bold tracking-[0.2em] uppercase text-white hover:text-cyan-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-md p-1"
           >
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
             <span>ADMAKI</span>
@@ -90,7 +90,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <Link
             href="/#contact"
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono tracking-widest text-white hover:border-cyan-400 hover:text-cyan-300 transition-all"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono tracking-widest text-white hover:border-cyan-400 hover:text-cyan-300 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
           >
             Let&apos;s Build →
           </Link>
@@ -110,11 +110,11 @@ export default async function ProjectPage({ params }: PageProps) {
               <span className="px-3 py-1 rounded-full border border-white/15 bg-white/[0.04] font-mono text-xs text-cyan-300 tracking-widest uppercase">
                 {project.category}
               </span>
-              <span className="font-mono text-xs text-zinc-500 tracking-widest uppercase">
+              <span className="font-mono text-xs text-zinc-400 tracking-widest uppercase">
                 PROJECT {project.number} {'//'} {project.year}
               </span>
               <div className="h-3 w-px bg-white/20" />
-              <span className="font-mono text-xs text-zinc-400 tracking-wider">
+              <span className="font-mono text-xs text-zinc-300 tracking-wider">
                 {project.clientType}
               </span>
             </div>
@@ -132,20 +132,20 @@ export default async function ProjectPage({ params }: PageProps) {
             {/* Project Meta Spec Strip */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10 font-mono text-xs">
               <div>
-                <span className="text-zinc-500 uppercase tracking-widest block mb-2">Sector</span>
+                <span className="text-zinc-400 uppercase tracking-widest block mb-2 font-medium">Sector</span>
                 <span className="text-zinc-200">{project.clientType}</span>
               </div>
               <div>
-                <span className="text-zinc-500 uppercase tracking-widest block mb-2">Timeline</span>
+                <span className="text-zinc-400 uppercase tracking-widest block mb-2 font-medium">Timeline</span>
                 <span className="text-zinc-200">Year {project.year}</span>
               </div>
               <div>
-                <span className="text-zinc-500 uppercase tracking-widest block mb-2">Deliverables</span>
+                <span className="text-zinc-400 uppercase tracking-widest block mb-2 font-medium">Deliverables</span>
                 <span className="text-zinc-200">{project.services.join(', ')}</span>
               </div>
               <div>
-                <span className="text-zinc-500 uppercase tracking-widest block mb-2">Technologies</span>
-                <span className="text-cyan-400">{project.technologies.join(' • ')}</span>
+                <span className="text-zinc-400 uppercase tracking-widest block mb-2 font-medium">Technologies</span>
+                <span className="text-cyan-400 font-semibold">{project.technologies.join(' • ')}</span>
               </div>
             </div>
           </div>
@@ -181,12 +181,12 @@ export default async function ProjectPage({ params }: PageProps) {
         <section className="py-16 border-b border-white/[0.08]">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="flex items-center justify-between mb-6">
-              <span className="text-xs font-mono tracking-[0.25em] text-zinc-500 uppercase">
+              <span className="text-xs font-mono tracking-[0.25em] text-zinc-400 uppercase">
                 {project.slug === 'telegram-automation'
                   ? 'LIVE INTERACTIVE SIMULATION'
                   : 'SYSTEM BLUEPRINT & PREVIEW'}
               </span>
-              <span className="text-[11px] font-mono text-zinc-600">
+              <span className="text-[11px] font-mono text-zinc-400">
                 ASSET // {project.number}
               </span>
             </div>
@@ -336,10 +336,10 @@ export default async function ProjectPage({ params }: PageProps) {
               {/* Previous Project */}
               <Link
                 href={prevProject.href}
-                className="group p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/60 hover:border-white/20 transition-all flex flex-col justify-between"
+                className="group p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/60 hover:border-white/20 transition-all flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
               >
-                <div className="text-xs font-mono tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2">
-                  <span className="transition-transform group-hover:-translate-x-1">←</span>
+                <div className="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-3 flex items-center gap-2">
+                  <span className="transition-transform group-hover:-translate-x-1 text-cyan-400">←</span>
                   <span>Previous Project</span>
                 </div>
                 <div>
@@ -355,11 +355,11 @@ export default async function ProjectPage({ params }: PageProps) {
               {/* Next Project */}
               <Link
                 href={nextProject.href}
-                className="group p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/60 hover:border-white/20 transition-all flex flex-col justify-between text-left sm:text-right"
+                className="group p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/60 hover:border-white/20 transition-all flex flex-col justify-between text-left sm:text-right focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
               >
-                <div className="text-xs font-mono tracking-widest text-zinc-500 uppercase mb-3 flex items-center gap-2 sm:justify-end">
+                <div className="text-xs font-mono tracking-widest text-zinc-400 uppercase mb-3 flex items-center gap-2 sm:justify-end">
                   <span>Next Project</span>
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                  <span className="transition-transform group-hover:translate-x-1 text-cyan-400">→</span>
                 </div>
                 <div>
                   <div className="text-lg sm:text-xl font-bold uppercase text-white group-hover:text-cyan-300 transition-colors">
