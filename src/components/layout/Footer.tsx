@@ -1,13 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 
-const services = [
-  { label: 'Social Media', href: '/#services' },
-  { label: 'Web Development', href: '/#services' },
-  { label: 'Custom Software', href: '/#services' },
-  { label: 'Telegram Bots', href: '/#services' },
-];
-
 const navigation = [
   { label: 'Work', href: '/#work' },
   { label: 'Services', href: '/#services' },
@@ -18,87 +11,53 @@ const navigation = [
 export default function Footer() {
   return (
     <footer
-      className="section-surface relative w-full text-white border-t border-white/10 pt-16 pb-12 overflow-hidden"
+      className="relative w-full overflow-hidden bg-[#050607] text-white border-t border-white/12 pt-16 sm:pt-20 pb-8"
       aria-label="ADMAKI Footer"
     >
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-14 border-b border-white/[0.08]">
-          {/* Brand & Statement */}
-          <div className="md:col-span-6 flex flex-col items-start space-y-4">
-            <Link
-              href="/"
-              className="group flex items-center gap-2.5 text-white tracking-tighter focus:outline-none"
-              aria-label="ADMAKI Home"
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
-              <span className="font-black text-2xl tracking-[0.2em] uppercase font-sans">
-                ADMAKI
-              </span>
-            </Link>
+      <div className="absolute inset-0 studio-grid-dark opacity-20 pointer-events-none" />
 
-            <p className="text-xs sm:text-sm text-zinc-400 font-light max-w-sm leading-relaxed">
-              Creative communication, digital design, software development and automation built to
-              move businesses forward.
+      <div className="relative z-10 w-full max-w-[1480px] mx-auto px-6 sm:px-10 md:px-12 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t border-white/16 pt-6 sm:pt-8">
+          <div className="lg:col-span-8">
+            <span className="text-[10px] sm:text-xs font-mono tracking-[0.26em] uppercase text-[#69dceb]">
+              ADMAKI / CREATIVE TECHNOLOGY STUDIO
+            </span>
+            <p className="mt-5 max-w-2xl text-lg sm:text-2xl text-zinc-300 tracking-[-0.02em] leading-snug">
+              Strategy, design, software and automation brought together to build useful digital work.
             </p>
-
-            <div className="pt-2">
-              <span className="text-[11px] font-mono tracking-[0.25em] text-cyan-400 uppercase font-medium">
-                IDEAS → SYSTEMS → IMPACT
-              </span>
-            </div>
           </div>
 
-          {/* Services Column */}
-          <div className="md:col-span-3 flex flex-col space-y-4">
-            <span className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-400 font-semibold">
-              Services
-            </span>
-            <ul className="space-y-2.5">
-              {services.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors duration-200"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Navigation Column */}
-          <div className="md:col-span-3 flex flex-col space-y-4">
-            <span className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-400 font-semibold">
-              Navigation
-            </span>
-            <ul className="space-y-2.5">
+          <div className="lg:col-span-4 lg:flex lg:justify-end">
+            <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm">
               {navigation.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors duration-200"
-                  >
-                    {item.label}
-                  </a>
-                </li>
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-zinc-400 hover:text-white transition-colors"
+                >
+                  {item.label}
+                </a>
               ))}
-            </ul>
+            </nav>
           </div>
         </div>
 
-        {/* Bottom Minimal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-400">
-          <div>
-            © ADMAKI
-          </div>
+        <Link
+          href="/"
+          className="group mt-14 sm:mt-20 block border-y border-white/12 py-5 sm:py-7 focus:outline-none"
+          aria-label="ADMAKI Home"
+        >
+          <span className="block text-[clamp(4.6rem,17vw,15rem)] font-black uppercase tracking-[-0.075em] leading-[0.72] text-white transition-colors group-hover:text-[#dff9fc]">
+            ADMAKI
+          </span>
+        </Link>
 
-          <div className="flex items-center gap-6 text-xs tracking-wider text-zinc-400">
-            <span>DIGITAL STUDIO</span>
-            <span>•</span>
-            <a href="#" className="hover:text-zinc-300 transition-colors">
-              BACK TO TOP ↑
+        <div className="pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase text-zinc-600">
+          <span>© ADMAKI</span>
+          <div className="flex items-center gap-5">
+            <span>Ideas → Systems → Impact</span>
+            <a href="#" className="text-zinc-500 hover:text-white transition-colors">
+              Back to top ↑
             </a>
           </div>
         </div>

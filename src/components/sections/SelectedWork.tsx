@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { projectsData } from '@/data/projects';
 import ProjectShowcase from '@/components/projects/ProjectShowcase';
 import Button from '@/components/ui/Button';
@@ -14,44 +14,38 @@ export default function SelectedWork() {
   return (
     <section
       id="work"
-      className="section-light-muted relative w-full text-slate-950 py-20 sm:py-28"
+      className="relative w-full overflow-hidden bg-[#07090b] text-white py-24 sm:py-32"
       aria-label="Selected Work"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-0 inset-x-0 h-96 pointer-events-none bg-gradient-to-b from-[#f7f6f2] via-white/40 to-transparent" />
+      <div className="absolute inset-0 studio-grid-dark opacity-35 pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cyan-400/[0.04] to-transparent pointer-events-none" />
 
-      {/* ========================================================================= */}
-      {/* SECTION INTRO HEADER                                                      */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12 mb-16 sm:mb-24">
-        <div className="flex flex-col items-start border-b border-slate-300 pb-10 sm:pb-14">
-          {/* Eyebrow */}
-          <div className="flex items-center gap-3 mb-4">
-            <span className="h-px w-6 bg-cyan-700" />
-            <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-700 font-semibold">
-              SELECTED WORK
-            </span>
+      <div className="relative z-10 w-full max-w-[1480px] mx-auto px-6 sm:px-10 md:px-12 lg:px-16 mb-16 sm:mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-white/16 pt-6 sm:pt-8">
+          <div className="lg:col-span-4 flex items-start justify-between lg:block">
+            <div>
+              <span className="text-[10px] sm:text-xs font-mono tracking-[0.28em] uppercase text-[#69dceb]">
+                02 / SELECTED WORK
+              </span>
+              <p className="mt-4 hidden lg:block text-xs text-zinc-500 max-w-[15rem] leading-relaxed">
+                A small selection of digital systems, interfaces and communication work.
+              </p>
+            </div>
+            <span className="lg:hidden text-[10px] font-mono text-zinc-600">2026</span>
           </div>
 
-          {/* Headline */}
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-950 leading-[0.95] max-w-4xl">
-            DIGITAL WORK <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-slate-700 to-slate-500">
-              BUILT FOR REAL BUSINESS.
-            </span>
-          </h2>
-
-          {/* Supporting Text */}
-          <p className="mt-5 text-sm sm:text-base lg:text-lg text-slate-600 font-light leading-relaxed max-w-2xl">
-            A selection of websites, software systems, automation tools and digital experiences.
-          </p>
+          <div className="lg:col-span-8">
+            <h2 className="text-[clamp(2.8rem,7vw,6.7rem)] font-semibold tracking-[-0.06em] leading-[0.88] text-white max-w-5xl">
+              Work built around real problems, not decorative screens.
+            </h2>
+            <p className="mt-7 max-w-2xl text-sm sm:text-base text-zinc-400 leading-relaxed">
+              Each project combines the right mix of strategy, design, development and automation for the job.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* ========================================================================= */}
-      {/* CASE STUDIES VERTICAL SEQUENCE                                            */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 w-full flex flex-col space-y-8 sm:space-y-12">
+      <div className="relative z-10 w-full">
         {projectsData.map((project, i) => (
           <ProjectShowcase
             key={project.id}
@@ -62,40 +56,27 @@ export default function SelectedWork() {
         ))}
       </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION END CTA                                                           */}
-      {/* ========================================================================= */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 md:px-12 pt-20 sm:pt-28">
-        <div className="relative rounded-3xl border border-white/10 bg-gradient-to-b from-zinc-900/60 to-black p-10 sm:p-16 lg:p-20 text-center flex flex-col items-center justify-center overflow-hidden shadow-2xl">
-          {/* Subtle central glow */}
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_40%,rgba(56,189,248,0.12)_0%,rgba(99,102,241,0.06)_45%,transparent_70%)]" />
-
-          {/* Eyebrow */}
-          <span className="relative z-10 text-xs font-mono tracking-[0.3em] uppercase text-cyan-300 font-semibold mb-4">
-            NEXT STEP // ENGAGEMENT
-          </span>
-
-          {/* Headline */}
-          <h3 className="relative z-10 text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-tight max-w-3xl">
-            MORE THAN A PORTFOLIO. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
-              I BUILD SYSTEMS THAT WORK.
+      <div className="relative z-10 w-full max-w-[1480px] mx-auto px-6 sm:px-10 md:px-12 lg:px-16 pt-16 sm:pt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-white/16 pt-8 sm:pt-10 items-end">
+          <div className="lg:col-span-8">
+            <span className="text-[10px] sm:text-xs font-mono tracking-[0.25em] uppercase text-zinc-500">
+              Have something worth building?
             </span>
-          </h3>
+            <h3 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.045em] leading-[0.95] text-white max-w-3xl">
+              Bring the problem. I&apos;ll help shape the right digital solution.
+            </h3>
+          </div>
 
-          {/* Button CTA */}
-          <div className="relative z-10 mt-8 sm:mt-10">
+          <div className="lg:col-span-4 lg:flex lg:justify-end">
             <Button
               asLink
               href="#contact"
               variant="primary"
               size="lg"
-              className="shadow-[0_0_22px_rgba(103,232,249,0.16)] text-sm sm:text-base tracking-wide"
+              className="w-full sm:w-auto shadow-none"
             >
               <span>Start a Project</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1 text-black">
-                →
-              </span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">↗</span>
             </Button>
           </div>
         </div>

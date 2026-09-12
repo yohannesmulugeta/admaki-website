@@ -7,21 +7,21 @@ import Button from '@/components/ui/Button';
 export const contactData = {
   email: {
     label: 'Email',
-    value: 'hello@admaki.com', // [PLACEHOLDER - Replace with your email]
+    value: 'hello@admaki.com',
     href: 'mailto:hello@admaki.com',
-    description: 'Inquiries & New Projects',
+    description: 'Project inquiries and new work',
   },
   telegram: {
     label: 'Telegram',
-    value: '@admaki_studio', // [PLACEHOLDER - Replace with your Telegram handle]
+    value: '@admaki_studio',
     href: 'https://t.me/admaki_studio',
-    description: 'Direct Message & Automation Demos',
+    description: 'Direct message and automation demos',
   },
   linkedin: {
     label: 'LinkedIn',
-    value: 'linkedin.com/in/admaki', // [PLACEHOLDER - Replace with your LinkedIn URL]
+    value: 'linkedin.com/in/admaki',
     href: 'https://linkedin.com/in/admaki',
-    description: 'Professional Network',
+    description: 'Professional network',
   },
 };
 
@@ -41,30 +41,18 @@ function isValidContact(value: string) {
 }
 
 export default function Contact() {
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string>(serviceOptions[0]);
+  const [selectedService, setSelectedService] = useState(serviceOptions[0]);
   const [name, setName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [message, setMessage] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const copyToClipboard = async (text: string, key: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedKey(key);
-      setTimeout(() => setCopiedKey(null), 2000);
-    } catch {
-      // Fallback
-    }
-  };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
     if (!name.trim() || !contactInfo.trim() || !message.trim()) {
-      setErrorMessage('Please fill in your name, contact handle, and brief description.');
+      setErrorMessage('Please fill in your name, contact handle, and project brief.');
       return;
     }
 
@@ -79,7 +67,6 @@ export default function Contact() {
       `Hi ADMAKI,\n\nName: ${name}\nContact: ${contactInfo}\nService: ${selectedService}\n\nProject Scope:\n${message}\n`
     );
 
-    // Prepare a local email draft. This does not claim that a message was sent.
     window.location.href = `mailto:${contactData.email.value}?subject=${subject}&body=${body}`;
     setSubmitSuccess(true);
   };
@@ -87,65 +74,45 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="section-light-muted relative w-full text-slate-950 py-20 sm:py-28 border-t border-slate-300 overflow-hidden"
+      className="relative w-full overflow-hidden bg-[#f0ede5] text-[#111315] py-24 sm:py-32 border-t border-black/10"
       aria-label="Start a Project - Contact ADMAKI"
     >
-      {/* Ambient Lighting Accents */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-cyan-600/[0.07] blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-blue-600/[0.06] blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 studio-grid-light opacity-25 pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
-        {/* Section Header */}
-        <div className="flex flex-col items-start space-y-4 mb-16 max-w-3xl">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-6 bg-cyan-700" />
-            <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-700 font-semibold">
-              START A PROJECT
+      <div className="relative z-10 w-full max-w-[1480px] mx-auto px-6 sm:px-10 md:px-12 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 border-t border-black/18 pt-6 sm:pt-8">
+          <div className="lg:col-span-4">
+            <span className="text-[10px] sm:text-xs font-mono tracking-[0.28em] uppercase text-[#0f8195]">
+              05 / START A PROJECT
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-950 leading-[0.94]">
-            LET&apos;S BUILD <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-950 via-slate-700 to-slate-500">
-              SOMETHING USEFUL.
-            </span>
-          </h2>
-
-          <p className="text-base sm:text-lg text-slate-700 font-light leading-relaxed">
-            Have a website, social media, software, ERP, or automation project in mind? Tell me what
-            you are trying to solve.
-          </p>
+          <div className="lg:col-span-8">
+            <h2 className="text-[clamp(3rem,7.5vw,7rem)] font-semibold tracking-[-0.065em] leading-[0.87] max-w-5xl">
+              Tell me what you&apos;re trying to solve.
+            </h2>
+            <p className="mt-7 max-w-2xl text-sm sm:text-base text-black/55 leading-relaxed">
+              Website, social media, ERP, automation or something between them — start with the problem and the goal.
+            </p>
+          </div>
         </div>
 
-        {/* Interactive Layout: Project Brief Form + Direct Channels */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Side: Interactive Quick Brief Form */}
-          <div className="lg:col-span-7 bg-white/90 border border-slate-200 rounded-2xl p-6 sm:p-8 backdrop-blur-xl shadow-[0_20px_55px_rgba(15,23,42,0.1)]">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
-              <div>
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-cyan-700 font-semibold block">
-                  FAST INQUIRY
-                </span>
-                <span className="text-xs text-slate-500 font-light">
-                  Prepare a pre-filled email draft with your project details
-                </span>
-              </div>
-              <span className="text-xs font-mono px-2.5 py-1 rounded-full border border-cyan-700/25 bg-cyan-700/[0.07] text-cyan-800">
-                EMAIL DRAFT
-              </span>
-            </div>
-
+        <div className="mt-16 sm:mt-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="lg:col-span-8 border-t border-black/18 pt-6">
             {submitSuccess ? (
-              <div className="py-12 text-center flex flex-col items-center space-y-4" aria-live="polite">
-                <div className="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-300 flex items-center justify-center text-emerald-700 text-xl font-mono">
-                  ✓
+              <div className="min-h-[28rem] flex flex-col justify-between border-b border-black/18 pb-8">
+                <div>
+                  <span className="text-xs font-mono tracking-[0.2em] uppercase text-[#0f8195]">
+                    Email draft prepared
+                  </span>
+                  <h3 className="mt-5 text-3xl sm:text-5xl font-semibold tracking-[-0.045em] leading-tight max-w-2xl">
+                    Your mail app should now have the project brief ready to review.
+                  </h3>
+                  <p className="mt-5 max-w-xl text-sm sm:text-base text-black/55 leading-relaxed">
+                    Nothing has been sent automatically. Review the draft and press Send from your mail app.
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold uppercase tracking-tight text-slate-950">
-                  Email Draft Prepared
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 max-w-sm font-light">
-                  Nothing has been sent yet. Review the prepared email in your mail app, then press Send. If it did not open, use one of the direct contact options.
-                </p>
+
                 <button
                   type="button"
                   onClick={() => {
@@ -154,225 +121,144 @@ export default function Contact() {
                     setContactInfo('');
                     setMessage('');
                   }}
-                  className="mt-4 px-5 py-2 rounded-full border border-slate-300 text-xs font-mono text-slate-700 hover:text-cyan-800 hover:border-cyan-700/40 transition-all"
+                  className="mt-10 w-fit text-xs font-mono uppercase tracking-[0.18em] border-b border-black/35 pb-1 hover:border-[#0f8195] hover:text-[#0f8195] transition-colors"
                 >
-                  Send Another Brief
+                  Prepare another brief ↗
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                {/* Service Selector Chips */}
-                <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest text-slate-500 mb-2">
-                    Select Focus Area
+              <form onSubmit={handleSubmit} noValidate>
+                <div className="pb-8 border-b border-black/14">
+                  <label className="block text-[10px] font-mono tracking-[0.2em] uppercase text-black/45 mb-4">
+                    What do you need?
                   </label>
-                  <div className="flex flex-wrap gap-2">
-                    {serviceOptions.map((opt) => {
-                      const isSelected = selectedService === opt;
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {serviceOptions.map((option, index) => {
+                      const selected = selectedService === option;
                       return (
                         <button
-                          key={opt}
+                          key={option}
                           type="button"
-                          onClick={() => setSelectedService(opt)}
-                          aria-pressed={isSelected}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
-                            isSelected
-                              ? 'bg-cyan-700/10 border-cyan-700/45 text-cyan-800 shadow-sm'
-                              : 'bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-950 hover:border-slate-300'
+                          onClick={() => setSelectedService(option)}
+                          aria-pressed={selected}
+                          className={`min-h-[48px] px-4 py-3 text-left border transition-colors flex items-center gap-3 ${
+                            selected
+                              ? 'border-[#0f8195] bg-[#0f8195]/[0.06] text-[#111315]'
+                              : 'border-black/14 bg-transparent text-black/55 hover:border-black/28 hover:text-[#111315]'
                           }`}
                         >
-                          {opt}
+                          <span className="text-[10px] font-mono text-black/35">0{index + 1}</span>
+                          <span className="text-sm">{option}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Name & Contact Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 py-8 border-b border-black/14">
                   <div>
-                    <label
-                      htmlFor="brief-name"
-                      className="block text-xs font-mono uppercase tracking-widest text-slate-500 mb-1.5"
-                    >
-                      Your Name <span className="text-cyan-700">*</span>
+                    <label htmlFor="brief-name" className="block text-[10px] font-mono tracking-[0.2em] uppercase text-black/45 mb-3">
+                      Your name
                     </label>
                     <input
                       id="brief-name"
                       type="text"
-                      required
                       autoComplete="name"
+                      required
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Alex"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-slate-950 placeholder-slate-400 focus:outline-none focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 transition-all"
+                      onChange={(event) => setName(event.target.value)}
+                      placeholder="Your name"
+                      className="w-full bg-transparent border-0 border-b border-black/22 px-0 py-3 text-base text-[#111315] placeholder:text-black/28 focus:outline-none focus:border-[#0f8195] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="brief-contact"
-                      className="block text-xs font-mono uppercase tracking-widest text-slate-500 mb-1.5"
-                    >
-                      Email or Telegram <span className="text-cyan-700">*</span>
+                    <label htmlFor="brief-contact" className="block text-[10px] font-mono tracking-[0.2em] uppercase text-black/45 mb-3">
+                      Email or Telegram
                     </label>
                     <input
                       id="brief-contact"
                       type="text"
-                      required
                       autoComplete="email"
+                      required
                       value={contactInfo}
-                      onChange={(e) => setContactInfo(e.target.value)}
+                      onChange={(event) => setContactInfo(event.target.value)}
                       placeholder="name@company.com or @handle"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-slate-950 placeholder-slate-400 focus:outline-none focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 transition-all"
+                      className="w-full bg-transparent border-0 border-b border-black/22 px-0 py-3 text-base text-[#111315] placeholder:text-black/28 focus:outline-none focus:border-[#0f8195] transition-colors"
                     />
                   </div>
                 </div>
 
-                {/* Message Field */}
-                <div>
-                  <label
-                    htmlFor="brief-message"
-                    className="block text-xs font-mono uppercase tracking-widest text-slate-500 mb-1.5"
-                  >
-                    What are you looking to build? <span className="text-cyan-700">*</span>
+                <div className="py-8 border-b border-black/14">
+                  <label htmlFor="brief-message" className="block text-[10px] font-mono tracking-[0.2em] uppercase text-black/45 mb-3">
+                    Project brief
                   </label>
                   <textarea
                     id="brief-message"
-                    rows={4}
+                    rows={5}
                     required
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Briefly describe your objectives, requirements, or problem to solve..."
-                    className="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-950 placeholder-slate-400 focus:outline-none focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 transition-all resize-none"
+                    onChange={(event) => setMessage(event.target.value)}
+                    placeholder="What are you trying to build, improve or automate?"
+                    className="w-full resize-none bg-transparent border border-black/16 p-4 text-sm sm:text-base text-[#111315] placeholder:text-black/28 focus:outline-none focus:border-[#0f8195] transition-colors"
                   />
                 </div>
 
                 {errorMessage && (
-                  <div
-                    role="alert"
-                    className="p-3 rounded-xl border border-rose-300 bg-rose-50 text-xs font-mono text-rose-700"
-                  >
+                  <div role="alert" className="mt-5 border-l-2 border-red-700 pl-4 text-sm text-red-800">
                     {errorMessage}
                   </div>
                 )}
 
-                {/* Submit Action */}
-                <div className="pt-2">
-                  <Button
-                    type="submit"
-                    variant="accent"
-                    size="md"
-                    className="w-full sm:w-auto"
-                  >
-                    <span>Prepare Email Draft</span>
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+                  <p className="text-xs text-black/42 max-w-md leading-relaxed">
+                    This prepares an email draft on your device. It does not submit data to a server.
+                  </p>
+                  <Button type="submit" variant="accent" size="lg" className="w-full sm:w-auto">
+                    Prepare Project Email ↗
                   </Button>
                 </div>
               </form>
             )}
           </div>
 
-          {/* Right Side: Direct Contact Channels with Copy Actions */}
-          <div className="lg:col-span-5 flex flex-col space-y-4 w-full">
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-slate-600 block mb-1">
-              Direct Communication Channels
+          <aside className="lg:col-span-4 border-t border-black/18 pt-6">
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-black/45">
+              Direct channels
             </span>
 
-            {/* Email Channel */}
-            <div className="group relative flex flex-col p-5 sm:p-6 rounded-2xl border border-slate-200 bg-white/85 hover:bg-white hover:border-cyan-700/35 hover:shadow-md transition-all duration-300 gap-3">
-              <div className="flex items-start justify-between">
+            <div className="mt-5 border-t border-black/14">
+              {Object.values(contactData).map((item, index) => (
                 <a
-                  href={contactData.email.href}
-                  className="flex flex-col text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 rounded-lg"
-                  aria-label={`Send Email to ${contactData.email.value}`}
+                  key={item.label}
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="group block py-5 border-b border-black/14"
                 >
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
-                    {contactData.email.label}
-                  </span>
-                  <span className="text-base sm:text-lg font-mono font-medium text-slate-950 group-hover:text-cyan-800 transition-colors">
-                    {contactData.email.value}
-                  </span>
-                  <span className="text-xs text-slate-500 font-light mt-0.5">
-                    {contactData.email.description}
-                  </span>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-mono text-[#0f8195]">0{index + 1}</span>
+                        <span className="text-xs font-mono uppercase tracking-[0.16em] text-black/45">
+                          {item.label}
+                        </span>
+                      </div>
+                      <div className="mt-3 text-sm sm:text-base font-medium text-[#111315] break-all">
+                        {item.value}
+                      </div>
+                      <div className="mt-1 text-xs text-black/42">{item.description}</div>
+                    </div>
+                    <span className="text-black/30 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+                  </div>
                 </a>
-
-                <button
-                  type="button"
-                  onClick={(e) => copyToClipboard(contactData.email.value, 'email', e)}
-                  className="px-2.5 py-1 rounded-md border border-slate-300 bg-slate-50 text-xs font-mono text-slate-700 hover:text-cyan-800 hover:border-cyan-700/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700"
-                  aria-label="Copy email address"
-                >
-                  {copiedKey === 'email' ? 'COPIED ✓' : 'COPY'}
-                </button>
-              </div>
+              ))}
             </div>
 
-            {/* Telegram Channel */}
-            <div className="group relative flex flex-col p-5 sm:p-6 rounded-2xl border border-slate-200 bg-white/85 hover:bg-white hover:border-cyan-700/35 hover:shadow-md transition-all duration-300 gap-3">
-              <div className="flex items-start justify-between">
-                <a
-                  href={contactData.telegram.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 rounded-lg"
-                  aria-label={`Open Telegram ${contactData.telegram.value}`}
-                >
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
-                    {contactData.telegram.label}
-                  </span>
-                  <span className="text-base sm:text-lg font-mono font-medium text-slate-950 group-hover:text-cyan-800 transition-colors">
-                    {contactData.telegram.value}
-                  </span>
-                  <span className="text-xs text-slate-500 font-light mt-0.5">
-                    {contactData.telegram.description}
-                  </span>
-                </a>
-
-                <button
-                  type="button"
-                  onClick={(e) => copyToClipboard(contactData.telegram.value, 'telegram', e)}
-                  className="px-2.5 py-1 rounded-md border border-slate-300 bg-slate-50 text-xs font-mono text-slate-700 hover:text-cyan-800 hover:border-cyan-700/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700"
-                  aria-label="Copy Telegram handle"
-                >
-                  {copiedKey === 'telegram' ? 'COPIED ✓' : 'COPY'}
-                </button>
-              </div>
-            </div>
-
-            {/* LinkedIn Channel */}
-            <div className="group relative flex flex-col p-5 sm:p-6 rounded-2xl border border-slate-200 bg-white/85 hover:bg-white hover:border-cyan-700/35 hover:shadow-md transition-all duration-300 gap-3">
-              <div className="flex items-start justify-between">
-                <a
-                  href={contactData.linkedin.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700 rounded-lg"
-                  aria-label={`Visit LinkedIn profile ${contactData.linkedin.value}`}
-                >
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-wider">
-                    {contactData.linkedin.label}
-                  </span>
-                  <span className="text-base sm:text-lg font-mono font-medium text-slate-950 group-hover:text-cyan-800 transition-colors">
-                    {contactData.linkedin.value}
-                  </span>
-                  <span className="text-xs text-slate-500 font-light mt-0.5">
-                    {contactData.linkedin.description}
-                  </span>
-                </a>
-
-                <button
-                  type="button"
-                  onClick={(e) => copyToClipboard(contactData.linkedin.value, 'linkedin', e)}
-                  className="px-2.5 py-1 rounded-md border border-slate-300 bg-slate-50 text-xs font-mono text-slate-700 hover:text-cyan-800 hover:border-cyan-700/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700"
-                  aria-label="Copy LinkedIn URL"
-                >
-                  {copiedKey === 'linkedin' ? 'COPIED ✓' : 'COPY'}
-                </button>
-              </div>
-            </div>
-          </div>
+            <p className="mt-6 text-xs text-black/42 leading-relaxed">
+              For larger projects, include the business goal, current problem, preferred timeline and any existing materials.
+            </p>
+          </aside>
         </div>
       </div>
     </section>
