@@ -92,6 +92,31 @@ p {
   background-size: 72px 72px;
 }
 
+/* Contact portrait: direct static fallback for GitHub Pages. */
+#contact aside > div:first-child > div:first-child {
+  background-image: url("https://yohannesmulugeta.github.io/admaki-website/images/contact/contact-portrait-clean.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#contact aside > div:first-child > div:first-child > img {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #contact aside > div:first-child > div:first-child > div:nth-of-type(1) {
+    background-image: url("https://yohannesmulugeta.github.io/admaki-website/images/contact/contact-portrait-gold.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  #contact aside > div:first-child > div:first-child > div:nth-of-type(1) > img {
+    opacity: 0;
+  }
+}
+
 /* Accessible focus ring defaults */
 :focus-visible {
   outline: 2px solid var(--accent);
