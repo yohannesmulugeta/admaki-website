@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 
 // Verify these business contact details before production launch.
@@ -38,6 +39,153 @@ const TELEGRAM_PATTERN = /^@[a-zA-Z0-9_]{5,32}$/;
 function isValidContact(value: string) {
   const contact = value.trim();
   return EMAIL_PATTERN.test(contact) || TELEGRAM_PATTERN.test(contact);
+}
+
+function getAssetSrc(src: string) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  if (!src.startsWith('/') || src.startsWith('//')) return src;
+  if (basePath && src.startsWith(`${basePath}/`)) return src;
+  return `${basePath}${src}`;
+}
+
+function ContactPortrait() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const goldRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+  const currentRef = useRef({ x: 0, y: 0 });
+  const initializedRef = useRef(false);
+  const [supportsHover, setSupportsHover] = useState(false);
+
+  const cleanPortrait = getAssetSrc('/images/contact/contact-portrait-clean.webp');
+  const goldPortrait = getAssetSrc('/images/contact/contact-portrait-gold.webp');
+
+  useEffect(() => {
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setSupportsHover(media.matches);
+    update();
+    media.addEventListener('change', update);
+
+    return () => {
+      media.removeEventListener('change', update);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const applyMask = (x: number, y: number) => {
+    const gold = goldRef.current;
+    if (!gold) return;
+
+    const mask = `radial-gradient(ellipse 92px 124px at ${x}px ${y}px, #000 0%, #000 56%, rgba(0,0,0,.82) 72%, transparent 100%)`;
+    gold.style.maskImage = mask;
+    gold.style.setProperty('-webkit-mask-image', mask);
+  };
+
+  const animateReveal = () => {
+    const current = currentRef.current;
+    const target = targetRef.current;
+
+    current.x += (target.x - current.x) * 0.22;
+    current.y += (target.y - current.y) * 0.22;
+    applyMask(current.x, current.y);
+
+    const dx = Math.abs(target.x - current.x);
+    const dy = Math.abs(target.y - current.y);
+
+    if (dx > 0.3 || dy > 0.3) {
+      rafRef.current = requestAnimationFrame(animateReveal);
+    } else {
+      current.x = target.x;
+      current.y = target.y;
+      applyMask(current.x, current.y);
+      rafRef.current = null;
+    }
+  };
+
+  const handlePointerMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!supportsHover || !frameRef.current || !goldRef.current) return;
+
+    const rect = frameRef.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    targetRef.current = { x, y };
+
+    if (!initializedRef.current) {
+      initializedRef.current = true;
+      currentRef.current = { x, y };
+      applyMask(x, y);
+      goldRef.current.style.opacity = '1';
+      return;
+    }
+
+    goldRef.current.style.opacity = '1';
+    if (rafRef.current === null) {
+      rafRef.current = requestAnimationFrame(animateReveal);
+    }
+  };
+
+  const handlePointerLeave = () => {
+    if (!goldRef.current) return;
+    goldRef.current.style.opacity = '0';
+    initializedRef.current = false;
+
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  };
+
+  return (
+    <div>
+      <div
+        ref={frameRef}
+        onMouseMove={handlePointerMove}
+        onMouseLeave={handlePointerLeave}
+        className="relative aspect-[4/5] w-full overflow-hidden border border-black/16 bg-[#202733]"
+      >
+        <Image
+          src={cleanPortrait}
+          alt="Joni — ADMAKI creative technologist"
+          fill
+          priority={false}
+          sizes="(max-width: 1024px) 100vw, 32vw"
+          className="object-cover object-center select-none"
+          draggable={false}
+        />
+
+        {supportsHover && (
+          <div
+            ref={goldRef}
+            className="absolute inset-0 opacity-0 transition-opacity duration-[400ms] ease-out will-change-[opacity] pointer-events-none"
+          >
+            <Image
+              src={goldPortrait}
+              alt=""
+              aria-hidden="true"
+              fill
+              sizes="(max-width: 1024px) 100vw, 32vw"
+              className="object-cover object-center select-none"
+              draggable={false}
+            />
+          </div>
+        )}
+
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-5 text-[9px] sm:text-[10px] font-mono tracking-[0.18em] uppercase text-white pointer-events-none">
+          <span className="bg-black/65 px-2 py-1">Joni / ADMAKI</span>
+          <span className="hidden sm:inline bg-black/65 px-2 py-1">
+            {supportsHover ? 'Move to reveal' : 'Creative + systems'}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 border-t border-black/14 pt-4">
+        <span className="text-[10px] font-mono tracking-[0.18em] uppercase text-[#0f8195]">Founder</span>
+        <p className="text-xs sm:text-sm text-black/52 leading-relaxed">
+          I work across design, business systems and digital experiences — from websites and content to ERP and automation.
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default function Contact() {
@@ -223,41 +371,45 @@ export default function Contact() {
           </div>
 
           <aside className="lg:col-span-4 border-t border-black/18 pt-6">
-            <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-black/45">
-              Direct channels
-            </span>
+            <ContactPortrait />
 
-            <div className="mt-5 border-t border-black/14">
-              {Object.values(contactData).map((item, index) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="group block py-5 border-b border-black/14"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-[10px] font-mono text-[#0f8195]">0{index + 1}</span>
-                        <span className="text-xs font-mono uppercase tracking-[0.16em] text-black/45">
-                          {item.label}
-                        </span>
+            <div className="mt-10">
+              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-black/45">
+                Direct channels
+              </span>
+
+              <div className="mt-5 border-t border-black/14">
+                {Object.values(contactData).map((item, index) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="group block py-5 border-b border-black/14"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] font-mono text-[#0f8195]">0{index + 1}</span>
+                          <span className="text-xs font-mono uppercase tracking-[0.16em] text-black/45">
+                            {item.label}
+                          </span>
+                        </div>
+                        <div className="mt-3 text-sm sm:text-base font-medium text-[#111315] break-all">
+                          {item.value}
+                        </div>
+                        <div className="mt-1 text-xs text-black/42">{item.description}</div>
                       </div>
-                      <div className="mt-3 text-sm sm:text-base font-medium text-[#111315] break-all">
-                        {item.value}
-                      </div>
-                      <div className="mt-1 text-xs text-black/42">{item.description}</div>
+                      <span className="text-black/30 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                     </div>
-                    <span className="text-black/30 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
-                  </div>
-                </a>
-              ))}
-            </div>
+                  </a>
+                ))}
+              </div>
 
-            <p className="mt-6 text-xs text-black/42 leading-relaxed">
-              For larger projects, include the business goal, current problem, preferred timeline and any existing materials.
-            </p>
+              <p className="mt-6 text-xs text-black/42 leading-relaxed">
+                For larger projects, include the business goal, current problem, preferred timeline and any existing materials.
+              </p>
+            </div>
           </aside>
         </div>
       </div>
