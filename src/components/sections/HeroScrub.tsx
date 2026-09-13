@@ -17,6 +17,8 @@ export default function HeroScrub({
   videoSrc = '/videos/hero-transition-scrub.mp4',
 }: HeroScrubProps) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const effectiveImageSrc =
+    imageSrc.startsWith('/') && basePath ? `${basePath}${imageSrc}` : imageSrc;
   const effectiveVideoSrc =
     videoSrc.startsWith('/') && basePath ? `${basePath}${videoSrc}` : videoSrc;
 
@@ -234,7 +236,7 @@ export default function HeroScrub({
           style={{ opacity: 1 }}
         >
           <Image
-            src={imageSrc}
+            src={effectiveImageSrc}
             alt="ADMAKI Studio"
             fill
             priority

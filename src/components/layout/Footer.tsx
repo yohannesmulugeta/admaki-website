@@ -30,13 +30,13 @@ export default function Footer() {
           <div className="lg:col-span-4 lg:flex lg:justify-end">
             <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.label}
                   href={item.href}
                   className="text-zinc-400 hover:text-white transition-colors"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

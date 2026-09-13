@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { projectsData, getProjectBySlug, getAllProjectSlugs } from '@/data/projects';
 import TelegramBotSimulator from '@/components/interactive/TelegramBotSimulator';
 import Footer from '@/components/layout/Footer';
+import { absoluteAssetUrl, withBasePath } from '@/lib/siteConfig';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -25,6 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const socialImage = absoluteAssetUrl(project.image);
+
   return {
     title: `${project.title} — Case Study`,
     description: project.description,
@@ -34,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       images: [
         {
-          url: project.image,
+          url: socialImage,
           width: 1200,
           height: 630,
           alt: project.title,
@@ -45,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: `${project.title} | ADMAKI`,
       description: project.description,
-      images: [project.image],
+      images: [socialImage],
     },
   };
 }
@@ -60,6 +63,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
   // Find index for next/previous navigation
   const currentIndex = projectsData.findIndex((p) => p.slug === slug);
+  const projectImage = withBasePath(project.image);
   const prevProject =
     currentIndex > 0 ? projectsData[currentIndex - 1] : projectsData[projectsData.length - 1];
   const nextProject =
@@ -200,7 +204,7 @@ export default async function ProjectPage({ params }: PageProps) {
               /* Cinematic Architecture Graphic Container */
               <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl border border-white/10 bg-zinc-950/90 overflow-hidden shadow-2xl">
                 <Image
-                  src={project.image}
+                  src={projectImage}
                   alt={project.title}
                   fill
                   priority

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { absoluteAssetUrl, basePath, siteUrl } from '@/lib/siteConfig';
 import './globals.css';
 
 const geistSans = Geist({
@@ -11,8 +12,6 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://admaki.com';
 
 export const viewport: Viewport = {
   themeColor: '#000000',
@@ -58,7 +57,7 @@ export const metadata: Metadata = {
       'I turn ideas into digital experiences. Social media, websites, custom software, and Telegram automation.',
     images: [
       {
-        url: '/images/projects/project-02.svg',
+        url: absoluteAssetUrl('/images/projects/project-02.svg'),
         width: 1200,
         height: 630,
         alt: 'ADMAKI Creative Technology Studio',
@@ -70,7 +69,7 @@ export const metadata: Metadata = {
     title: 'ADMAKI — Creative Technology Studio',
     description:
       'I turn ideas into digital experiences. Social media, websites, custom software, and Telegram automation.',
-    images: ['/images/projects/project-02.svg'],
+    images: [absoluteAssetUrl('/images/projects/project-02.svg')],
   },
   robots: {
     index: true,
@@ -84,7 +83,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: `${basePath}/favicon.ico`,
   },
 };
 

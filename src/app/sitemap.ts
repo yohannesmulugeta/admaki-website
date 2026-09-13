@@ -1,13 +1,12 @@
 import { MetadataRoute } from 'next';
 import { projectsData } from '@/data/projects';
+import { siteUrl } from '@/lib/siteConfig';
 
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://admaki.com';
-
   const projectRoutes = projectsData.map((project) => ({
-    url: `${baseUrl}/work/${project.slug}`,
+    url: `${siteUrl}/work/${project.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -15,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: baseUrl,
+      url: siteUrl,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 1.0,
