@@ -53,7 +53,7 @@ export default function StudioCursor() {
     const updateTarget = (event: PointerEvent) => {
       const hovered = event.target instanceof Element ? event.target : null;
       if (hovered === currentTarget) return;
-      const interactive = hovered?.closest('[data-cursor-label], a, button, summary, input, textarea, select');
+      const interactive = hovered?.closest('[data-cursor-label], a, button, summary, input, textarea, select') ?? null;
       if (interactive === currentTarget) return;
       currentTarget = interactive;
       const textInput = interactive?.matches('input, textarea, select');
