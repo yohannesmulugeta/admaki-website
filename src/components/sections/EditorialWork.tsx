@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import { socialBrands, workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
 import { withBasePath } from '@/lib/siteConfig';
@@ -9,7 +9,7 @@ type Filter = 'All work' | WorkCategory;
 const filters: Filter[] = ['All work', 'Websites', 'Business systems'];
 
 function ProjectCard({ project, index }: { project: WorkProject; index: number }) {
-  const primaryUrl = project.caseStudyUrl || project.liveUrl || project.repoUrl || '';
+  const primaryUrl = project.caseStudyUrl ? withBasePath(project.caseStudyUrl) : (project.liveUrl || project.repoUrl || '');
   const external = !!primaryUrl && /^https?:/.test(primaryUrl);
 
   return (
@@ -26,7 +26,7 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
       <div className="ed-project-meta">
         <div><h3>{project.title}</h3><p>{project.description}</p></div>
         <div className="ed-project-links">
-          {project.caseStudyUrl && <a href={project.caseStudyUrl}>Case study ↗</a>}
+          {project.caseStudyUrl && <a href={withBasePath(project.caseStudyUrl)}>Case study ↗</a>}
           {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Open website ↗</a>}
           {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">Source ↗</a>}
         </div>
@@ -98,7 +98,7 @@ export default function EditorialWork() {
           </div>
           <div className="ed-social-grid">
             {socialBrands.map((brand, i) => (
-              <article key={brand.id} className="ed-social-card" style={{ '--brand-accent': brand.accent } as React.CSSProperties}>
+              <article key={brand.id} className="ed-social-card" style={{ '--brand-accent': brand.accent } as CSSProperties}>
                 <div className="ed-social-art">
                   <div className="ed-social-art-no">0{i + 1}</div>
                   <span className="ed-social-tag">ADMAKI / SOCIAL STUDIO</span>
