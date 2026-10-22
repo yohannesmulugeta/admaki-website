@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
-  colorScheme: 'dark',
+  themeColor: '#f7f6f1',
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
 };
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: '%s | ADMAKI',
   },
   description:
-    'Creative communication, modern web development, custom software & ERP systems, and Telegram automation engineered for businesses.',
+    'ADMAKI creates memorable websites, creative campaigns and custom ERP systems for businesses in Ethiopia and beyond.',
   keywords: [
     'ADMAKI',
     'Creative Technology Studio',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: 'ADMAKI',
     title: 'ADMAKI — Creative Technology Studio',
     description:
-      'I turn ideas into digital experiences. Social media, websites, custom software, and Telegram automation.',
+      'Ideas that move. Systems that work. Explore ADMAKI websites, creative campaigns and practical business software.',
     images: [
       {
         url: absoluteAssetUrl('/images/projects/project-02.svg'),
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ADMAKI — Creative Technology Studio',
     description:
-      'I turn ideas into digital experiences. Social media, websites, custom software, and Telegram automation.',
+      'Ideas that move. Systems that work. Explore ADMAKI websites, creative campaigns and practical business software.',
     images: [absoluteAssetUrl('/images/projects/project-02.svg')],
   },
   robots: {
