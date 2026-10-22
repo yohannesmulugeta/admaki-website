@@ -70,3 +70,14 @@ Build emits static output to `out/`. GitHub Actions deploys the `main` branch to
 - Replace social placeholders with actual links once campaign media has been published.
 - Provide approved ADMAKI email or WhatsApp details for the inquiry CTA.
 - Avoid unverified performance figures, fictitious testimonials, or implied client endorsements.
+
+## Creative cursor and genuine homepage covers
+
+- **Studio cursor:** `src/components/motion/StudioCursor.tsx` and `src/app/cursor-covers.css`. Only active for a fine desktop pointer with motion enabled; touch and reduced-motion users retain their regular cursor. Hover labels come from `data-cursor-label`.
+- **Actual website cover screenshots:** `public/images/covers/<project-id>.jpg`. The project cards use real screenshots of the homepage first screen, rather than generic mockup art.
+- **Refresh the covers:** GitHub → Actions → **Capture website cover screenshots** → **Run workflow**. The script at `scripts/capture-project-covers.mjs` uses Playwright to capture the homepages at 1440×900, checks for error pages, and commits updated JPEGs.
+- **Cloudflare-protected KKGT sites:** If the public domain refuses an automated browser (HTTP 403), screenshots are produced from a local preview of the corresponding public GitHub website repository.
+- **Graceful fallback:** If a screenshot path is missing or fails to load, the project card returns to its original themed artwork rather than showing a broken image.
+- **Koffera demo:** The public route was showing an error during this update, so its broken live URL was intentionally hidden while the repository remains linked. Restore it after fixing its published website.
+
+Screenshots should always be reviewed for accuracy, attribution, and any client-sensitive content before sharing widely.
