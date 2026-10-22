@@ -1,8 +1,10 @@
 import IdeaEngine from '@/components/sections/IdeaEngine';
 import MotionSignals from '@/components/motion/MotionSignals';
+import StudioCursor from '@/components/motion/StudioCursor';
 import type { CSSProperties } from 'react';
 import EditorialWork from '@/components/sections/EditorialWork';
 import './editorial.css';
+import './cursor-covers.css';
 
 const services = [
   { number: '01', title: 'Creative & social', subtitle: 'Stories with a reason to exist.', body: 'Campaign thinking, content strategy, visual direction and short-form video made to connect with people.', tags: ['Social media', 'Content production', 'Art direction'] },
@@ -21,6 +23,7 @@ export default function Home() {
   return (
     <main className="editorial-site" id="main-content">
       <MotionSignals />
+      <StudioCursor />
       <a href="#work" className="ed-skip">Skip to work</a>
       <header className="ed-nav">
         <div className="ed-wrap ed-nav-inner">
