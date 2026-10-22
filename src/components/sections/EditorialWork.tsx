@@ -17,7 +17,7 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
     <article className="ed-project" data-reveal style={{ '--reveal-delay': Math.min(index % 2, 1) * 100 + 'ms' } as CSSProperties}>
       <div className="ed-project-top"><span>{String(index + 1).padStart(2, '0')} / {project.eyebrow}</span><span>{project.status}</span></div>
       {primaryUrl ? (
-        <a className={`ed-project-art theme-${project.theme}`} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
+        <a className={`ed-project-art theme-${project.theme}`} data-cursor-label={project.category === 'Websites' ? 'VIEW SITE ↗' : 'CASE STUDY ↗'} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
           <ProjectArtwork project={project} />
           <span className="ed-art-arrow" aria-hidden="true">↗</span>
         </a>
@@ -37,8 +37,34 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
 }
 
 function ProjectArtwork({ project }: { project: WorkProject }) {
-  if (project.screenshot) {
-    return <Image className="ed-project-screenshot" src={withBasePath(project.screenshot)} alt={project.title + ' project preview'} width={1200} height={750} unoptimized sizes="(max-width: 700px) 100vw, 50vw" />;
+  const [imageFailed, setImageFailed] = useState(false);
+
+  if (project.screenshot && !imageFailed) {
+    return (
+      <div className="ed-cover-shell">
+        <div className="ed-cover-toolbar" aria-hidden="true">
+          <span className="ed-cover-dots"><i /><i /><i /></span>
+          <span className="ed-cover-url">{project.liveUrl ? new URL(project.liveUrl).hostname : project.title}</span>
+          <span className="ed-cover-toolbar-icon">↗</span>
+        </div>
+        <div className="ed-cover-window">
+          <Image
+            className="ed-project-screenshot"
+            src={withBasePath(project.screenshot)}
+            alt={project.title + ' — genuine homepage hero preview'}
+            width={1440}
+            height={900}
+            unoptimized
+            loading="lazy"
+            sizes="(max-width: 700px) 100vw, 50vw"
+            onError={() => setImageFailed(true)}
+          />
+          <span className="ed-cover-annotation">
+            {project.category === 'Business systems' ? 'PRODUCT PREVIEW' : project.status === 'Concept' ? 'CONCEPT HOMEPAGE' : 'ACTUAL HOMEPAGE'}
+          </span>
+        </div>
+      </div>
+    );
   }
 
   return (
