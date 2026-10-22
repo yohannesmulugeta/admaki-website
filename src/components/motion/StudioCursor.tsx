@@ -33,6 +33,7 @@ export default function StudioCursor() {
       halo.classList.remove('is-visible');
       dot.classList.remove('is-visible');
       halo.classList.remove('is-pressed');
+      root.classList.remove('ed-cursor-text-entry');
     };
 
     const tick = () => {
@@ -63,6 +64,7 @@ export default function StudioCursor() {
       const expanded = !!text;
       label.textContent = text;
       halo.classList.toggle('is-expanded', expanded);
+      dot.classList.toggle('is-expanded', expanded);
       halo.classList.toggle('is-project', !!isProject);
       root.classList.toggle('ed-cursor-text-entry', !!textInput);
     };
@@ -70,7 +72,7 @@ export default function StudioCursor() {
     const pointerMove = (event: PointerEvent) => {
       if (!enabled || event.pointerType !== 'mouse') return;
       const hovered = event.target instanceof Element ? event.target : null;
-      const inside = hovered?.closest('.editorial-site') !== null;
+      const inside = !!hovered?.closest('.editorial-site');
       if (!inside) { hide(); return; }
 
       x = event.clientX;
