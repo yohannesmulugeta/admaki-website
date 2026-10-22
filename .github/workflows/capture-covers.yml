@@ -1,0 +1,60 @@
+name: Capture website cover screenshots
+
+# Runs once when this file is introduced on the feature branch.
+# Future screenshot refreshes can be requested manually in Actions.
+on:
+  push:
+    branches:
+      - feature/creative-cursor-live-covers
+    paths:
+      - .github/workflows/capture-covers.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install app and browser automation
+        run: |
+          npm ci
+          npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Find available browser
+        id: browser
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "path=$(command -v google-chrome)" >> "$GITHUB_OUTPUT"
+          elif command -v google-chrome-stable >/dev/null 2>&1; then
+            echo "path=$(command -v google-chrome-stable)" >> "$GITHUB_OUTPUT"
+          else
+            echo "Chrome not found; installing Playwright Chromium"
+            npx playwright install --with-deps chromium
+            echo "path=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Capture each verified homepage hero
+        env:
+          CHROME_PATH: ${{ steps.browser.outputs.path }}
+        run: node scripts/capture-project-covers.mjs
+      - name: Commit screenshots to this branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/covers/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "assets: capture real website hero covers [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
