@@ -1,18 +1,19 @@
 /**
- * Capture the visible homepage hero of real ADMAKI portfolio websites.
- * Run on GitHub's Ubuntu runner where Chromium/Chrome and internet are available.
- * Screenshots are local assets, not third-party hotlinked thumbnail services.
- *
- * Refresh with the "Capture website cover screenshots" workflow.
+ * Capture each project's actual homepage at desktop hero viewport.
+ * Public sites are visited first. KKGT's production firewall may block CI
+ * browsers, so those two can be captured from a locally served checkout of
+ * the very same public source repo as a fallback.
  */
 import { chromium } from 'playwright';
-import { mkdir, stat } from 'node:fs/promises';
+import { mkdir, mkdtemp, stat } from 'node:fs/promises';
+import { spawn, execFileSync } from 'node:child_process';
+import os from 'node:os';
 import path from 'node:path';
 
 const sites = [
-  { id: 'kkgt-coffee', url: 'https://kkgtcoffee.com/' },
+  { id: 'kkgt-coffee', url: 'https://kkgtcoffee.com/', sourceRepo: 'KKGTCOFFEEwebsite' },
   { id: 'universal', url: 'https://universalelectronicet.com/' },
-  { id: 'kkgt-trade', url: 'https://kkgtimportexport.com/' },
+  { id: 'kkgt-trade', url: 'https://kkgtimportexport.com/', sourceRepo: 'KKGTIMPORTEXPORT' },
   { id: 'sibu', url: 'https://yohannesmulugeta.github.io/SIBU-TRADING-PLC/' },
   { id: 'gurshamenu', url: 'https://yohannesmulugeta.github.io/gurshamenu/' },
   { id: 'getfit', url: 'https://yohannesmulugeta.github.io/GET-FIT-WITH-JO/' },
@@ -24,38 +25,71 @@ const sites = [
 
 const output = path.resolve('public/images/covers');
 await mkdir(output, { recursive: true });
-
-const browserPath = process.env.CHROME_PATH || undefined;
 const browser = await chromium.launch({
   headless: true,
-  ...(browserPath ? { executablePath: browserPath } : {}),
+  ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}),
   args: ['--no-sandbox', '--disable-dev-shm-usage'],
 });
+
+function run(command, args, cwd) {
+  execFileSync(command, args, { cwd, stdio: 'inherit', timeout: 110000 });
+}
+
+async function openLocalSource(page, site, port) {
+  const temp = await mkdtemp(path.join(os.tmpdir(), 'admaki-cover-'));
+  const destination = path.join(temp, 'site');
+  const gitUrl = 'https://github.com/yohannesmulugeta/' + site.sourceRepo + '.git';
+  console.log('Production capture blocked; generating hero from public source:', site.sourceRepo);
+  run('git', ['clone', '--depth', '1', gitUrl, destination], temp);
+  run('npm', ['ci', '--no-audit', '--no-fund'], destination);
+  const child = spawn('npm', ['run', 'dev', '--', '--host', '127.0.0.1', '--port', String(port), '--strictPort'], {
+    cwd: destination, stdio: 'ignore', detached: true,
+  });
+
+  try {
+    let ready = false;
+    for (let attempt = 0; attempt < 25; attempt++) {
+      try {
+        const response = await page.goto('http://127.0.0.1:' + port, { waitUntil: 'domcontentloaded', timeout: 1900 });
+        if (response && response.status() < 400) { ready = true; break; }
+      } catch { /* dev server is still starting */ }
+      await page.waitForTimeout(500);
+    }
+    if (!ready) throw new Error('Local preview failed to start');
+    return child;
+  } catch (error) {
+    if (child.pid) process.kill(-child.pid, 'SIGTERM');
+    throw error;
+  }
+}
+
 let success = 0;
 const failures = [];
 try {
-  for (const site of sites) {
+  for (let index = 0; index < sites.length; index++) {
+    const site = sites[index];
     const page = await browser.newPage({
       viewport: { width: 1440, height: 900 },
-      deviceScaleFactor: 1,
-      colorScheme: 'light',
-      reducedMotion: 'reduce',
-      locale: 'en-US',
+      deviceScaleFactor: 1, colorScheme: 'light', reducedMotion: 'reduce', locale: 'en-US',
     });
+    let localServer;
     try {
       console.log('Capturing:', site.id, site.url);
       const response = await page.goto(site.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-      if (!response || response.status() >= 400) throw new Error('HTTP ' + (response?.status() ?? 'none'));
-      await page.evaluate(() => document.fonts.ready).catch(() => {});
-      await page.waitForTimeout(2600);
-      await page.evaluate(() => window.scrollTo({ top: 0, left: 0 })).catch(() => {});
-      const content = await page.locator('body').innerText({ timeout: 3500 }).catch(() => '');
-      if (/Website error|This page could not load correctly|This site can.t be reached|Application error:/i.test(content.slice(0, 300))) {
-        throw new Error('The website is displaying its error screen, not its hero');
+      if (!response || response.status() >= 400) {
+        if (!site.sourceRepo) throw new Error('HTTP ' + (response?.status() ?? 'none'));
+        localServer = await openLocalSource(page, site, 4180 + index);
       }
-      if (content.trim().length < 40) throw new Error('Insufficient visible content');
+      await page.evaluate(() => document.fonts.ready).catch(() => {});
+      await page.waitForTimeout(2900);
+      await page.evaluate(() => window.scrollTo({ top: 0, left: 0 })).catch(() => {});
+      const bodyText = await page.locator('body').innerText({ timeout: 3500 }).catch(() => '');
+      if (/Website error|This page could not load correctly|This site can.t be reached|Application error:/i.test(bodyText.slice(0, 350))) {
+        throw new Error('Website is displaying an error screen');
+      }
+      if (bodyText.trim().length < 40) throw new Error('Insufficient rendered content');
       const file = path.join(output, site.id + '.jpg');
-      await page.screenshot({ path: file, type: 'jpeg', quality: 82, fullPage: false, animations: 'disabled', timeout: 16000 });
+      await page.screenshot({ path: file, type: 'jpeg', quality: 82, fullPage: false, animations: 'disabled', timeout: 18000 });
       const size = (await stat(file)).size;
       if (size < 7500) throw new Error('Suspiciously small screenshot: ' + size);
       success++;
@@ -64,6 +98,9 @@ try {
       failures.push(site.id + ': ' + String(error));
       console.warn('Skipped', site.id, error);
     } finally {
+      if (localServer?.pid) {
+        try { process.kill(-localServer.pid, 'SIGTERM'); } catch { /* already exited */ }
+      }
       await page.close();
     }
   }
@@ -72,4 +109,4 @@ try {
 }
 console.log('Captured', success, '/', sites.length, 'homepage covers');
 if (failures.length) console.log('Failures:\n' + failures.join('\n'));
-if (success < 4) process.exitCode = 1;
+if (success < 7) process.exitCode = 1;
