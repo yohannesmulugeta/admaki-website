@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties } from 'react';
 import Image from 'next/image';
+import { flushSync } from 'react-dom';
 import { socialBrands, workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
 import { withBasePath } from '@/lib/siteConfig';
 
@@ -13,7 +14,7 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
   const external = !!primaryUrl && /^https?:/.test(primaryUrl);
 
   return (
-    <article className="ed-project">
+    <article className="ed-project" data-reveal style={{ '--reveal-delay': Math.min(index % 2, 1) * 100 + 'ms' } as CSSProperties}>
       <div className="ed-project-top"><span>{String(index + 1).padStart(2, '0')} / {project.eyebrow}</span><span>{project.status}</span></div>
       {primaryUrl ? (
         <a className={`ed-project-art theme-${project.theme}`} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
@@ -58,11 +59,22 @@ export default function EditorialWork() {
   const filtered = workProjects.filter((project) => filter === 'All work' || project.category === filter);
   const shown = showAll ? filtered : filtered.slice(0, 6);
 
+  // The View Transitions API animates filter changes in supporting browsers.
+  // The fallback remains an immediate, keyboard-accessible React update.
+  const transition = (update: () => void) => {
+    const doc = document as Document & { startViewTransition?: (callback: () => void) => unknown };
+    if (doc.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      doc.startViewTransition(() => flushSync(update));
+    } else {
+      update();
+    }
+  };
+
   return (
     <>
       <section id="work" className="ed-section ed-work" aria-labelledby="work-heading">
         <div className="ed-wrap">
-          <div className="ed-section-head">
+          <div className="ed-section-head" data-reveal>
             <span className="ed-kicker">01 / SELECTED WORK</span>
             <div><h2 id="work-heading">Made to look good.<br /><em>Built to do good.</em></h2>
               <p>Real digital projects across websites, brands and business systems. Explore the work, visit the published sites or look at the underlying code.</p>
@@ -71,17 +83,17 @@ export default function EditorialWork() {
           <div className="ed-filter-bar" role="group" aria-label="Filter portfolio projects">
             <div className="ed-tabs">
               {filters.map((item) => (
-                <button type="button" key={item} onClick={() => { setFilter(item); setShowAll(false); }} className={filter === item ? 'ed-tab active' : 'ed-tab'} aria-pressed={filter === item}>
+                <button type="button" key={item} onClick={() => transition(() => { setFilter(item); setShowAll(false); })} className={filter === item ? 'ed-tab active' : 'ed-tab'} aria-pressed={filter === item}>
                   {item}<sup>{item === 'All work' ? workProjects.length : workProjects.filter((project) => project.category === item).length}</sup>
                 </button>
               ))}
             </div>
-            <span className="ed-results">{filtered.length} PROJECTS</span>
+            <span className="ed-results" role="status" aria-live="polite">{filtered.length} PROJECTS</span>
           </div>
           <div className="ed-project-grid">{shown.map((project, i) => <ProjectCard project={project} index={i} key={project.id} />)}</div>
           {filtered.length > 6 && (
             <div className="ed-center-action">
-              <button className="ed-btn ed-btn-outline" type="button" onClick={() => setShowAll(!showAll)}>
+              <button className="ed-btn ed-btn-outline" data-magnetic type="button" onClick={() => transition(() => setShowAll(!showAll))}>
                 {showAll ? 'Show fewer projects' : `View all ${filtered.length} projects`} <span aria-hidden="true">{showAll ? '↑' : '↘'}</span>
               </button>
             </div>
@@ -90,7 +102,7 @@ export default function EditorialWork() {
       </section>
       <section id="social" className="ed-section ed-social" aria-labelledby="social-heading">
         <div className="ed-wrap">
-          <div className="ed-section-head">
+          <div className="ed-section-head" data-reveal>
             <span className="ed-kicker">02 / SOCIAL & CAMPAIGNS</span>
             <div><h2 id="social-heading">Stories made<br /><em>to be seen.</em></h2>
               <p>Strategy, content direction and short-form production for ambitious Ethiopian brands. Video and profile links will be added as approved work is published.</p>
@@ -98,7 +110,7 @@ export default function EditorialWork() {
           </div>
           <div className="ed-social-grid">
             {socialBrands.map((brand, i) => (
-              <article key={brand.id} className="ed-social-card" style={{ '--brand-accent': brand.accent } as CSSProperties}>
+              <article key={brand.id} data-reveal className="ed-social-card" style={{ '--brand-accent': brand.accent } as CSSProperties}>
                 <div className="ed-social-art">
                   <div className="ed-social-art-no">0{i + 1}</div>
                   <span className="ed-social-tag">ADMAKI / SOCIAL STUDIO</span>
