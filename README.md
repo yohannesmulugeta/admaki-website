@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ADMAKI — Creative & Digital Studio
 
-## Getting Started
+Bright editorial portfolio for ADMAKI, an Ethiopia-based creative and technology studio.
 
-First, run the development server:
+**Public website:** https://yohannesmulugeta.github.io/admaki-website/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- Next.js App Router, React 19, TypeScript, Tailwind CSS
+- Static export to GitHub Pages via GitHub Actions
+- Lightweight CSS illustration and scroll-responsive Idea Engine
+- Responsive, accessible work filters and reusable portfolio data
+
+## Editing the portfolio
+
+All project and campaign data is in **`src/data/portfolio.ts`**.
+
+### Website and ERP cards
+
+Each `workProjects` entry supports:
+- `title`, `eyebrow`, `description`, `category`, `status`, `theme`
+- `liveUrl` — link to the actual public website when confirmed
+- `repoUrl` — link to public GitHub source (omit for private repositories)
+- `caseStudyUrl` — internal project detail page when available
+- `screenshot` — optional approved web image in `public/images/projects/`
+
+Projects without a screenshot use **conceptual editorial artwork**, which does not pretend to be a screenshot. "Concept" and demo entries are clearly labelled.
+
+### Social media: Universal / KKGT / Finder
+
+Update `socialBrands` in `src/data/portfolio.ts`. For each entry, add links in its `channels` list:
+
+```ts
+channels: [
+  { label: 'TikTok', url: 'https://www.tiktok.com/@your-approved-handle' },
+  { label: 'Instagram', url: '' },
+  { label: 'Campaign work', url: '' },
+],
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Blank URLs render as **link coming soon**, not broken or fake links. Replace the geometric social art with client-approved thumbnails when available.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ADMAKI contact details
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The contact section intentionally does **not** publish an unverified email address or phone number. Update `src/app/page.tsx` when approved business contact channels are available.
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm ci
+npm run dev
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Build emits static output to `out/`. GitHub Actions deploys the `main` branch to Pages. A separate PR workflow verifies that `npm run build` succeeds before a redesign is merged.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Layout files
 
-## Deploy on Vercel
+- `src/app/page.tsx` — new homepage sections and copy
+- `src/app/editorial.css` — visual design, mobile and animation states
+- `src/components/sections/IdeaEngine.tsx` — four-stage scroll hero
+- `src/components/sections/EditorialWork.tsx` — project filter and social cards
+- `src/data/portfolio.ts` — editable project and link data
+- `src/data/projects.ts` — approved ERP detail pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Content review before sharing publicly
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Review client names, attribution, screenshots, and usage permissions.
+- Confirm every external website's final URL and live status.
+- Replace social placeholders with actual links once campaign media has been published.
+- Provide approved ADMAKI email or WhatsApp details for the inquiry CTA.
+- Avoid unverified performance figures, fictitious testimonials, or implied client endorsements.
