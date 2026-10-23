@@ -17,5 +17,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Check portfolio image sizes and paths
+        run: node scripts/check-cover-budget.mjs
       - name: Check static Next.js export
         run: npm run build

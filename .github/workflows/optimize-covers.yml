@@ -1,0 +1,41 @@
+name: Optimize homepage covers
+
+on:
+  push:
+    branches:
+      - fix/performance-and-portfolio-covers
+    paths:
+      - .github/workflows/optimize-covers.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: |
+          npm ci
+          npm install --no-save --package-lock=false sharp@0.34.4
+      - run: node scripts/optimize-covers.mjs
+      - name: Commit compressed local cover assets
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A public/images/covers
+          if git diff --cached --quiet; then
+            echo 'No image changes'
+          else
+            git commit -m 'assets: optimize homepage cover images'
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

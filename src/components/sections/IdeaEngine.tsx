@@ -87,6 +87,7 @@ export default function IdeaEngine() {
     let desiredY = 0;
     let smoothX = 0;
     let smoothY = 0;
+    let engineBounds = engine.getBoundingClientRect();
 
     const reset = () => {
       [discRef, squareRef, cardRef, bladeLeftRef, bladeRightRef].forEach((ref) => {
@@ -111,7 +112,6 @@ export default function IdeaEngine() {
       setPose(bladeRightRef.current, interpolate(poses.right, p));
       engine.style.setProperty('--tilt-x', smoothX.toFixed(2) + 'px');
       engine.style.setProperty('--tilt-y', smoothY.toFixed(2) + 'px');
-      engine.style.setProperty('--engine-progress', p.toFixed(4));
       setPhase((previous) => {
         const next = Math.min(3, Math.floor(p * 4));
         return previous === next ? previous : next;
@@ -133,11 +133,12 @@ export default function IdeaEngine() {
     };
     const onPointer = (event: PointerEvent) => {
       if (!media.matches || !pointer.matches) return;
-      const rect = engine.getBoundingClientRect();
-      desiredX = ((event.clientX - rect.left) / rect.width - 0.5) * 12;
-      desiredY = ((event.clientY - rect.top) / rect.height - 0.5) * 12;
+      // Cache bounds on entry; do not force a layout read for every mouse move.
+      desiredX = ((event.clientX - engineBounds.left) / engineBounds.width - 0.5) * 9;
+      desiredY = ((event.clientY - engineBounds.top) / engineBounds.height - 0.5) * 9;
       schedule();
     };
+    const onEnter = () => { engineBounds = engine.getBoundingClientRect(); };
     const onLeave = () => {
       desiredX = desiredY = 0;
       schedule();
@@ -156,6 +157,7 @@ export default function IdeaEngine() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onModeChange);
+    engine.addEventListener('pointerenter', onEnter);
     engine.addEventListener('pointermove', onPointer, { passive: true });
     engine.addEventListener('pointerleave', onLeave);
     media.addEventListener('change', onModeChange);
@@ -164,6 +166,7 @@ export default function IdeaEngine() {
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onModeChange);
+      engine.removeEventListener('pointerenter', onEnter);
       engine.removeEventListener('pointermove', onPointer);
       engine.removeEventListener('pointerleave', onLeave);
       media.removeEventListener('change', onModeChange);

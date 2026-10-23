@@ -5,6 +5,7 @@
  * the very same public source repo as a fallback.
  */
 import { chromium } from 'playwright';
+import sharp from 'sharp';
 import { mkdir, mkdtemp, stat } from 'node:fs/promises';
 import { spawn, execFileSync } from 'node:child_process';
 import os from 'node:os';
@@ -88,10 +89,14 @@ try {
         throw new Error('Website is displaying an error screen');
       }
       if (bodyText.trim().length < 40) throw new Error('Insufficient rendered content');
-      const file = path.join(output, site.id + '.jpg');
-      await page.screenshot({ path: file, type: 'jpeg', quality: 82, fullPage: false, animations: 'disabled', timeout: 18000 });
+      const file = path.join(output, site.id + '.webp');
+      const screenshot = await page.screenshot({
+        type: 'jpeg', quality: 82, fullPage: false, animations: 'disabled', timeout: 18000,
+      });
+      await sharp(screenshot).resize({ width: 1040, withoutEnlargement: true })
+        .webp({ quality: 67, effort: 5 }).toFile(file);
       const size = (await stat(file)).size;
-      if (size < 7500) throw new Error('Suspiciously small screenshot: ' + size);
+      if (size < 6000) throw new Error('Suspiciously small hero cover: ' + size);
       success++;
       console.log('Saved', file, Math.round(size / 1024) + ' KiB');
     } catch (error) {

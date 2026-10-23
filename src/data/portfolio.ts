@@ -20,7 +20,7 @@ export type WorkProject = {
   liveUrl?: string;
   repoUrl?: string;
   caseStudyUrl?: string;
-  screenshot?: string; // /images/covers/<id>.jpg captured from the actual website homepage
+  screenshot?: string; // /images/covers/<id>.jpg compressed WebP captured from the actual website homepage
   featured?: boolean;
 };
 
@@ -32,21 +32,21 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Website', theme: 'coffee', featured: true,
     description: 'An editorial website for Ethiopian coffee origins, quality and buyer discovery.',
     liveUrl: 'https://kkgtcoffee.com/', repoUrl: git + 'KKGTCOFFEEwebsite',
-    screenshot: '/images/covers/kkgt-coffee.jpg',
+    screenshot: '/images/covers/kkgt-coffee.webp',
   },
   {
     id: 'universal', title: 'Universal Electronics', eyebrow: 'Solar / Electronics',
     category: 'Websites', status: 'Website', theme: 'electric', featured: true,
     description: 'A product-focused destination for solar, electronics and sound solutions.',
     liveUrl: 'https://universalelectronicet.com/', repoUrl: git + 'universalelectronics',
-    screenshot: '/images/covers/universal.jpg',
+    screenshot: '/images/covers/universal.webp',
   },
   {
     id: 'kkgt-trade', title: 'KKGT Import & Export', eyebrow: 'Import / Export',
     category: 'Websites', status: 'Website', theme: 'trade', featured: true,
     description: 'A structured commercial website connecting agriculture, commodities and trade.',
     liveUrl: 'https://kkgtimportexport.com/', repoUrl: git + 'KKGTIMPORTEXPORT',
-    screenshot: '/images/covers/kkgt-trade.jpg',
+    screenshot: '/images/covers/kkgt-trade.webp',
   },
   {
     id: 'sibu', title: 'Sibu Trading PLC', eyebrow: 'Coffee / Export',
@@ -54,7 +54,7 @@ export const workProjects: WorkProject[] = [
     description: 'An origin-led presentation of Ethiopian coffee and trading operations.',
     liveUrl: 'https://yohannesmulugeta.github.io/SIBU-TRADING-PLC/',
     repoUrl: git + 'SIBU-TRADING-PLC',
-    screenshot: '/images/covers/sibu.jpg',
+    screenshot: '/images/covers/sibu.webp',
   },
   {
     id: 'gurshamenu', title: 'GurshaMenu', eyebrow: 'Restaurant technology',
@@ -62,7 +62,7 @@ export const workProjects: WorkProject[] = [
     description: 'A QR-menu product website built to make restaurant menus easier to update.',
     liveUrl: 'https://yohannesmulugeta.github.io/gurshamenu/',
     repoUrl: git + 'gurshamenu',
-    screenshot: '/images/covers/gurshamenu.jpg',
+    screenshot: '/images/covers/gurshamenu.webp',
   },
   {
     id: 'getfit', title: 'Get Fit with JO', eyebrow: 'Fitness / Coaching',
@@ -70,7 +70,7 @@ export const workProjects: WorkProject[] = [
     description: 'A mobile-first coaching experience focused on programs and consultation.',
     liveUrl: 'https://yohannesmulugeta.github.io/GET-FIT-WITH-JO/',
     repoUrl: git + 'GET-FIT-WITH-JO',
-    screenshot: '/images/covers/getfit.jpg',
+    screenshot: '/images/covers/getfit.webp',
   },
   {
     id: 'orbit', title: 'Orbit Health Solutions', eyebrow: 'Healthcare / B2B',
@@ -78,7 +78,7 @@ export const workProjects: WorkProject[] = [
     description: 'An editorial redesign for a health-technology solutions provider.',
     liveUrl: 'https://yohannesmulugeta.github.io/orbiths/',
     repoUrl: git + 'orbiths',
-    screenshot: '/images/covers/orbit.jpg',
+    screenshot: '/images/covers/orbit.webp',
   },
   {
     id: 'lobelia', title: 'Hotel Lobelia', eyebrow: 'Hospitality / Concept',
@@ -86,7 +86,7 @@ export const workProjects: WorkProject[] = [
     description: 'A cinematic hotel-website concept exploring a richer arrival experience.',
     liveUrl: 'https://yohannesmulugeta.github.io/Hotel-Lobelia/',
     repoUrl: git + 'Hotel-Lobelia',
-    screenshot: '/images/covers/lobelia.jpg',
+    screenshot: '/images/covers/lobelia.webp',
   },
   {
     id: 'koffera', title: 'Koffera Coffee', eyebrow: 'Coffee / Concept',
@@ -101,7 +101,7 @@ export const workProjects: WorkProject[] = [
     liveUrl: 'https://yohannesmulugeta.github.io/ephremart/',
     description: 'A contemporary gallery-style artist portfolio exploring artwork and biography.',
     repoUrl: git + 'ephremart',
-    screenshot: '/images/covers/ephrem.jpg',
+    screenshot: '/images/covers/ephrem.webp',
   },
   {
     id: 'bethager', title: 'Bethager Furniture', eyebrow: 'Furniture / Demo',
@@ -109,7 +109,7 @@ export const workProjects: WorkProject[] = [
     liveUrl: 'https://yohannesmulugeta.github.io/bethager-furniture/',
     description: 'A furniture-showroom demonstration with an image-led shopping aesthetic.',
     repoUrl: git + 'bethager-furniture',
-    screenshot: '/images/covers/bethager.jpg',
+    screenshot: '/images/covers/bethager.webp',
   },
   {
     id: 'hayked', title: 'Hayked Coffee Warehouse ERP', eyebrow: 'Warehouse / ERP',
