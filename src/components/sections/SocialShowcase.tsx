@@ -100,7 +100,7 @@ export default function SocialShowcase() {
     setVideoIndex(0);
     setManualPlay(false);
     setPaused(false);
-    carouselRef.current?.scrollTo({ left: 0, behavior: 'instant' });
+    carouselRef.current?.scrollTo({ left: 0, behavior: 'auto' });
   };
 
   const chooseVideo = (index: number) => {
@@ -125,6 +125,16 @@ export default function SocialShowcase() {
 
   // A single iframe is ever present. It is entirely unmounted when offscreen
   // or in a background tab, preventing nine embeds from consuming bandwidth.
+  useEffect(() => {
+    // Unmounting the iframe discards its ready state. Ensure that returning to
+    // this section doesn't mistakenly treat a fresh player as ready.
+    if (!permittedToStart) {
+      playerReadyRef.current = false;
+      setStatus('idle');
+      setPlayerPlaying(false);
+    }
+  }, [permittedToStart]);
+
   useEffect(() => {
     if (!embedActive || !shouldPlay || !playerReadyRef.current) {
       sendPlayerCommand(iframeRef.current, 'pause');
