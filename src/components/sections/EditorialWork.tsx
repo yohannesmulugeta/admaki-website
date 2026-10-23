@@ -9,12 +9,23 @@ import { withBasePath } from '@/lib/siteConfig';
 type Filter = 'All work' | WorkCategory;
 const filters: Filter[] = ['All work', 'Websites', 'Business systems'];
 
+// Open with a stronger visual mix: cinematic site, electronics, restaurant tech,
+// and an ERP product. KKGT Coffee stays in the portfolio without leading it.
+const showcaseOrder = [
+  'sibu', 'universal', 'gurshamenu', 'hayked', 'kkgt-coffee', 'getfit',
+  'orbit', 'kkgt-trade', 'beanledger', 'lobelia', 'ephrem', 'bethager', 'koffera',
+];
+const order = new Map(showcaseOrder.map((id, index) => [id, index]));
+const orderedProjects = [...workProjects].sort(
+  (left, right) => (order.get(left.id) ?? 99) - (order.get(right.id) ?? 99)
+);
+
 function ProjectCard({ project, index }: { project: WorkProject; index: number }) {
   const primaryUrl = project.caseStudyUrl ? withBasePath(project.caseStudyUrl) : (project.liveUrl || project.repoUrl || '');
   const external = !!primaryUrl && /^https?:/.test(primaryUrl);
 
   return (
-    <article className="ed-project" data-reveal style={{ '--reveal-delay': Math.min(index % 2, 1) * 100 + 'ms' } as CSSProperties}>
+    <article className="ed-project" data-project={project.id} data-reveal style={{ '--reveal-delay': Math.min(index % 2, 1) * 100 + 'ms' } as CSSProperties}>
       <div className="ed-project-top"><span>{String(index + 1).padStart(2, '0')} / {project.eyebrow}</span><span>{project.status}</span></div>
       {primaryUrl ? (
         <a className={`ed-project-art theme-${project.theme}`} data-cursor-label={project.category === 'Websites' ? 'VIEW SITE ↗' : 'CASE STUDY ↗'} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
@@ -56,6 +67,7 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
             height={900}
             unoptimized
             loading="lazy"
+            decoding="async"
             sizes="(max-width: 700px) 100vw, 50vw"
             onError={() => setImageFailed(true)}
           />
@@ -82,7 +94,7 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
 export default function EditorialWork() {
   const [filter, setFilter] = useState<Filter>('All work');
   const [showAll, setShowAll] = useState(false);
-  const filtered = workProjects.filter((project) => filter === 'All work' || project.category === filter);
+  const filtered = orderedProjects.filter((project) => filter === 'All work' || project.category === filter);
   const shown = showAll ? filtered : filtered.slice(0, 6);
 
   // The View Transitions API animates filter changes in supporting browsers.
