@@ -112,6 +112,19 @@ export default function SocialShowcase() {
     setPaused(false);
   };
 
+  const navigateMobile = (direction: -1 | 1) => {
+    const next = (videoIndex + direction + brand.videos.length) % brand.videos.length;
+    chooseVideo(next);
+    const grid = carouselRef.current;
+    const card = grid?.querySelector<HTMLElement>(`[data-video-index="${next}"]`);
+    if (grid && card) {
+      grid.scrollTo({
+        left: card.offsetLeft - grid.offsetLeft,
+        behavior: reducedMotion ? 'auto' : 'smooth',
+      });
+    }
+  };
+
   const resetPlayer = useCallback(() => {
     setStatus('idle');
     setPlayerError('');
@@ -315,6 +328,14 @@ export default function SocialShowcase() {
               </article>
             );
           })}
+        </div>
+
+        <div className="ad-mobile-video-controls" aria-label="Mobile video navigation">
+          <span>0{videoIndex + 1} / 03</span>
+          <div>
+            <button type="button" onClick={() => navigateMobile(-1)} aria-label="Previous campaign video">←</button>
+            <button type="button" onClick={() => navigateMobile(1)} aria-label="Next campaign video">→</button>
+          </div>
         </div>
 
         <div className="ad-showcase-footer">
