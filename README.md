@@ -81,3 +81,21 @@ Build emits static output to `out/`. GitHub Actions deploys the `main` branch to
 - **Koffera demo:** The public route was showing an error during this update, so its broken live URL was intentionally hidden while the repository remains linked. Restore it after fixing its published website.
 
 Screenshots should always be reviewed for accuracy, attribution, and any client-sensitive content before sharing widely.
+
+
+## TikTok social portfolio — three campaigns per brand
+
+The portfolio includes 3 selected public TikTok URLs each for Universal Electronics, KKGT Import & Export, and Finder Tools Ethiopia (9 in total). Edit the exact videos, creator handle, company names, and profile links in `src/data/portfolio.ts` → `socialBrands`.
+
+The interactive component is `src/components/sections/SocialShowcase.tsx` with styling in `src/app/social-showcase.css`.
+
+- **Only one TikTok player iframe is ever mounted**, for the selected video and company.
+- TikTok is **not loaded on initial page visit**. The player mounts when the social section becomes visible. Autoplay is requested muted and looping via TikTok's official `/player/v1/{id}` embed.
+- Playback is paused and the iframe is unmounted outside the viewport or in a background tab.
+- Desktop displays all 3 cards; mobile cards can be swiped. Selecting another card pauses the previous player.
+- Visitors who choose reduced motion see static editorial previews until clicking a play button.
+- Autoplay and third-party embedding are subject to browser settings and TikTok availability. If unavailable, a **retry and direct TikTok link** are provided.
+- Card artwork is editorial, not a fabricated photo of the source TikTok video. Add a genuine, approved still later where available.
+- The athlete collaboration video under `@kebromneguseofficial` retains the original uploader attribution.
+
+No TikTok video files are downloaded or rehosted. The original video pages remain accessible as normal links even when their embeds cannot play.
