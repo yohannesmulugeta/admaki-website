@@ -371,3 +371,43 @@
   .ed-project-art:hover .ed-art-words strong,
   .ed-project-art:hover .ed-art-words i { transform: none !important; }
 }
+
+/* Performance pass: shorten sticky scroll journey and avoid expensive
+   translucent backdrop rasterization during every scroll frame. */
+@media (min-width: 851px) {
+  .idea-scroll { height: 164vh; }
+}
+.ed-nav {
+  background: rgba(247,246,241,.985);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.idea-copy .ed-eyebrow,
+.idea-copy h1 .idea-title-line > span,
+.idea-lead,
+.idea-actions {
+  animation-duration: .62s;
+}
+.engine-display { animation-duration: .74s; }
+
+/* Do not lay out and paint distant sections before they approach the
+   viewport. All content remains in the accessibility tree. */
+@supports (content-visibility: auto) {
+  .ed-social, .ed-services, .ed-studio, .ed-process, .ed-contact {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+@media (max-width: 700px) {
+  @supports (content-visibility: auto) {
+    .ed-social, .ed-services, .ed-studio, .ed-process, .ed-contact {
+      contain-intrinsic-size: auto 1200px;
+    }
+  }
+}
+
+/* Limit heavy rendering on hover to deliberate interactions. */
+@media (hover: none), (pointer: coarse) {
+  .ed-project-art:hover { box-shadow: none; }
+  .ed-social-card:hover { box-shadow: none; }
+}
