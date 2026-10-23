@@ -5,132 +5,122 @@ import { useEffect } from 'react';
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 
 /**
- * One small motion controller for the editorial homepage.
- * Progressive enhancement: all content stays visible if JavaScript,
- * IntersectionObserver or motion preferences disable animation.
+ * One passive, RAF-throttled scroll controller for all editorial sections.
+ * The custom cursor already owns pointer motion; do not run an additional
+ * document-wide pointer listener for magnetic buttons.
  */
 export default function MotionSignals() {
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reducedMotion.matches || !('IntersectionObserver' in window)) return;
+    const canObserve = 'IntersectionObserver' in window;
+    if (reducedMotion.matches || !canObserve) return;
 
     const root = document.documentElement;
-    const revealed = new WeakSet<Element>();
+    const seen = new WeakSet<Element>();
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
           entry.target.classList.add('ed-in-view');
           observer.unobserve(entry.target);
-        });
+        }
       },
-      { threshold: 0.09, rootMargin: '0px 0px -5% 0px' }
+      { threshold: 0.06, rootMargin: '0px 0px -3% 0px' }
     );
 
     const register = (scope: ParentNode) => {
-      scope.querySelectorAll('[data-reveal]').forEach((el) => {
-        if (revealed.has(el)) return;
-        revealed.add(el);
-        observer.observe(el);
+      scope.querySelectorAll('[data-reveal]').forEach((element) => {
+        if (seen.has(element)) return;
+        seen.add(element);
+        observer.observe(element);
       });
     };
     register(document);
     root.classList.add('motion-ready');
 
-    // Newly filtered project cards and "view more" cards need an observer too.
     const mutation = new MutationObserver((records) => {
-      for (const record of records) {
-        record.addedNodes.forEach((node) => {
+      records.forEach(({ addedNodes }) => {
+        addedNodes.forEach((node) => {
           if (!(node instanceof Element)) return;
-          if (node.matches('[data-reveal]') && !revealed.has(node)) {
-            revealed.add(node);
+          if (node.matches('[data-reveal]') && !seen.has(node)) {
+            seen.add(node);
             observer.observe(node);
           }
           register(node);
         });
-      }
+      });
     });
-    mutation.observe(document.getElementById('work') || document.body, { childList: true, subtree: true });
+    const workSection = document.getElementById('work');
+    if (workSection) mutation.observe(workSection, { childList: true, subtree: true });
 
     let frame = 0;
     let active = '';
+    let lastProgress = -1;
     const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ed-nav-links a[href^="#"]'));
     const sections = ['work', 'social', 'services', 'studio', 'contact']
-      .map((id) => document.getElementById(id)).filter((section): section is HTMLElement => !!section);
+      .map((id) => document.getElementById(id)).filter((item): item is HTMLElement => !!item);
     const processTrack = document.querySelector<HTMLElement>('.ed-process-grid');
 
     const update = () => {
       frame = 0;
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      root.style.setProperty('--page-progress', String(clamp(window.scrollY / maxScroll)));
+      if (document.hidden) return;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const pageProgress = clamp(scrollY / maxScroll);
+      if (Math.abs(pageProgress - lastProgress) >= 0.002) {
+        root.style.setProperty('--page-progress', pageProgress.toFixed(3));
+        lastProgress = pageProgress;
+      }
 
-      const markerY = Math.min(window.innerHeight * 0.35, 290);
+      const markerY = Math.min(innerHeight * 0.35, 290);
       let current = '';
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= markerY) current = section.id;
       }
       if (current !== active) {
         active = current;
-        navLinks.forEach((link) => {
-          const isCurrent = link.getAttribute('href') === '#' + current;
-          if (isCurrent) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
-        });
+        for (const link of navLinks) {
+          if (link.getAttribute('href') === '#' + current) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        }
       }
 
+      // Do not read geometry/write transforms for the process timeline
+      // on every frame while the user is several screens away.
       if (processTrack) {
         const rect = processTrack.getBoundingClientRect();
-        const travel = Math.max(1, rect.height + window.innerHeight * 0.3);
-        const progress = clamp((window.innerHeight * 0.76 - rect.top) / travel);
-        processTrack.style.setProperty('--process-progress', progress.toFixed(3));
+        if (rect.top < innerHeight && rect.bottom > 0) {
+          const travel = Math.max(1, rect.height + innerHeight * 0.3);
+          processTrack.style.setProperty('--process-progress',
+            clamp((innerHeight * 0.76 - rect.top) / travel).toFixed(3));
+        }
       }
     };
-    const schedule = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule);
     schedule();
 
-    let activeMagnetic: HTMLElement | null = null;
-    const clearMagnetic = () => {
-      if (!activeMagnetic) return;
-      activeMagnetic.style.removeProperty('--mag-x');
-      activeMagnetic.style.removeProperty('--mag-y');
-      activeMagnetic = null;
-    };
-    const handlePointer = (event: PointerEvent) => {
-      if (event.pointerType === 'touch' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      const target = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-magnetic]') : null;
-      if (!target) { clearMagnetic(); return; }
-      if (activeMagnetic && activeMagnetic !== target) clearMagnetic();
-      activeMagnetic = target;
-      const rect = target.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 12;
-      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
-      target.style.setProperty('--mag-x', x.toFixed(2) + 'px');
-      target.style.setProperty('--mag-y', y.toFixed(2) + 'px');
-    };
-
     const closeMobileMenu = (event: MouseEvent) => {
-      const clickedLink = event.target instanceof Element ? event.target.closest('.ed-mobile-menu nav a') : null;
-      if (clickedLink) document.querySelector<HTMLDetailsElement>('.ed-mobile-menu')?.removeAttribute('open');
+      if (event.target instanceof Element && event.target.closest('.ed-mobile-menu nav a')) {
+        document.querySelector<HTMLDetailsElement>('.ed-mobile-menu')?.removeAttribute('open');
+      }
     };
-    document.addEventListener('pointermove', handlePointer, { passive: true });
     document.addEventListener('click', closeMobileMenu);
 
     return () => {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
-      document.removeEventListener('pointermove', handlePointer);
       document.removeEventListener('click', closeMobileMenu);
-      if (frame) window.cancelAnimationFrame(frame);
-      clearMagnetic();
+      if (frame) cancelAnimationFrame(frame);
       mutation.disconnect();
       observer.disconnect();
       root.classList.remove('motion-ready');
       root.style.removeProperty('--page-progress');
     };
   }, []);
+
   return null;
 }
