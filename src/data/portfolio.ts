@@ -130,40 +130,74 @@ export const workProjects: WorkProject[] = [
 ];
 
 /**
- * Social media portfolio. Add real, approved TikTok / Instagram / Facebook
- * and campaign links here after you have published the work. Empty strings
- * intentionally render non-clickable "Link to be added" placeholders.
+ * Nine selected, published TikTok posts. Keep creator attribution for content
+ * uploaded by collaborators (e.g. Kebrom Neguse). The optional poster path can
+ * be filled with an approved still at any time; no TikTok embeds load upfront.
  */
+export type SocialVideo = {
+  id: string;
+  url: string;
+  creator: string;
+  label: string;
+  poster?: string;
+};
+
 export type SocialBrand = {
   id: string;
   name: string;
+  shortName: string;
   sector: string;
   summary: string;
-  deliverables: string[];
   accent: string;
-  channels: { label: string; url: string }[];
+  accentContrast: string;
+  profileUrl: string;
+  videos: [SocialVideo, SocialVideo, SocialVideo];
 };
 
 export const socialBrands: SocialBrand[] = [
   {
-    id: 'universal-social', name: 'Universal Electronics', sector: 'Solar · Electronics · Sound',
-    summary: 'Product education, video campaigns and creative communication for energy and electronics.',
-    deliverables: ['Creative direction', 'Product videos', 'Campaign content'],
-    accent: '#2758f3',
-    channels: [{ label: 'TikTok', url: '' }, { label: 'Instagram', url: '' }, { label: 'Facebook', url: '' }],
+    id: 'universal-social',
+    name: 'Universal Electronics',
+    shortName: 'UNIVERSAL',
+    sector: 'Solar · Electronics · Sound',
+    summary: 'Creative campaigns, product education and brand storytelling for energy and electronics.',
+    accent: '#2b4db4',
+    accentContrast: '#e5ecff',
+    profileUrl: 'https://www.tiktok.com/@universal_electronics',
+    videos: [
+      { id: '7697672470446345504', url: 'https://www.tiktok.com/@kebromneguseofficial/video/7697672470446345504', creator: '@kebromneguseofficial', label: 'Athlete collaboration' },
+      { id: '7684533828672670994', url: 'https://www.tiktok.com/@universal_electronics/video/7684533828672670994', creator: '@universal_electronics', label: 'Campaign video 02' },
+      { id: '7618627966997695751', url: 'https://www.tiktok.com/@universal_electronics/video/7618627966997695751', creator: '@universal_electronics', label: 'Campaign video 03' },
+    ],
   },
   {
-    id: 'kkgt-social', name: 'KKGT', sector: 'Agriculture · Coffee · Trade',
-    summary: 'Digital storytelling, product awareness and educational content for Ethiopian agriculture and trade.',
-    deliverables: ['Content planning', 'Social videos', 'Educational posts'],
-    accent: '#6e7e4c',
-    channels: [{ label: 'TikTok', url: '' }, { label: 'Facebook', url: '' }, { label: 'Campaign work', url: '' }],
+    id: 'kkgt-social',
+    name: 'KKGT Import & Export',
+    shortName: 'KKGT',
+    sector: 'Agriculture · Coffee · Trade',
+    summary: 'Brand-led stories and social campaigns bringing Ethiopian agriculture and trade to life.',
+    accent: '#395642',
+    accentContrast: '#ebefdb',
+    profileUrl: 'https://www.tiktok.com/@kkgtimport_export',
+    videos: [
+      { id: '7687193464877960481', url: 'https://www.tiktok.com/@kkgtimport_export/video/7687193464877960481', creator: '@kkgtimport_export', label: 'Campaign video 01' },
+      { id: '7682077657965612320', url: 'https://www.tiktok.com/@kkgtimport_export/video/7682077657965612320', creator: '@kkgtimport_export', label: 'Campaign video 02' },
+      { id: '7677607760153922849', url: 'https://www.tiktok.com/@kkgtimport_export/video/7677607760153922849', creator: '@kkgtimport_export', label: 'Campaign video 03' },
+    ],
   },
   {
-    id: 'finder-social', name: 'Finder Tools Ethiopia', sector: 'Power tools · Workshop equipment',
-    summary: 'Practical tool demonstrations and short-form campaign concepts made for professional audiences.',
-    deliverables: ['Content concepts', 'Video scripts', 'Product demonstrations'],
-    accent: '#ec6a2c',
-    channels: [{ label: 'TikTok', url: '' }, { label: 'Instagram', url: '' }, { label: 'Campaign work', url: '' }],
+    id: 'finder-social',
+    name: 'Finder Tools Ethiopia',
+    shortName: 'FINDER',
+    sector: 'Power tools · Workshop equipment',
+    summary: 'Short-form product demonstrations and practical creative campaigns for professional tools.',
+    accent: '#ca5c27',
+    accentContrast: '#fff0dc',
+    profileUrl: 'https://www.tiktok.com/@findertoolsethiopia',
+    videos: [
+      { id: '7698043236140633352', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698043236140633352', creator: '@findertoolsethiopia', label: 'Campaign video 01' },
+      { id: '7698782478424706311', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698782478424706311', creator: '@findertoolsethiopia', label: 'Campaign video 02' },
+      { id: '7699520885266369800', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7699520885266369800', creator: '@findertoolsethiopia', label: 'Campaign video 03' },
+    ],
   },
 ];

@@ -5,6 +5,7 @@ import type { CSSProperties } from 'react';
 import EditorialWork from '@/components/sections/EditorialWork';
 import './editorial.css';
 import './cursor-covers.css';
+import './social-showcase.css';
 
 const services = [
   { number: '01', title: 'Creative & social', subtitle: 'Stories with a reason to exist.', body: 'Campaign thinking, content strategy, visual direction and short-form video made to connect with people.', tags: ['Social media', 'Content production', 'Art direction'] },
