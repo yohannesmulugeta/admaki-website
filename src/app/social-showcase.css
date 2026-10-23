@@ -404,3 +404,23 @@
   .ad-video-spinner { animation:none; }
   .ad-video-grid { scroll-behavior:auto; }
 }
+
+
+/* Visible controls for mobile even when the embedded player swallows swipes. */
+.ad-mobile-video-controls { display: none; }
+@media (max-width: 700px) {
+  .ad-mobile-video-controls {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:18px;
+    font: 680 11px var(--font-geist-mono),monospace;
+    letter-spacing:.09em; color:#526156;
+  }
+  .ad-mobile-video-controls > div { display:flex; gap:9px; }
+  .ad-mobile-video-controls button {
+    display:grid; place-items:center;
+    width:43px; height:43px;
+    border:1px solid #99ad9a; background:#f8faf5;
+    color:#1c3222; cursor:pointer; font-size:21px;
+  }
+  .ad-mobile-video-controls button:active { background:#dee8d9; }
+}
