@@ -3,7 +3,8 @@
 import { useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import { flushSync } from 'react-dom';
-import { socialBrands, workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
+import { workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
+import SocialShowcase from '@/components/sections/SocialShowcase';
 import { withBasePath } from '@/lib/siteConfig';
 
 type Filter = 'All work' | WorkCategory;
@@ -138,43 +139,7 @@ export default function EditorialWork() {
           )}
         </div>
       </section>
-      <section id="social" className="ed-section ed-social" aria-labelledby="social-heading">
-        <div className="ed-wrap">
-          <div className="ed-section-head" data-reveal>
-            <span className="ed-kicker">02 / SOCIAL & CAMPAIGNS</span>
-            <div><h2 id="social-heading">Stories made<br /><em>to be seen.</em></h2>
-              <p>Strategy, content direction and short-form production for ambitious Ethiopian brands. Video and profile links will be added as approved work is published.</p>
-            </div>
-          </div>
-          <div className="ed-social-grid">
-            {socialBrands.map((brand, i) => (
-              <article key={brand.id} data-reveal className="ed-social-card" style={{ '--brand-accent': brand.accent } as CSSProperties}>
-                <div className="ed-social-art">
-                  <div className="ed-social-art-no">0{i + 1}</div>
-                  <span className="ed-social-tag">ADMAKI / SOCIAL STUDIO</span>
-                  <div className="ed-social-art-name">{brand.name.split(' ').map((word) => <span key={word}>{word}</span>)}</div>
-                  <div className="ed-social-lines"><span /><span /><span /></div>
-                  <span className="ed-social-watermark">↗</span>
-                </div>
-                <div className="ed-social-content">
-                  <span className="ed-card-kicker">{brand.sector}</span>
-                  <h3>{brand.name}</h3>
-                  <p>{brand.summary}</p>
-                  <div className="ed-social-tags">{brand.deliverables.map((label) => <span key={label}>{label}</span>)}</div>
-                  <div className="ed-social-links" aria-label={brand.name + ' social links'}>
-                    {brand.channels.map((channel) => channel.url ? (
-                      <a key={channel.label} href={channel.url} target="_blank" rel="noopener noreferrer">{channel.label} ↗</a>
-                    ) : (
-                      <span key={channel.label} className="ed-link-placeholder" title="Update src/data/portfolio.ts to add link">{channel.label} · link coming soon</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="ed-small-footnote">Social visuals are editorial placeholders, not campaign photographs. Replace them with approved video thumbnails and add live URLs in <code>src/data/portfolio.ts</code>.</p>
-        </div>
-      </section>
+      <SocialShowcase />
     </>
   );
 }
