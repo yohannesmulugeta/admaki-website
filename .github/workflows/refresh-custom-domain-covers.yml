@@ -1,0 +1,60 @@
+name: Capture newly added portfolio covers
+
+on:
+  push:
+    branches:
+      - feature/custom-domains-portfolio-refresh
+    paths:
+      - .github/workflows/refresh-custom-domain-covers.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install capture dependencies
+        run: |
+          npm ci
+          npm install --no-save --package-lock=false playwright@1.56.1 sharp@0.34.4
+      - name: Find Chrome
+        id: chrome
+        shell: bash
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "path=$(command -v google-chrome)" >> "$GITHUB_OUTPUT"
+          elif command -v google-chrome-stable >/dev/null 2>&1; then
+            echo "path=$(command -v google-chrome-stable)" >> "$GITHUB_OUTPUT"
+          else
+            npx playwright install --with-deps chromium
+            echo "path=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Capture production custom-domain and client preview hero covers
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.path }}
+          COVER_IDS: sibu,enkupanet,maison-debrah,hayked-trading
+        run: node scripts/capture-project-covers.mjs
+      - name: Save optimized images into portfolio branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/covers/
+          if git diff --cached --quiet; then
+            echo 'No updated screenshots'
+          else
+            git commit -m 'assets: add authentic custom-domain portfolio hero covers'
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

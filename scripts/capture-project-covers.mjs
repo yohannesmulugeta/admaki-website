@@ -15,7 +15,10 @@ const sites = [
   { id: 'kkgt-coffee', url: 'https://kkgtcoffee.com/', sourceRepo: 'KKGTCOFFEEwebsite' },
   { id: 'universal', url: 'https://universalelectronicet.com/' },
   { id: 'kkgt-trade', url: 'https://kkgtimportexport.com/', sourceRepo: 'KKGTIMPORTEXPORT' },
-  { id: 'sibu', url: 'https://yohannesmulugeta.github.io/SIBU-TRADING-PLC/' },
+  { id: 'sibu', url: 'https://sibutradingplc.com/' },
+  { id: 'enkupanet', url: 'https://enkupanetagrotrading.com/' },
+  { id: 'maison-debrah', url: 'https://maisondebrah-et.com/' },
+  { id: 'hayked-trading', url: 'https://yohannesmulugeta.github.io/hayked-trading/' },
   { id: 'gurshamenu', url: 'https://yohannesmulugeta.github.io/gurshamenu/' },
   { id: 'getfit', url: 'https://yohannesmulugeta.github.io/GET-FIT-WITH-JO/' },
   { id: 'orbit', url: 'https://yohannesmulugeta.github.io/orbiths/' },
@@ -23,6 +26,15 @@ const sites = [
   { id: 'ephrem', url: 'https://yohannesmulugeta.github.io/ephremart/' },
   { id: 'bethager', url: 'https://yohannesmulugeta.github.io/bethager-furniture/' },
 ];
+
+const selectedIds = process.env.COVER_IDS
+  ? new Set(process.env.COVER_IDS.split(',').map((id) => id.trim()).filter(Boolean))
+  : null;
+const selectedSites = selectedIds ? sites.filter((site) => selectedIds.has(site.id)) : sites;
+if (selectedIds && selectedSites.length !== selectedIds.size) {
+  throw new Error('Unknown COVER_IDS: ' +
+    [...selectedIds].filter((id) => !sites.some((site) => site.id === id)).join(', '));
+}
 
 const output = path.resolve('public/images/covers');
 await mkdir(output, { recursive: true });
@@ -67,8 +79,8 @@ async function openLocalSource(page, site, port) {
 let success = 0;
 const failures = [];
 try {
-  for (let index = 0; index < sites.length; index++) {
-    const site = sites[index];
+  for (let index = 0; index < selectedSites.length; index++) {
+    const site = selectedSites[index];
     const page = await browser.newPage({
       viewport: { width: 1440, height: 900 },
       deviceScaleFactor: 1, colorScheme: 'light', reducedMotion: 'reduce', locale: 'en-US',
@@ -112,6 +124,6 @@ try {
 } finally {
   await browser.close();
 }
-console.log('Captured', success, '/', sites.length, 'homepage covers');
+console.log('Captured', success, '/', selectedSites.length, 'homepage covers');
 if (failures.length) console.log('Failures:\n' + failures.join('\n'));
-if (success < 7) process.exitCode = 1;
+if (success < (selectedIds ? selectedSites.length : 7)) process.exitCode = 1;
