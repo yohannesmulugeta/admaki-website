@@ -10,16 +10,28 @@ import { withBasePath } from '@/lib/siteConfig';
 type Filter = 'All work' | WorkCategory;
 const filters: Filter[] = ['All work', 'Websites', 'Business systems'];
 
-// Open with a stronger visual mix: cinematic site, electronics, restaurant tech,
-// and an ERP product. KKGT Coffee stays in the portfolio without leading it.
+// Showcase real custom-domain websites first. This ranking also adapts when
+// another project gains its own domain: update only its liveUrl in portfolio.ts.
+// Draft sites with custom domains retain their explicit Preview status.
 const showcaseOrder = [
-  'sibu', 'universal', 'enkupanet', 'gurshamenu', 'hayked', 'kkgt-coffee',
-  'hayked-trading', 'getfit', 'orbit', 'kkgt-trade', 'beanledger',
-  'maison-debrah', 'lobelia', 'ephrem', 'bethager', 'koffera',
+  'sibu', 'universal', 'enkupanet', 'kkgt-coffee', 'kkgt-trade', 'maison-debrah',
+  'gurshamenu', 'hayked', 'hayked-trading', 'getfit', 'orbit', 'beanledger',
+  'lobelia', 'ephrem', 'bethager', 'koffera',
 ];
 const order = new Map(showcaseOrder.map((id, index) => [id, index]));
+const hasCustomDomain = (project: WorkProject): boolean => {
+  if (!project.liveUrl) return false;
+  try {
+    const hostname = new URL(project.liveUrl).hostname;
+    return hostname !== 'github.io' && !hostname.endsWith('.github.io');
+  } catch {
+    return false;
+  }
+};
 const orderedProjects = [...workProjects].sort(
-  (left, right) => (order.get(left.id) ?? 99) - (order.get(right.id) ?? 99)
+  (left, right) =>
+    Number(hasCustomDomain(right)) - Number(hasCustomDomain(left)) ||
+    (order.get(left.id) ?? 99) - (order.get(right.id) ?? 99)
 );
 
 function ProjectCard({ project, index }: { project: WorkProject; index: number }) {
