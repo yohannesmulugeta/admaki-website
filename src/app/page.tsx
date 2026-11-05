@@ -97,7 +97,7 @@ export default function Home() {
           <h2 id="contact-heading" data-reveal>Have an idea?<br /><em>Let's make it matter.</em></h2>
           <div className="ed-contact-bottom" data-reveal>
             <p>Tell us what you're building — a website, a campaign or a system that makes the work easier.</p>
-            <div className="ed-contact-actions"><a className="ed-btn ed-btn-white" data-magnetic href="https://github.com/yohannesmulugeta" target="_blank" rel="noopener noreferrer">Explore our GitHub <span aria-hidden="true">↗</span></a><span className="ed-contact-note">Email and WhatsApp inquiry links will be added when confirmed.</span></div>
+            <div className="ed-contact-actions"><a className="ed-btn ed-btn-white" data-magnetic href="#work">Explore selected projects <span aria-hidden="true">↗</span></a><span className="ed-contact-note">Email and WhatsApp inquiry links will be added when confirmed.</span></div>
           </div>
           <div className="ed-footer" data-reveal><a href="#home" className="ed-footer-wordmark">ADMAKI<span>®</span></a><div><span>CREATIVE THINKING. TECHNICAL EXECUTION.</span><a href="#home">BACK TO TOP ↑</a></div></div>
         </div>
