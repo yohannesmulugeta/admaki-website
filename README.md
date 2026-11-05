@@ -20,7 +20,6 @@ All project and campaign data is in **`src/data/portfolio.ts`**.
 Each `workProjects` entry supports:
 - `title`, `eyebrow`, `description`, `category`, `status`, `theme`
 - `liveUrl` — link to the actual public website when confirmed
-- `repoUrl` — link to public GitHub source (omit for private repositories)
 - `caseStudyUrl` — internal project detail page when available
 - `screenshot` — optional approved web image in `public/images/projects/`
 
@@ -109,3 +108,7 @@ The interactive component is `src/components/sections/SocialShowcase.tsx` with s
 - The athlete collaboration video under `@kebromneguseofficial` retains the original uploader attribution.
 
 No TikTok video files are downloaded or rehosted. The original video pages remain accessible as normal links even when their embeds cannot play.
+
+## Public source-code link policy
+
+ADMAKI is a client-facing portfolio, not a code directory. Do not display GitHub, repository, or `Source ↗` links in public project cards, homepage contact CTAs, or case-study pages. Keep live-site and case-study links. Repositories remain accessible directly through the owner's GitHub account for development in Codex.
