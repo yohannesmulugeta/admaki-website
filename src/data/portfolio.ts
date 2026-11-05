@@ -6,7 +6,7 @@
  * labelled as such. Add screenshots only after reviewing image permissions.
  */
 export type WorkCategory = 'Websites' | 'Business systems';
-export type WorkStatus = 'Website' | 'Product' | 'Concept';
+export type WorkStatus = 'Website' | 'Product' | 'Concept' | 'Preview';
 export type WorkTheme = 'coffee' | 'trade' | 'electric' | 'fitness' | 'food' | 'health' | 'hotel' | 'gallery' | 'furniture' | 'software';
 
 export type WorkProject = {
@@ -20,7 +20,7 @@ export type WorkProject = {
   liveUrl?: string;
   repoUrl?: string;
   caseStudyUrl?: string;
-  screenshot?: string; // /images/covers/<id>.jpg compressed WebP captured from the actual website homepage
+  screenshot?: string; // /images/covers/<id>.webp — actual homepage screenshot, not stock art
   featured?: boolean;
 };
 
@@ -52,9 +52,27 @@ export const workProjects: WorkProject[] = [
     id: 'sibu', title: 'Sibu Trading PLC', eyebrow: 'Coffee / Export',
     category: 'Websites', status: 'Website', theme: 'coffee',
     description: 'An origin-led presentation of Ethiopian coffee and trading operations.',
-    liveUrl: 'https://yohannesmulugeta.github.io/SIBU-TRADING-PLC/',
+    liveUrl: 'https://sibutradingplc.com/',
     repoUrl: git + 'SIBU-TRADING-PLC',
     screenshot: '/images/covers/sibu.webp',
+  },
+  {
+    id: 'enkupanet', title: 'Enkupanet Agro Trading', eyebrow: 'Agriculture / Global trade',
+    category: 'Websites', status: 'Website', theme: 'trade', featured: true,
+    description: 'A bilingual corporate and product website for Ethiopian agricultural export products.',
+    liveUrl: 'https://enkupanetagrotrading.com/',
+    repoUrl: git + 'Enkupanet',
+    screenshot: '/images/covers/enkupanet.webp',
+  },
+  {
+    id: 'hayked-trading', title: 'Hayked General Trading', eyebrow: 'Coffee / Corporate preview',
+    category: 'Websites', status: 'Preview', theme: 'coffee',
+    description: 'A coffee export and processing website preview, with origin and warehouse services.',
+    // The custom domain currently returns an HTTP error. Show the working
+    // GitHub Pages preview until deployment is repaired and verified.
+    liveUrl: 'https://yohannesmulugeta.github.io/hayked-trading/',
+    repoUrl: git + 'hayked-trading',
+    screenshot: '/images/covers/hayked-trading.webp',
   },
   {
     id: 'gurshamenu', title: 'GurshaMenu', eyebrow: 'Restaurant technology',
@@ -87,6 +105,16 @@ export const workProjects: WorkProject[] = [
     liveUrl: 'https://yohannesmulugeta.github.io/Hotel-Lobelia/',
     repoUrl: git + 'Hotel-Lobelia',
     screenshot: '/images/covers/lobelia.webp',
+  },
+  {
+    id: 'maison-debrah', title: 'Maison Debrah Ethiopia', eyebrow: 'Luxury interiors / Client preview',
+    category: 'Websites', status: 'Preview', theme: 'furniture',
+    description: 'A luxury furniture and interiors storefront preview. Client launch approval remains pending.',
+    // Domain is accessible, but the website is explicitly marked as an
+    // unapproved client draft in the source repository.
+    liveUrl: 'https://maisondebrah-et.com/',
+    repoUrl: git + 'maison-debrah-et-last-edition',
+    screenshot: '/images/covers/maison-debrah.webp',
   },
   {
     id: 'koffera', title: 'Koffera Coffee', eyebrow: 'Coffee / Concept',
