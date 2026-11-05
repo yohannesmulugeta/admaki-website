@@ -26,19 +26,29 @@ Each `workProjects` entry supports:
 
 Projects without a screenshot use **conceptual editorial artwork**, which does not pretend to be a screenshot. "Concept" and demo entries are clearly labelled.
 
+### Custom-domain portfolio projects
+
+Project links and publication labels are maintained in `src/data/portfolio.ts`.
+
+| Portfolio project | Preferred public URL | Portfolio status |
+| --- | --- | --- |
+| Sibu Trading PLC | https://sibutradingplc.com/ | Production website |
+| KKGT Coffee | https://kkgtcoffee.com/ | Public website |
+| KKGT Import & Export | https://kkgtimportexport.com/ | Public website |
+| Universal Electronics | https://universalelectronicet.com/ | Public website |
+| Enkupanet Agro Trading | https://enkupanetagrotrading.com/ | Public website |
+| Maison Debrah Ethiopia | https://maisondebrah-et.com/ | **Client preview awaiting approval** |
+| Hayked General Trading | https://yohannesmulugeta.github.io/hayked-trading/ | **GitHub Pages preview**; custom domain is presently unavailable |
+
+The browser was able to fetch the first six custom-domain homepages during the November 2026 update. The presence of a public draft domain does not imply the client has approved a production launch. Repair and verify `https://haykedtrading.com/` before replacing the working Hayked preview URL. Do not invent missing launch approvals.
+
+Four new or refreshed screenshots are prepared as optimized local WebP cover assets from the public homepages. The capture helper lives at `scripts/capture-project-covers.mjs`; set `COVER_IDS` to refresh only selected projects.
+
 ### Social media: Universal / KKGT / Finder
 
-Update `socialBrands` in `src/data/portfolio.ts`. For each entry, add links in its `channels` list:
+The `socialBrands` array in `src/data/portfolio.ts` contains nine selected TikTok posts (three videos per brand), each with an exact video URL, video ID, uploader attribution, and official profile URL. The showcase uses `src/components/sections/SocialShowcase.tsx` to load at most one TikTok embed when needed. TikTok may restrict automatic playback; every video has a direct link.
 
-```ts
-channels: [
-  { label: 'TikTok', url: 'https://www.tiktok.com/@your-approved-handle' },
-  { label: 'Instagram', url: '' },
-  { label: 'Campaign work', url: '' },
-],
-```
-
-Blank URLs render as **link coming soon**, not broken or fake links. Replace the geometric social art with client-approved thumbnails when available.
+To use an original MP4 instead of an embed, obtain an approved export and implement a performant HTML5 video source with a poster. Do not download/rehost TikTok posts without permission.
 
 ### ADMAKI contact details
 
