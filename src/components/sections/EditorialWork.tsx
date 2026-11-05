@@ -13,8 +13,9 @@ const filters: Filter[] = ['All work', 'Websites', 'Business systems'];
 // Open with a stronger visual mix: cinematic site, electronics, restaurant tech,
 // and an ERP product. KKGT Coffee stays in the portfolio without leading it.
 const showcaseOrder = [
-  'sibu', 'universal', 'gurshamenu', 'hayked', 'kkgt-coffee', 'getfit',
-  'orbit', 'kkgt-trade', 'beanledger', 'lobelia', 'ephrem', 'bethager', 'koffera',
+  'sibu', 'universal', 'enkupanet', 'gurshamenu', 'hayked', 'kkgt-coffee',
+  'hayked-trading', 'getfit', 'orbit', 'kkgt-trade', 'beanledger',
+  'maison-debrah', 'lobelia', 'ephrem', 'bethager', 'koffera',
 ];
 const order = new Map(showcaseOrder.map((id, index) => [id, index]));
 const orderedProjects = [...workProjects].sort(
@@ -29,7 +30,7 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
     <article className="ed-project" data-project={project.id} data-reveal style={{ '--reveal-delay': Math.min(index % 2, 1) * 100 + 'ms' } as CSSProperties}>
       <div className="ed-project-top"><span>{String(index + 1).padStart(2, '0')} / {project.eyebrow}</span><span>{project.status}</span></div>
       {primaryUrl ? (
-        <a className={`ed-project-art theme-${project.theme}`} data-cursor-label={project.category === 'Websites' ? 'VIEW SITE ↗' : 'CASE STUDY ↗'} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
+        <a className={`ed-project-art theme-${project.theme}`} data-cursor-label={project.status === 'Preview' ? 'PREVIEW ↗' : project.category === 'Websites' ? 'VIEW SITE ↗' : 'CASE STUDY ↗'} href={primaryUrl} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} aria-label={`Explore ${project.title}`}>
           <ProjectArtwork project={project} />
           <span className="ed-art-arrow" aria-hidden="true">↗</span>
         </a>
@@ -40,7 +41,7 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
         <div><h3>{project.title}</h3><p>{project.description}</p></div>
         <div className="ed-project-links">
           {project.caseStudyUrl && <a href={withBasePath(project.caseStudyUrl)}>Case study ↗</a>}
-          {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">Open website ↗</a>}
+          {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">{project.status === 'Preview' ? 'View preview ↗' : 'Open website ↗'}</a>}
           {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">Source ↗</a>}
         </div>
       </div>
@@ -73,7 +74,7 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
             onError={() => setImageFailed(true)}
           />
           <span className="ed-cover-annotation">
-            {project.category === 'Business systems' ? 'PRODUCT PREVIEW' : project.status === 'Concept' ? 'CONCEPT HOMEPAGE' : 'ACTUAL HOMEPAGE'}
+            {project.category === 'Business systems' ? 'PRODUCT PREVIEW' : project.status === 'Concept' ? 'CONCEPT HOMEPAGE' : project.status === 'Preview' ? 'DRAFT PREVIEW' : 'ACTUAL HOMEPAGE'}
           </span>
         </div>
       </div>
