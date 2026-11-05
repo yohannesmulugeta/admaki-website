@@ -18,34 +18,31 @@ export type WorkProject = {
   description: string;
   theme: WorkTheme;
   liveUrl?: string;
-  repoUrl?: string;
   caseStudyUrl?: string;
   screenshot?: string; // /images/covers/<id>.webp — actual homepage screenshot, not stock art
   featured?: boolean;
 };
-
-const git = 'https://github.com/yohannesmulugeta/';
 
 export const workProjects: WorkProject[] = [
   {
     id: 'kkgt-coffee', title: 'KKGT Coffee', eyebrow: 'Coffee export / Corporate',
     category: 'Websites', status: 'Website', theme: 'coffee', featured: true,
     description: 'An editorial website for Ethiopian coffee origins, quality and buyer discovery.',
-    liveUrl: 'https://kkgtcoffee.com/', repoUrl: git + 'KKGTCOFFEEwebsite',
+    liveUrl: 'https://kkgtcoffee.com/', 
     screenshot: '/images/covers/kkgt-coffee.webp',
   },
   {
     id: 'universal', title: 'Universal Electronics', eyebrow: 'Solar / Electronics',
     category: 'Websites', status: 'Website', theme: 'electric', featured: true,
     description: 'A product-focused destination for solar, electronics and sound solutions.',
-    liveUrl: 'https://universalelectronicet.com/', repoUrl: git + 'universalelectronics',
+    liveUrl: 'https://universalelectronicet.com/', 
     screenshot: '/images/covers/universal.webp',
   },
   {
     id: 'kkgt-trade', title: 'KKGT Import & Export', eyebrow: 'Import / Export',
     category: 'Websites', status: 'Website', theme: 'trade', featured: true,
     description: 'A structured commercial website connecting agriculture, commodities and trade.',
-    liveUrl: 'https://kkgtimportexport.com/', repoUrl: git + 'KKGTIMPORTEXPORT',
+    liveUrl: 'https://kkgtimportexport.com/', 
     screenshot: '/images/covers/kkgt-trade.webp',
   },
   {
@@ -53,7 +50,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Website', theme: 'coffee',
     description: 'An origin-led presentation of Ethiopian coffee and trading operations.',
     liveUrl: 'https://sibutradingplc.com/',
-    repoUrl: git + 'SIBU-TRADING-PLC',
+    
     screenshot: '/images/covers/sibu.webp',
   },
   {
@@ -61,7 +58,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Website', theme: 'trade', featured: true,
     description: 'A bilingual corporate and product website for Ethiopian agricultural export products.',
     liveUrl: 'https://enkupanetagrotrading.com/',
-    repoUrl: git + 'Enkupanet',
+    
     screenshot: '/images/covers/enkupanet.webp',
   },
   {
@@ -71,7 +68,7 @@ export const workProjects: WorkProject[] = [
     // The custom domain currently returns an HTTP error. Show the working
     // GitHub Pages preview until deployment is repaired and verified.
     liveUrl: 'https://yohannesmulugeta.github.io/hayked-trading/',
-    repoUrl: git + 'hayked-trading',
+    
     screenshot: '/images/covers/hayked-trading.webp',
   },
   {
@@ -79,7 +76,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Product', theme: 'food', featured: true,
     description: 'A QR-menu product website built to make restaurant menus easier to update.',
     liveUrl: 'https://yohannesmulugeta.github.io/gurshamenu/',
-    repoUrl: git + 'gurshamenu',
+    
     screenshot: '/images/covers/gurshamenu.webp',
   },
   {
@@ -87,7 +84,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Website', theme: 'fitness',
     description: 'A mobile-first coaching experience focused on programs and consultation.',
     liveUrl: 'https://yohannesmulugeta.github.io/GET-FIT-WITH-JO/',
-    repoUrl: git + 'GET-FIT-WITH-JO',
+    
     screenshot: '/images/covers/getfit.webp',
   },
   {
@@ -95,7 +92,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Website', theme: 'health',
     description: 'An editorial redesign for a health-technology solutions provider.',
     liveUrl: 'https://yohannesmulugeta.github.io/orbiths/',
-    repoUrl: git + 'orbiths',
+    
     screenshot: '/images/covers/orbit.webp',
   },
   {
@@ -103,7 +100,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Concept', theme: 'hotel',
     description: 'A cinematic hotel-website concept exploring a richer arrival experience.',
     liveUrl: 'https://yohannesmulugeta.github.io/Hotel-Lobelia/',
-    repoUrl: git + 'Hotel-Lobelia',
+    
     screenshot: '/images/covers/lobelia.webp',
   },
   {
@@ -113,7 +110,7 @@ export const workProjects: WorkProject[] = [
     // Domain is accessible, but the website is explicitly marked as an
     // unapproved client draft in the source repository.
     liveUrl: 'https://maisondebrah-et.com/',
-    repoUrl: git + 'maison-debrah-et-last-edition',
+    
     screenshot: '/images/covers/maison-debrah.webp',
   },
   {
@@ -121,14 +118,14 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Concept', theme: 'coffee',
     description: 'A modern coffee-export presentation with animated, responsive storytelling.',
     // Temporarily hide live link: homepage currently displays a website error.
-    repoUrl: git + 'koffera-coffee',
+    
   },
   {
     id: 'ephrem', title: 'Ephrem Art', eyebrow: 'Artist portfolio / Concept',
     category: 'Websites', status: 'Concept', theme: 'gallery',
     liveUrl: 'https://yohannesmulugeta.github.io/ephremart/',
     description: 'A contemporary gallery-style artist portfolio exploring artwork and biography.',
-    repoUrl: git + 'ephremart',
+    
     screenshot: '/images/covers/ephrem.webp',
   },
   {
@@ -136,7 +133,7 @@ export const workProjects: WorkProject[] = [
     category: 'Websites', status: 'Concept', theme: 'furniture',
     liveUrl: 'https://yohannesmulugeta.github.io/bethager-furniture/',
     description: 'A furniture-showroom demonstration with an image-led shopping aesthetic.',
-    repoUrl: git + 'bethager-furniture',
+    
     screenshot: '/images/covers/bethager.webp',
   },
   {
@@ -144,7 +141,7 @@ export const workProjects: WorkProject[] = [
     category: 'Business systems', status: 'Product', theme: 'software', featured: true,
     description: 'Warehouse receipts, client custody, lot traceability and stock workflows in one system.',
     caseStudyUrl: '/work/hayked-coffee-warehouse-erp',
-    repoUrl: git + 'hayked-coffee-warehouse-erp',
+    
     screenshot: '/images/projects/hayked-coffee-warehouse-erp.webp',
   },
   {
@@ -152,7 +149,7 @@ export const workProjects: WorkProject[] = [
     category: 'Business systems', status: 'Product', theme: 'software', featured: true,
     description: 'Connecting coffee purchases, processing, stock, bags and export operations.',
     caseStudyUrl: '/work/beanledger',
-    repoUrl: git + 'Bean-Ledger-',
+    
     screenshot: '/images/projects/beanledger-coffee-export-erp.webp',
   },
 ];

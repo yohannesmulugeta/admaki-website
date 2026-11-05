@@ -35,7 +35,7 @@ const orderedProjects = [...workProjects].sort(
 );
 
 function ProjectCard({ project, index }: { project: WorkProject; index: number }) {
-  const primaryUrl = project.caseStudyUrl ? withBasePath(project.caseStudyUrl) : (project.liveUrl || project.repoUrl || '');
+  const primaryUrl = project.caseStudyUrl ? withBasePath(project.caseStudyUrl) : (project.liveUrl || '');
   const external = !!primaryUrl && /^https?:/.test(primaryUrl);
 
   return (
@@ -54,7 +54,6 @@ function ProjectCard({ project, index }: { project: WorkProject; index: number }
         <div className="ed-project-links">
           {project.caseStudyUrl && <a href={withBasePath(project.caseStudyUrl)}>Case study ↗</a>}
           {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">{project.status === 'Preview' ? 'View preview ↗' : 'Open website ↗'}</a>}
-          {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">Source ↗</a>}
         </div>
       </div>
     </article>
@@ -129,7 +128,7 @@ export default function EditorialWork() {
           <div className="ed-section-head" data-reveal>
             <span className="ed-kicker">01 / SELECTED WORK</span>
             <div><h2 id="work-heading">Made to look good.<br /><em>Built to do good.</em></h2>
-              <p>Real digital projects across websites, brands and business systems. Explore the work, visit the published sites or look at the underlying code.</p>
+              <p>Real digital projects across websites, brands and business systems. Explore the work, visit the published sites, and discover the thinking behind our digital projects.</p>
             </div>
           </div>
           <div className="ed-filter-bar" role="group" aria-label="Filter portfolio projects">
