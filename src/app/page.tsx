@@ -5,6 +5,7 @@ import StudioCursor from '@/components/motion/StudioCursor';
 import type { CSSProperties } from 'react';
 import SocialShowcase from '@/components/sections/SocialShowcase';
 import EditorialWork from '@/components/sections/EditorialWork';
+import FeaturedCaseStudies from '@/components/sections/FeaturedCaseStudies';
 import './editorial.css';
 import './cursor-covers.css';
 import './social-showcase.css';
@@ -33,7 +34,7 @@ export default function Home() {
         <div className="ed-wrap ed-nav-inner">
           <a href="#home" className="ed-logo" aria-label="ADMAKI, home">ADMAKI<span>®</span></a>
           <nav className="ed-nav-links" aria-label="Main navigation">
-            <Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
+            <Link href="/work">Work</Link><a href="#featured-case-studies">Case studies</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
           </nav>
           <a className="ed-nav-cta" data-magnetic href="#contact">Start a project <span aria-hidden="true">↗</span></a>
           <details className="ed-mobile-menu">
@@ -51,6 +52,7 @@ export default function Home() {
 
       <SocialShowcase />
 
+      <FeaturedCaseStudies />
       <EditorialWork />
 
       <section id="products" className="ad-products ed-section" aria-labelledby="products-heading">
@@ -77,7 +79,7 @@ export default function Home() {
               <div className="ad-product-actions">
                 <a className="ad-product-action" href="https://nfc.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore NFC cards <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
-                <a className="ad-product-action secondary" href="mailto:sales@admakidigital.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="mailto:yohannesmulugegta084@gmail.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
               </div>
               <p className="ad-product-foot">Customer editing portal is planned, not yet launched.</p>
             </article>
