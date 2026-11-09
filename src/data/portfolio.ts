@@ -30,6 +30,7 @@ export const workProjects: WorkProject[] = [
     description: 'An editorial website for Ethiopian coffee origins, quality and buyer discovery.',
     liveUrl: 'https://kkgtcoffee.com/', 
     screenshot: '/images/covers/kkgt-coffee.webp',
+    caseStudyUrl: '/case-studies/kkgt',
   },
   {
     id: 'universal', title: 'Universal Electronics', eyebrow: 'Solar / Electronics',
@@ -37,6 +38,7 @@ export const workProjects: WorkProject[] = [
     description: 'A product-focused destination for solar, electronics and sound solutions.',
     liveUrl: 'https://universalelectronicet.com/', 
     screenshot: '/images/covers/universal.webp',
+    caseStudyUrl: '/case-studies/universal-electronics',
   },
   {
     id: 'kkgt-trade', title: 'KKGT Import & Export', eyebrow: 'Import / Export',
@@ -52,6 +54,7 @@ export const workProjects: WorkProject[] = [
     liveUrl: 'https://sibutradingplc.com/',
     
     screenshot: '/images/covers/sibu.webp',
+    caseStudyUrl: '/case-studies/sibu-trading',
   },
   {
     id: 'enkupanet', title: 'Enkupanet Agro Trading', eyebrow: 'Agriculture / Global trade',
@@ -104,14 +107,13 @@ export const workProjects: WorkProject[] = [
     screenshot: '/images/covers/lobelia.webp',
   },
   {
-    id: 'maison-debrah', title: 'Maison Debrah Ethiopia', eyebrow: 'Luxury interiors / Client preview',
-    category: 'Websites', status: 'Preview', theme: 'furniture',
-    description: 'A luxury furniture and interiors storefront preview. Client launch approval remains pending.',
-    // Domain is accessible, but the website is explicitly marked as an
-    // unapproved client draft in the source repository.
+    id: 'maison-debrah', title: 'Maison Debrah Ethiopia', eyebrow: 'Luxury interiors / Launched website',
+    category: 'Websites', status: 'Website', theme: 'furniture',
+    description: 'A launched, image-forward website for a luxury furniture and interiors business.',
     liveUrl: 'https://maisondebrah-et.com/',
     
     screenshot: '/images/covers/maison-debrah.webp',
+    caseStudyUrl: '/case-studies/maison-debrah',
   },
   {
     id: 'koffera', title: 'Koffera Coffee', eyebrow: 'Coffee / Concept',
@@ -140,9 +142,10 @@ export const workProjects: WorkProject[] = [
     id: 'hayked', title: 'Hayked Coffee Warehouse ERP', eyebrow: 'Warehouse / ERP',
     category: 'Business systems', status: 'Product', theme: 'software', featured: true,
     description: 'Warehouse receipts, client custody, lot traceability and stock workflows in one system.',
-    caseStudyUrl: '/work/hayked-coffee-warehouse-erp',
+    
     
     screenshot: '/images/projects/hayked-coffee-warehouse-erp.webp',
+    caseStudyUrl: '/case-studies/hayked-warehouse-erp',
   },
   {
     id: 'beanledger', title: 'BeanLedger', eyebrow: 'Coffee export / ERP',
