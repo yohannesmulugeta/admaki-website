@@ -39,7 +39,7 @@ export default function Home() {
           <a className="ed-nav-cta" data-magnetic href="#contact">Start a project <span aria-hidden="true">↗</span></a>
           <details className="ed-mobile-menu">
             <summary aria-label="Open navigation">MENU <span aria-hidden="true">☰</span></summary>
-            <nav aria-label="Mobile navigation"><Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
+            <nav aria-label="Mobile navigation"><Link href="/work">Work</Link><a href="#featured-case-studies">Case studies</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
           </details>
         </div>
       </header>
