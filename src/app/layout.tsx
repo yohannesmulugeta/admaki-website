@@ -22,12 +22,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: { canonical: '/' },
   title: {
     default: 'ADMAKI — Creative Technology Studio',
     template: '%s | ADMAKI',
   },
   description:
-    'ADMAKI creates memorable websites, creative campaigns and custom ERP systems for businesses in Ethiopia and beyond.',
+    'ADMAKI creates websites, social media campaigns, QR restaurant menus, NFC business cards and custom ERP software for businesses in Ethiopia.',
   keywords: [
     'ADMAKI',
     'Creative Technology Studio',
@@ -38,6 +39,9 @@ export const metadata: Metadata = {
     'Telegram Bots',
     'Workflow Automation',
     'Social Media Strategy',
+    'QR Restaurant Menus Ethiopia',
+    'NFC Digital Business Cards Ethiopia',
+    'Digital Menu Addis Ababa',
   ],
   authors: [{ name: 'ADMAKI' }],
   creator: 'ADMAKI',
@@ -54,7 +58,7 @@ export const metadata: Metadata = {
     siteName: 'ADMAKI',
     title: 'ADMAKI — Creative Technology Studio',
     description:
-      'Ideas that move. Systems that work. Explore ADMAKI websites, creative campaigns and practical business software.',
+      'Websites, creative campaigns, QR restaurant menus, NFC business cards and business software, built in Ethiopia.',
     images: [
       {
         url: absoluteAssetUrl('/images/projects/project-02.svg'),
