@@ -1,7 +1,9 @@
+import Link from 'next/link';
 import IdeaEngine from '@/components/sections/IdeaEngine';
 import MotionSignals from '@/components/motion/MotionSignals';
 import StudioCursor from '@/components/motion/StudioCursor';
 import type { CSSProperties } from 'react';
+import SocialShowcase from '@/components/sections/SocialShowcase';
 import EditorialWork from '@/components/sections/EditorialWork';
 import './editorial.css';
 import './cursor-covers.css';
@@ -26,17 +28,17 @@ export default function Home() {
     <main className="editorial-site" id="main-content">
       <MotionSignals />
       <StudioCursor />
-      <a href="#work" className="ed-skip">Skip to work</a>
+      <a href="#social" className="ed-skip">Skip to campaigns</a>
       <header className="ed-nav">
         <div className="ed-wrap ed-nav-inner">
           <a href="#home" className="ed-logo" aria-label="ADMAKI, home">ADMAKI<span>®</span></a>
           <nav className="ed-nav-links" aria-label="Main navigation">
-            <a href="#work">Work</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
+            <Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
           </nav>
           <a className="ed-nav-cta" data-magnetic href="#contact">Start a project <span aria-hidden="true">↗</span></a>
           <details className="ed-mobile-menu">
             <summary aria-label="Open navigation">MENU <span aria-hidden="true">☰</span></summary>
-            <nav aria-label="Mobile navigation"><a href="#work">Work</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
+            <nav aria-label="Mobile navigation"><Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
           </details>
         </div>
       </header>
@@ -46,6 +48,8 @@ export default function Home() {
       <div className="ed-marquee" aria-label="ADMAKI disciplines">
         <div className="ed-wrap ed-marquee-inner"><span>STRATEGY</span><i>✳</i><span>DESIGN</span><i>✳</i><span>DEVELOPMENT</span><i>✳</i><span>STORYTELLING</span><i>✳</i><span>BUSINESS SYSTEMS</span></div>
       </div>
+
+      <SocialShowcase />
 
       <EditorialWork />
 
@@ -106,7 +110,7 @@ export default function Home() {
           <div data-reveal><h2 id="studio-heading">Not more noise.<br /><em>More meaning.</em></h2>
             <p className="ed-studio-lead">ADMAKI connects creative communication with practical technology. Based in Ethiopia, we work where strong ideas and everyday business challenges meet.</p>
             <p>We care about the details people see — the identity, layout, interaction and story — and the systems they rely on when the screen closes.</p>
-            <a href="#contact" className="ed-text-link" data-magnetic>Let's make something together <span aria-hidden="true">↗</span></a>
+            <a href="#contact" className="ed-text-link" data-magnetic>Let&apos;s make something together <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
@@ -125,10 +129,10 @@ export default function Home() {
 
       <section id="contact" className="ed-contact" aria-labelledby="contact-heading">
         <div className="ed-wrap">
-          <span className="ed-kicker">06 / WHAT'S NEXT</span>
-          <h2 id="contact-heading" data-reveal>Have an idea?<br /><em>Let's make it matter.</em></h2>
+          <span className="ed-kicker">06 / WHAT&apos;S NEXT</span>
+          <h2 id="contact-heading" data-reveal>Have an idea?<br /><em>Let&apos;s make it matter.</em></h2>
           <div className="ed-contact-bottom" data-reveal>
-            <p>Tell us what you're building — a website, a campaign or a system that makes the work easier.</p>
+            <p>Tell us what you&apos;re building — a website, a campaign or a system that makes the work easier.</p>
             <div className="ed-contact-actions"><div className="ad-contact-buttons">
               <a className="ed-btn ed-btn-white" data-magnetic href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span aria-hidden="true">↗</span></a>
               <a className="ed-btn ed-btn-white" data-magnetic href="mailto:yohannesmulugegta084@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20AdMaki%20Digital">Send an email <span aria-hidden="true">↗</span></a>

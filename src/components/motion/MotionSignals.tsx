@@ -57,7 +57,7 @@ export default function MotionSignals() {
     let active = '';
     let lastProgress = -1;
     const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.ed-nav-links a[href^="#"]'));
-    const sections = ['work', 'social', 'services', 'studio', 'contact']
+    const sections = ['social', 'work', 'services', 'studio', 'contact']
       .map((id) => document.getElementById(id)).filter((item): item is HTMLElement => !!item);
     const processTrack = document.querySelector<HTMLElement>('.ed-process-grid');
 

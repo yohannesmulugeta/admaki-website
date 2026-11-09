@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, type CSSProperties } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { flushSync } from 'react-dom';
 import { workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
-import SocialShowcase from '@/components/sections/SocialShowcase';
 import { withBasePath } from '@/lib/siteConfig';
 
 type Filter = 'All work' | WorkCategory;
@@ -98,8 +98,6 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
       <div className="ed-art-circle" />
       <div className="ed-art-panel" />
       <span className="ed-art-index">CREATIVE DIGITAL WORK &nbsp; / &nbsp; 2026</span>
-      <div className="ed-art-words"><span>{project.eyebrow}</span><strong>{project.title}</strong><i>↗</i></div>
-      <span className="ed-art-sidenote">Conceptual preview artwork — open project for the actual website</span>
     </div>
   );
 }
@@ -107,11 +105,13 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
 export default function EditorialWork() {
   const [filter, setFilter] = useState<Filter>('All work');
   const [showAll, setShowAll] = useState(false);
-  const filtered = orderedProjects.filter((project) => filter === 'All work' || project.category === filter);
+
+  const filtered = filter === 'All work'
+    ? orderedProjects
+    : orderedProjects.filter((project) => project.category === filter);
+
   const shown = showAll ? filtered : filtered.slice(0, 6);
 
-  // The View Transitions API animates filter changes in supporting browsers.
-  // The fallback remains an immediate, keyboard-accessible React update.
   const transition = (update: () => void) => {
     const doc = document as Document & { startViewTransition?: (callback: () => void) => unknown };
     if (doc.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -122,36 +122,39 @@ export default function EditorialWork() {
   };
 
   return (
-    <>
-      <section id="work" className="ed-section ed-work" aria-labelledby="work-heading">
-        <div className="ed-wrap">
-          <div className="ed-section-head" data-reveal>
-            <span className="ed-kicker">01 / SELECTED WORK</span>
-            <div><h2 id="work-heading">Made to look good.<br /><em>Built to do good.</em></h2>
-              <p>Real digital projects across websites, brands and business systems. Explore the work, visit the published sites, and discover the thinking behind our digital projects.</p>
-            </div>
+    <section id="work" className="ed-section ed-work" aria-labelledby="work-heading">
+      <div className="ed-wrap">
+        <div className="ed-section-head" data-reveal>
+          <span className="ed-kicker">02 / SELECTED WORK</span>
+          <div><h2 id="work-heading">Made to look good.<br /><em>Built to do good.</em></h2>
+            <p>Real digital projects across websites, brands and business systems. Explore the work, visit the published sites, and discover the thinking behind our digital projects.</p>
           </div>
-          <div className="ed-filter-bar" role="group" aria-label="Filter portfolio projects">
-            <div className="ed-tabs">
-              {filters.map((item) => (
-                <button type="button" key={item} onClick={() => transition(() => { setFilter(item); setShowAll(false); })} className={filter === item ? 'ed-tab active' : 'ed-tab'} aria-pressed={filter === item}>
-                  {item}<sup>{item === 'All work' ? workProjects.length : workProjects.filter((project) => project.category === item).length}</sup>
-                </button>
-              ))}
-            </div>
-            <span className="ed-results" role="status" aria-live="polite">{filtered.length} PROJECTS</span>
-          </div>
-          <div className="ed-project-grid">{shown.map((project, i) => <ProjectCard project={project} index={i} key={project.id} />)}</div>
-          {filtered.length > 6 && (
-            <div className="ed-center-action">
-              <button className="ed-btn ed-btn-outline" data-magnetic type="button" onClick={() => transition(() => setShowAll(!showAll))}>
-                {showAll ? 'Show fewer projects' : `View all ${filtered.length} projects`} <span aria-hidden="true">{showAll ? '↑' : '↘'}</span>
-              </button>
-            </div>
-          )}
         </div>
-      </section>
-      <SocialShowcase />
-    </>
+        <div className="ed-filter-bar" role="group" aria-label="Filter portfolio projects">
+          <div className="ed-tabs">
+            {filters.map((item) => (
+              <button type="button" key={item} onClick={() => transition(() => { setFilter(item); setShowAll(false); })} className={filter === item ? 'ed-tab active' : 'ed-tab'} aria-pressed={filter === item}>
+                {item}<sup>{item === 'All work' ? workProjects.length : workProjects.filter((project) => project.category === item).length}</sup>
+              </button>
+            ))}
+          </div>
+          <span className="ed-results" role="status" aria-live="polite">{filtered.length} PROJECTS</span>
+        </div>
+        <div className="ed-project-grid">{shown.map((project, i) => <ProjectCard project={project} index={i} key={project.id} />)}</div>
+        {filtered.length > 6 && (
+          <div className="ed-center-action" style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button className="ed-btn ed-btn-outline" data-magnetic type="button" onClick={() => transition(() => setShowAll(!showAll))}>
+              {showAll ? 'Show fewer projects' : `View all ${filtered.length} projects`} <span aria-hidden="true">{showAll ? '↑' : '↘'}</span>
+            </button>
+            <Link href="/websites" className="ed-btn ed-btn-dark" data-magnetic>
+              All Websites (14) →
+            </Link>
+            <Link href="/erp" className="ed-btn ed-btn-dark" data-magnetic>
+              All ERP Systems →
+            </Link>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

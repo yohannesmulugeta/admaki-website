@@ -2,9 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 
 const navigation = [
-  { label: 'Work', href: '/#work' },
+  { label: 'Campaigns', href: '/social' },
+  { label: 'Websites', href: '/websites' },
+  { label: 'ERP Systems', href: '/erp' },
   { label: 'Services', href: '/#services' },
-  { label: 'About', href: '/#about' },
+  { label: 'Studio', href: '/#studio' },
   { label: 'Contact', href: '/#contact' },
 ];
 
