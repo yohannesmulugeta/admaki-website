@@ -75,7 +75,7 @@ export const workProjects: WorkProject[] = [
     id: 'gurshamenu', title: 'GurshaMenu', eyebrow: 'Restaurant technology',
     category: 'Websites', status: 'Product', theme: 'food', featured: true,
     description: 'A QR-menu product website built to make restaurant menus easier to update.',
-    liveUrl: 'https://yohannesmulugeta.github.io/gurshamenu/',
+    liveUrl: 'https://menu.admakidigital.com/',
     
     screenshot: '/images/covers/gurshamenu.webp',
   },
@@ -165,6 +165,7 @@ export type SocialVideo = {
   creator: string;
   label: string;
   poster?: string;
+  videoSrc?: string;
 };
 
 export type SocialBrand = {
@@ -190,9 +191,66 @@ export const socialBrands: SocialBrand[] = [
     accentContrast: '#e5ecff',
     profileUrl: 'https://www.tiktok.com/@universal_electronics',
     videos: [
-      { id: '7697672470446345504', url: 'https://www.tiktok.com/@kebromneguseofficial/video/7697672470446345504', creator: '@kebromneguseofficial', label: 'Athlete collaboration' },
-      { id: '7684533828672670994', url: 'https://www.tiktok.com/@universal_electronics/video/7684533828672670994', creator: '@universal_electronics', label: 'Campaign video 02' },
-      { id: '7618627966997695751', url: 'https://www.tiktok.com/@universal_electronics/video/7618627966997695751', creator: '@universal_electronics', label: 'Campaign video 03' },
+      {
+        id: 'universal-01',
+        url: 'https://www.tiktok.com/@kebromneguseofficial/video/7697672470446345504',
+        creator: '@kebromneguseofficial',
+        label: 'Athlete collaboration',
+        videoSrc: '/videos/campaigns/universal/universal-01.mp4',
+        poster: '/images/campaigns/universal/universal-01.jpg',
+      },
+      {
+        id: 'universal-02',
+        url: 'https://www.tiktok.com/@universal_electronics/video/7684533828672670994',
+        creator: '@universal_electronics',
+        label: 'Campaign video 02',
+        videoSrc: '/videos/campaigns/universal/universal-02.mp4',
+        poster: '/images/campaigns/universal/universal-02.jpg',
+      },
+      {
+        id: 'universal-03',
+        url: 'https://www.tiktok.com/@universal_electronics/video/7618627966997695751',
+        creator: '@universal_electronics',
+        label: 'Campaign video 03',
+        videoSrc: '/videos/campaigns/universal/universal-03.mp4',
+        poster: '/images/campaigns/universal/universal-03.jpg',
+      },
+    ],
+  },
+{
+    id: 'finder-social',
+    name: 'Finder Tools Ethiopia',
+    shortName: 'FINDER',
+    sector: 'Power tools · Workshop equipment',
+    summary: 'Short-form product demonstrations and practical creative campaigns for professional tools.',
+    accent: '#ca5c27',
+    accentContrast: '#fff0dc',
+    profileUrl: 'https://www.tiktok.com/@findertoolsethiopia',
+    videos: [
+      {
+        id: 'finder-01',
+        url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698043236140633352',
+        creator: '@findertoolsethiopia',
+        label: 'Campaign video 01',
+        videoSrc: '/videos/campaigns/finder/finder-01.mp4',
+        poster: '/images/campaigns/finder/finder-01.jpg',
+      },
+      {
+        id: 'finder-02',
+        url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698782478424706311',
+        creator: '@findertoolsethiopia',
+        label: 'Campaign video 02',
+        videoSrc: '/videos/campaigns/finder/finder-02.mp4',
+        poster: '/images/campaigns/finder/finder-02.jpg',
+      },
+      {
+        id: 'finder-03',
+        url: 'https://www.tiktok.com/@findertoolsethiopia/video/7699520885266369800',
+        creator: '@findertoolsethiopia',
+        label: 'Campaign video 03',
+        videoSrc: '/videos/campaigns/finder/finder-03.mp4',
+        poster: '/images/campaigns/finder/finder-03.jpg',
+      },
     ],
   },
   {
@@ -208,21 +266,6 @@ export const socialBrands: SocialBrand[] = [
       { id: '7687193464877960481', url: 'https://www.tiktok.com/@kkgtimport_export/video/7687193464877960481', creator: '@kkgtimport_export', label: 'Campaign video 01' },
       { id: '7682077657965612320', url: 'https://www.tiktok.com/@kkgtimport_export/video/7682077657965612320', creator: '@kkgtimport_export', label: 'Campaign video 02' },
       { id: '7677607760153922849', url: 'https://www.tiktok.com/@kkgtimport_export/video/7677607760153922849', creator: '@kkgtimport_export', label: 'Campaign video 03' },
-    ],
-  },
-  {
-    id: 'finder-social',
-    name: 'Finder Tools Ethiopia',
-    shortName: 'FINDER',
-    sector: 'Power tools · Workshop equipment',
-    summary: 'Short-form product demonstrations and practical creative campaigns for professional tools.',
-    accent: '#ca5c27',
-    accentContrast: '#fff0dc',
-    profileUrl: 'https://www.tiktok.com/@findertoolsethiopia',
-    videos: [
-      { id: '7698043236140633352', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698043236140633352', creator: '@findertoolsethiopia', label: 'Campaign video 01' },
-      { id: '7698782478424706311', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7698782478424706311', creator: '@findertoolsethiopia', label: 'Campaign video 02' },
-      { id: '7699520885266369800', url: 'https://www.tiktok.com/@findertoolsethiopia/video/7699520885266369800', creator: '@findertoolsethiopia', label: 'Campaign video 03' },
     ],
   },
 ];

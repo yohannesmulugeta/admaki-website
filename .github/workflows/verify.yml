@@ -20,4 +20,8 @@ jobs:
       - name: Check portfolio image sizes and paths
         run: node scripts/check-cover-budget.mjs
       - name: Check static Next.js export
+        env:
+          NEXT_PUBLIC_BASE_PATH: ""
         run: npm run build
+      - name: Check exported routes and campaign assets
+        run: node scripts/check-export.mjs

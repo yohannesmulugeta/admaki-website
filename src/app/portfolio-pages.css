@@ -1,0 +1,18 @@
+/* Shared route layout: do not rely on homepage CSS having loaded first. */
+.ed-wrap { width: min(100% - 7.5vw, 1450px); margin-inline: auto; }
+.social-cta-actions { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.social-cta-btn-white,.social-cta-btn-ghost {
+  font: 650 12px/1 var(--font-geist-mono),monospace;
+  letter-spacing: .08em; text-transform: uppercase; padding: 14px 28px;
+  border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center;
+}
+.social-cta-btn-white { background: #f7f6f1; color: #0b1510; }
+.social-cta-btn-ghost { border: 1px solid #ffffff40; color: #f7f6f1; }
+.social-cta-btn-white:hover { background: #d7e7fc; }
+.social-cta-btn-ghost:hover { background: #ffffff14; border-color: #fff; }
+@media (max-width:850px) { .ed-wrap { width: min(100% - 40px,740px); } }
+@media (max-width:610px) { .ed-wrap { width: calc(100% - 32px); } }
+@media (max-width:600px) {
+  .social-nav-inner,.websites-nav-inner,.erp-nav-inner { gap: 12px; }
+  .social-back-link span:last-child,.websites-back-link span:last-child,.erp-back-link span:last-child { display: none; }
+}
