@@ -61,7 +61,8 @@ export default function Home() {
               <div className="ad-product-number"><span>01 / RESTAURANTS</span><span className="ad-product-icon" aria-hidden="true">▦</span></div>
               <div className="ad-product-body"><h3>Digital restaurant menus</h3><p>Give customers a mobile-friendly QR menu they can open without installing an app. See a real working menu and ask about creating one for your restaurant.</p></div>
               <div className="ad-product-actions">
-                <a className="ad-product-action" href="https://menu.admakidigital.com/#/r/abol-coffee" target="_blank" rel="noopener noreferrer">Try live menu <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action" href="https://menu.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore menu service <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="https://app.admakidigital.com/#/r/abol-coffee" target="_blank" rel="noopener noreferrer">Try live menu <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20a%20digital%20restaurant%20menu." target="_blank" rel="noopener noreferrer">Request a menu <span aria-hidden="true">↗</span></a>
               </div>
               <p className="ad-product-foot">Live demo: Abol Coffee · Restaurant menu platform</p>
