@@ -75,7 +75,8 @@ export default function Home() {
               <div className="ad-product-number"><span>02 / BUSINESS IDENTITY</span><span className="ad-product-icon" aria-hidden="true">◈</span></div>
               <div className="ad-product-body"><h3>NFC digital business cards</h3><p>Share your contact details with a tap or QR code. Our planned customer dashboard will let card owners update their photos, phone numbers, and links without rewriting their NFC cards.</p></div>
               <div className="ad-product-actions">
-                <a className="ad-product-action" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action" href="https://nfc.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore NFC cards <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="mailto:yohannesmulugegta084@gmail.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
               </div>
               <p className="ad-product-foot">Customer editing portal is planned, not yet launched.</p>

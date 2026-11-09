@@ -40,12 +40,12 @@ export default function ErpClient() {
 
           <div className="erp-stats-strip">
             <div className="erp-stat-item">
-              <span className="erp-stat-num">100%</span>
+              <span className="erp-stat-num">GRN → Lot</span>
               <span className="erp-stat-label">Lot traceability</span>
             </div>
             <div className="erp-stat-item">
-              <span className="erp-stat-num">Zero</span>
-              <span className="erp-stat-label">Data drift</span>
+              <span className="erp-stat-num">Reviewable</span>
+              <span className="erp-stat-label">Operational records</span>
             </div>
             <div className="erp-stat-item">
               <span className="erp-stat-num">Role-Based</span>
@@ -66,7 +66,7 @@ export default function ErpClient() {
           <article className="erp-system-card">
             <div className="erp-card-header">
               <span className="erp-card-index">SYSTEM 01 // WAREHOUSE ERP</span>
-              <span className="erp-card-status-pill">Production Ready</span>
+              <span className="erp-card-status-pill">Project showcase</span>
             </div>
             <div className="erp-card-content">
               <div className="erp-card-graphic">
@@ -124,7 +124,7 @@ export default function ErpClient() {
           <article className="erp-system-card">
             <div className="erp-card-header">
               <span className="erp-card-index">SYSTEM 02 // EXPORT LEDGER ERP</span>
-              <span className="erp-card-status-pill">Production Ready</span>
+              <span className="erp-card-status-pill">Project showcase</span>
             </div>
             <div className="erp-card-content">
               <div className="erp-card-graphic">
@@ -183,30 +183,30 @@ export default function ErpClient() {
                   SYSTEM 03 // AUTOMATION &amp; DAEMONS
                 </span>
                 <h2 style={{ fontSize: 'clamp(24px, 2.8vw, 36px)', fontWeight: 850, margin: '0 0 12px', color: '#fff' }}>
-                  Telegram Automation Core
+                  Telegram Workflow Simulator
                 </h2>
                 <div className="erp-card-tagline">
-                  Asynchronous Dispatches · Webhooks · CRM Integration
+                  Interactive prototype · Example commands · Sample responses
                 </div>
                 <p className="erp-card-desc">
-                  Autonomous operational bots that bridge messaging platforms with relational databases. Receives webhooks, processes payload encryption, allocates queue workers, and notifies teams instantly.
+                  Explore a browser-based demonstration of command-driven workflows. Responses and telemetry are illustrative; this preview is not connected to Telegram, customer records, or a live database.
                 </p>
                 <div className="erp-feature-list">
                   <div className="erp-feature-item">
                     <span className="erp-feature-check">✓</span>
-                    <span>24/7 background daemon concurrency with TLS 1.3 encryption</span>
+                    <span>Illustrative command and response flows</span>
                   </div>
                   <div className="erp-feature-item">
                     <span className="erp-feature-check">✓</span>
-                    <span>Inbound webhook validation and sub-20ms database writes</span>
+                    <span>Sample operational events and status messages</span>
                   </div>
                   <div className="erp-feature-item">
                     <span className="erp-feature-check">✓</span>
-                    <span>Automated customer service, lead qualification, and order alerts</span>
+                    <span>Example customer service, lead, and order workflows</span>
                   </div>
                 </div>
                 <p style={{ font: '600 11px/1 var(--font-geist-mono), monospace', color: '#38bdf8', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  ⚡ Try the live interactive simulation on the right:
+                  Try the interactive simulation:
                 </p>
               </div>
 

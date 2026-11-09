@@ -75,7 +75,7 @@ export const workProjects: WorkProject[] = [
     id: 'gurshamenu', title: 'GurshaMenu', eyebrow: 'Restaurant technology',
     category: 'Websites', status: 'Product', theme: 'food', featured: true,
     description: 'A QR-menu product website built to make restaurant menus easier to update.',
-    liveUrl: 'https://yohannesmulugeta.github.io/gurshamenu/',
+    liveUrl: 'https://menu.admakidigital.com/',
     
     screenshot: '/images/covers/gurshamenu.webp',
   },

@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import '@/app/websites/websites.css';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/work' },
   title: 'Selected Work & Systems Directory',
   description:
     'Complete portfolio directory for ADMAKI: custom websites, coffee export and warehouse ERP systems, and digital campaigns.',
@@ -68,7 +69,7 @@ export default function WorkDirectoryPage() {
                 <article key={project.id} className="website-card">
                   <div className="website-card-top">
                     <span>
-                      0{idx + 1} / {project.eyebrow}
+                      {String(idx + 1).padStart(2, '0')} / {project.eyebrow}
                     </span>
                     <span className="website-status-tag status-website">
                       {project.status}

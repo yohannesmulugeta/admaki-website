@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import CampaignVideoPlayer from '@/components/media/CampaignVideoPlayer';
 import { socialBrands, type SocialBrand, type SocialVideo } from '@/data/portfolio';
 import { withBasePath } from '@/lib/siteConfig';
 import Footer from '@/components/layout/Footer';
@@ -19,108 +21,51 @@ const allVideos: VideoWithBrand[] = socialBrands.flatMap((brand) =>
   }))
 );
 
-function SocialCardVideoPlayer({
-  video,
-  isAudioActive,
-  onActivateAudio,
-  onDeactivateAudio,
-}: {
+function SocialCardVideoPlayer({ video, isActive, onActivate }: {
   video: VideoWithBrand;
-  isAudioActive: boolean;
-  onActivateAudio: () => void;
-  onDeactivateAudio: () => void;
+  isActive: boolean;
+  onActivate: () => void;
 }) {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [pageVisible, setPageVisible] = useState(true);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
-    el.muted = !isAudioActive;
-  }, [isAudioActive]);
+    if (!isActive) return;
+    const update = () => setPageVisible(!document.hidden);
+    update();
+    document.addEventListener('visibilitychange', update);
+    const stage = stageRef.current;
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting && entry.intersectionRatio >= 0.1);
+    }, { threshold: [0, 0.1] }) : null;
+    if (stage) observer?.observe(stage);
+    return () => { observer?.disconnect(); document.removeEventListener('visibilitychange', update); };
+  }, [isActive]);
 
-  const toggleMute = () => {
-    if (isAudioActive) {
-      onDeactivateAudio();
-    } else {
-      onActivateAudio();
-    }
-  };
-
-  const togglePlay = () => {
-    const el = videoRef.current;
-    if (!el) return;
-    if (isPlaying) {
-      el.pause();
-      setIsPlaying(false);
-    } else {
-      el.play().catch(() => {});
-      setIsPlaying(true);
-    }
-  };
-
-  return (
-    <div className="social-card-stage">
-      {video.videoSrc ? (
-        <>
-          <video
-            ref={videoRef}
-            src={withBasePath(video.videoSrc)}
-            poster={video.poster ? withBasePath(video.poster) : undefined}
-            className="social-card-video"
-            playsInline
-            loop
-            muted={!isAudioActive}
-            autoPlay
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-          />
-
-          <button
-            type="button"
-            className={`ad-video-sound-toggle ${isAudioActive ? 'is-unmuted' : 'is-muted'}`}
-            onClick={toggleMute}
-            aria-label={isAudioActive ? 'Mute audio' : 'Unmute audio'}
-          >
-            <span aria-hidden="true">{isAudioActive ? '🔊' : '🔇'}</span>
-            <span>{isAudioActive ? 'MUTE' : 'UNMUTE'}</span>
-          </button>
-
-          <button
-            type="button"
-            className="ad-video-toggle"
-            onClick={togglePlay}
-            aria-label={isPlaying ? 'Pause video' : 'Play video'}
-          >
-            <span aria-hidden="true">{isPlaying ? 'Ⅱ' : '▶'}</span>
-            <span>{isPlaying ? 'PAUSE' : 'PLAY'}</span>
-          </button>
-        </>
-      ) : (
-        <div className="ad-video-art" style={{ position: 'relative', width: '100%', height: '100%' }}>
-          <span className="ad-video-art-kicker">ADMAKI / SHORT-FORM</span>
-          <span className="ad-video-art-shape" />
-          <span className="ad-video-art-brand">{video.brand.shortName}</span>
-          <span className="ad-video-art-number">0{video.label.replace(/\D/g, '') || '1'}</span>
-          <a
-            href={video.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ad-video-play"
-            style={{ position: 'absolute', bottom: '24px', left: '50%', transform: 'translateX(-50%)', width: 'auto', padding: '10px 18px' }}
-          >
-            <span className="ad-play-icon" aria-hidden="true">▶</span>
-            <span>Watch on TikTok ↗</span>
-          </a>
-        </div>
-      )}
-    </div>
-  );
+  return <div className="social-card-stage" ref={stageRef}>
+    {video.videoSrc && isActive ? <CampaignVideoPlayer video={video}
+      shouldPlay={visible && pageVisible && !paused} paused={paused} setPaused={setPaused}
+      className="social-card-video" /> : <div className="ad-video-art social-card-preview">
+      {video.poster && <Image src={withBasePath(video.poster)} alt="" fill
+        sizes="(max-width:640px) 100vw, (max-width:950px) 50vw, 33vw" className="ad-video-poster-img" unoptimized />}
+      <span className="ad-video-art-kicker">ADMAKI / SHORT-FORM</span>
+      <span className="ad-video-art-shape" />
+      <span className="ad-video-art-brand">{video.brand.shortName}</span>
+      {video.videoSrc ? <button type="button" className="ad-video-play"
+        onClick={() => { setPaused(false); onActivate(); }} aria-label={`Play ${video.brand.name} — ${video.label}`}>
+        <span className="ad-play-icon" aria-hidden="true">▶</span><span>Play preview</span>
+      </button> : <a href={video.url} target="_blank" rel="noopener noreferrer" className="ad-video-play">
+        <span className="ad-play-icon" aria-hidden="true">▶</span><span>Watch on TikTok ↗</span>
+      </a>}
+    </div>}
+  </div>;
 }
 
 export default function SocialGalleryClient() {
   const [selectedBrandId, setSelectedBrandId] = useState<string>('all');
-  const [activeAudioVideoId, setActiveAudioVideoId] = useState<string | null>(null);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
   const displayedVideos = selectedBrandId === 'all'
     ? allVideos
@@ -153,16 +98,16 @@ export default function SocialGalleryClient() {
             <em>to be seen &amp; heard.</em>
           </h1>
           <p className="social-hero-lead">
-            Explore all creative campaigns, product demonstrations and athlete collaborations produced for TikTok and digital audiences. Every video plays in high quality with interactive audio controls.
+            Explore all creative campaigns, product demonstrations and athlete collaborations produced for TikTok and digital audiences. Choose a preview to play with optional sound, or open the original on TikTok. Only the selected preview loads.
           </p>
 
           <div className="social-stats-strip">
             <div className="social-stat-item">
-              <span className="social-stat-num">09</span>
+              <span className="social-stat-num">{allVideos.length}</span>
               <span className="social-stat-label">Campaign videos</span>
             </div>
             <div className="social-stat-item">
-              <span className="social-stat-num">03</span>
+              <span className="social-stat-num">{socialBrands.length}</span>
               <span className="social-stat-label">Featured brands</span>
             </div>
             <div className="social-stat-item">
@@ -170,8 +115,8 @@ export default function SocialGalleryClient() {
               <span className="social-stat-label">Fast web streaming</span>
             </div>
             <div className="social-stat-item">
-              <span className="social-stat-num">100%</span>
-              <span className="social-stat-label">Mobile optimized</span>
+              <span className="social-stat-num">On demand</span>
+              <span className="social-stat-label">One preview at a time</span>
             </div>
           </div>
         </div>
@@ -180,13 +125,12 @@ export default function SocialGalleryClient() {
       {/* Filter Tabs Bar */}
       <section className="social-filter-section">
         <div className="ed-wrap social-filter-bar">
-          <div className="social-tabs" role="tablist" aria-label="Filter videos by brand">
+          <div className="social-tabs" role="group" aria-label="Filter videos by brand">
             <button
               type="button"
-              role="tab"
-              aria-selected={selectedBrandId === 'all'}
+              aria-pressed={selectedBrandId === 'all'}
               className={`social-tab ${selectedBrandId === 'all' ? 'is-active' : ''}`}
-              onClick={() => setSelectedBrandId('all')}
+              onClick={() => { setSelectedBrandId('all'); setActiveVideoId(null); }}
             >
               All campaigns ({allVideos.length})
             </button>
@@ -194,10 +138,9 @@ export default function SocialGalleryClient() {
               <button
                 key={brand.id}
                 type="button"
-                role="tab"
-                aria-selected={selectedBrandId === brand.id}
+                aria-pressed={selectedBrandId === brand.id}
                 className={`social-tab ${selectedBrandId === brand.id ? 'is-active' : ''}`}
-                onClick={() => setSelectedBrandId(brand.id)}
+                onClick={() => { setSelectedBrandId(brand.id); setActiveVideoId(null); }}
               >
                 {brand.shortName} ({brand.videos.length})
               </button>
@@ -214,14 +157,13 @@ export default function SocialGalleryClient() {
         <div className="ed-wrap">
           <div className="social-gallery-grid">
             {displayedVideos.map((video) => {
-              const isAudioActive = activeAudioVideoId === video.id;
+              const isActive = activeVideoId === video.id;
               return (
                 <article key={video.id} className="social-gallery-card">
                   <SocialCardVideoPlayer
                     video={video}
-                    isAudioActive={isAudioActive}
-                    onActivateAudio={() => setActiveAudioVideoId(video.id)}
-                    onDeactivateAudio={() => setActiveAudioVideoId(null)}
+                    isActive={isActive}
+                    onActivate={() => setActiveVideoId(video.id)}
                   />
 
                   <div className="social-card-meta">
@@ -237,7 +179,7 @@ export default function SocialGalleryClient() {
                       </span>
                       {video.videoSrc && (
                         <span className="social-card-status">
-                          {isAudioActive ? 'SOUND ON' : 'MUTED'}
+                          {isActive ? 'SELECTED' : 'PLAY ON DEMAND'}
                         </span>
                       )}
                     </div>

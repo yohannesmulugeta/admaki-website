@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { socialBrands, type SocialBrand, type SocialVideo } from '@/data/portfolio';
 import Link from 'next/link';
 import Image from 'next/image';
+import CampaignVideoPlayer from '@/components/media/CampaignVideoPlayer';
 import { withBasePath } from '@/lib/siteConfig';
 
 const PLAYER_ORIGIN = 'https://www.tiktok.com';
@@ -20,106 +21,6 @@ function playerUrl(id: string) {
 
 function sendPlayerCommand(player: HTMLIFrameElement | null, type: 'play' | 'pause' | 'mute') {
   player?.contentWindow?.postMessage({ 'x-tiktok-player': true, type, value: null }, PLAYER_ORIGIN);
-}
-
-/**
- * Native HTML5 Video Player for campaign videos with compressed local MP4s.
- * Starts muted by default to ensure immediate, policy-compliant autoplay.
- * Toggling sound unmutes the video so it talks. Reloading resets to muted.
- */
-function ActiveNativeVideoPlayer({
-  video,
-  shouldPlay,
-  paused,
-  setPaused,
-  onPlayingChange,
-  onMutedChange,
-}: {
-  video: SocialVideo;
-  shouldPlay: boolean;
-  paused: boolean;
-  setPaused: (paused: boolean) => void;
-  onPlayingChange: (playing: boolean) => void;
-  onMutedChange: (muted: boolean) => void;
-}) {
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    onMutedChange(isMuted);
-  }, [isMuted, onMutedChange]);
-
-  useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
-    if (shouldPlay) {
-      el.play().catch(() => {});
-      onPlayingChange(true);
-    } else {
-      el.pause();
-      onPlayingChange(false);
-    }
-  }, [shouldPlay, onPlayingChange]);
-
-  const toggleMute = () => {
-    const el = videoRef.current;
-    if (!el) return;
-    const nextMuted = !isMuted;
-    el.muted = nextMuted;
-    setIsMuted(nextMuted);
-  };
-
-  const togglePause = () => {
-    const nextPaused = !paused;
-    setPaused(nextPaused);
-    const el = videoRef.current;
-    if (!el) return;
-    if (nextPaused) {
-      el.pause();
-      onPlayingChange(false);
-    } else {
-      el.play().catch(() => {});
-      onPlayingChange(true);
-    }
-  };
-
-  return (
-    <>
-      <video
-        ref={videoRef}
-        key={video.id}
-        src={withBasePath(video.videoSrc!)}
-        poster={video.poster ? withBasePath(video.poster) : undefined}
-        className="ad-native-video"
-        playsInline
-        loop
-        muted={isMuted}
-        autoPlay={shouldPlay}
-        onPlay={() => onPlayingChange(true)}
-        onPause={() => onPlayingChange(false)}
-      />
-
-      <button
-        type="button"
-        className={`ad-video-sound-toggle ${isMuted ? 'is-muted' : 'is-unmuted'}`}
-        onClick={toggleMute}
-        aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
-      >
-        <span aria-hidden="true">{isMuted ? '🔇' : '🔊'}</span>
-        <span>{isMuted ? 'UNMUTE' : 'MUTE'}</span>
-      </button>
-
-      <button
-        type="button"
-        className="ad-video-toggle"
-        onClick={togglePause}
-        aria-label={paused ? 'Resume video preview' : 'Pause preview'}
-      >
-        <span aria-hidden="true">{paused ? '▶' : 'Ⅱ'}</span>
-        <span>{paused ? 'RESUME' : 'PAUSE'}</span>
-      </button>
-    </>
-  );
 }
 
 /**
@@ -408,7 +309,7 @@ export default function SocialShowcase() {
 
                   {displayPlayer ? (
                     video.videoSrc ? (
-                      <ActiveNativeVideoPlayer
+                      <CampaignVideoPlayer
                         key={`${brand.id}-${video.id}`}
                         video={video}
                         shouldPlay={shouldPlay}

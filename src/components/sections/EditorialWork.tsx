@@ -147,7 +147,7 @@ export default function EditorialWork() {
               {showAll ? 'Show fewer projects' : `View all ${filtered.length} projects`} <span aria-hidden="true">{showAll ? '↑' : '↘'}</span>
             </button>
             <Link href="/websites" className="ed-btn ed-btn-dark" data-magnetic>
-              All Websites (14) →
+              All Websites ({workProjects.filter((project) => project.category === 'Websites').length}) →
             </Link>
             <Link href="/erp" className="ed-btn ed-btn-dark" data-magnetic>
               All ERP Systems →

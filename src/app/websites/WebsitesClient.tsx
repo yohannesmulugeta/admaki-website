@@ -63,8 +63,8 @@ export default function WebsitesClient() {
               <span className="websites-stat-label">Live websites</span>
             </div>
             <div className="websites-stat-item">
-              <span className="websites-stat-num">100%</span>
-              <span className="websites-stat-label">Responsive &amp; fast</span>
+              <span className="websites-stat-num">Mobile-first</span>
+              <span className="websites-stat-label">Design approach</span>
             </div>
             <div className="websites-stat-item">
               <span className="websites-stat-num">Next.js</span>
@@ -77,13 +77,12 @@ export default function WebsitesClient() {
       {/* Filter Section */}
       <section className="websites-filter-section">
         <div className="ed-wrap websites-filter-bar">
-          <div className="websites-tabs" role="tablist" aria-label="Filter websites">
+          <div className="websites-tabs" role="group" aria-label="Filter websites">
             {(['All', 'Production', 'Previews & Concepts'] as FilterType[]).map((tab) => (
               <button
                 key={tab}
                 type="button"
-                role="tab"
-                aria-selected={filter === tab}
+                aria-pressed={filter === tab}
                 className={`websites-tab ${filter === tab ? 'is-active' : ''}`}
                 onClick={() => setFilter(tab)}
               >
@@ -102,7 +101,7 @@ export default function WebsitesClient() {
         <div className="ed-wrap">
           <div className="websites-grid">
             {filtered.map((project, idx) => {
-              const hostname = project.liveUrl ? new URL(project.liveUrl).hostname : 'admaki.com';
+              const hostname = project.liveUrl ? new URL(project.liveUrl).hostname : 'admakidigital.com';
               const statusClass =
                 project.status === 'Website'
                   ? 'status-website'
@@ -116,7 +115,7 @@ export default function WebsitesClient() {
                 <article key={project.id} className="website-card">
                   <div className="website-card-top">
                     <span>
-                      0{idx + 1} / {project.eyebrow}
+                      {String(idx + 1).padStart(2, '0')} / {project.eyebrow}
                     </span>
                     <span className={`website-status-tag ${statusClass}`}>
                       {project.status}
