@@ -77,7 +77,7 @@ export default function Home() {
               <div className="ad-product-actions">
                 <a className="ad-product-action" href="https://nfc.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore NFC cards <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
-                <a className="ad-product-action secondary" href="mailto:yohannesmulugeta084@gmail.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="mailto:sales@admakidigital.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
               </div>
               <p className="ad-product-foot">Customer editing portal is planned, not yet launched.</p>
             </article>
@@ -136,9 +136,17 @@ export default function Home() {
             <p>Tell us what you&apos;re building — a website, a campaign or a system that makes the work easier.</p>
             <div className="ed-contact-actions"><div className="ad-contact-buttons">
               <a className="ed-btn ed-btn-white" data-magnetic href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span aria-hidden="true">↗</span></a>
-              <a className="ed-btn ed-btn-white" data-magnetic href="mailto:yohannesmulugeta084@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20AdMaki%20Digital">Send an email <span aria-hidden="true">↗</span></a>
+              <a className="ed-btn ed-btn-white" data-magnetic href="mailto:hello@admakidigital.com?subject=Project%20Inquiry%20%E2%80%94%20AdMaki%20Digital">Send an email <span aria-hidden="true">↗</span></a>
               <a className="ed-btn ed-btn-white" href="tel:+251937928215">Call us <span aria-hidden="true">↗</span></a>
-            </div><p className="ad-contact-details">Phone / WhatsApp: <a href="tel:+251937928215">+251 93 792 8215</a> · Email: <a href="mailto:yohannesmulugeta084@gmail.com">yohannesmulugeta084@gmail.com</a></p></div>
+            </div>
+              <p className="ad-contact-details">Phone / WhatsApp: <a href="tel:+251937928215">+251 93 792 8215</a></p>
+              <dl className="ad-business-emails" aria-label="Business email contacts">
+                <div><dt>General enquiries</dt><dd><a href="mailto:hello@admakidigital.com">hello@admakidigital.com</a></dd></div>
+                <div><dt>Sales &amp; orders</dt><dd><a href="mailto:sales@admakidigital.com">sales@admakidigital.com</a></dd></div>
+                <div><dt>Customer support</dt><dd><a href="mailto:support@admakidigital.com">support@admakidigital.com</a></dd></div>
+                <div><dt>Contact Joni</dt><dd><a href="mailto:joni@admakidigital.com">joni@admakidigital.com</a></dd></div>
+              </dl>
+            </div>
           </div>
           <div className="ed-footer" data-reveal><a href="#home" className="ed-footer-wordmark">ADMAKI<span>®</span></a><div><span>CREATIVE THINKING. TECHNICAL EXECUTION.</span><a href="#home">BACK TO TOP ↑</a></div></div>
         </div>

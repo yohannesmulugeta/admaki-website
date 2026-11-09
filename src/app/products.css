@@ -26,6 +26,13 @@
 .ad-contact-buttons .ed-btn{min-width:160px}
 .ad-contact-details{font-size:13px;line-height:1.7;color:inherit;opacity:.85;margin-top:15px;overflow-wrap:anywhere}
 .ad-contact-details a{color:inherit;text-underline-offset:3px}
+.ed-contact-actions{min-width:0}
+.ad-business-emails{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;width:100%;margin:10px 0 0;padding-top:22px;border-top:1px solid #657269}
+.ad-business-emails dt{font-size:10px;font-weight:600;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#c4ccc3}
+.ad-business-emails dd{margin:6px 0 0;font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+.ad-business-emails a{color:inherit;text-decoration:underline;text-underline-offset:4px}
+.ad-business-emails a:hover{color:#d0e97a}
+@media(max-width:650px){.ad-business-emails{grid-template-columns:1fr}}
 @media(max-width:850px){.ad-products-head{grid-template-columns:1fr}.ad-products-grid{grid-template-columns:1fr}.ad-product-card{min-height:330px}}
 @media(max-width:650px){.ad-products{padding:70px 0}.ad-product-card{padding:26px 22px}.ad-product-action{width:100%}.ad-contact-buttons{flex-direction:column}.ad-contact-buttons .ed-btn{width:100%}}
 @media(prefers-reduced-motion:reduce){.ad-product-action{transition:none}.ad-product-action:hover{transform:none}}
