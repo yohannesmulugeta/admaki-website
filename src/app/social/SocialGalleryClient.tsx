@@ -76,7 +76,7 @@ export default function SocialGalleryClient() {
       {/* Top Navigation */}
       <header className="social-nav">
         <div className="ed-wrap social-nav-inner">
-          <Link href="/#social" className="social-back-link">
+          <Link href="/#social" className="social-back-link" aria-label="Back to home">
             <span>←</span>
             <span>Back to Home</span>
           </Link>

@@ -12,3 +12,7 @@
 .social-cta-btn-ghost:hover { background: #ffffff14; border-color: #fff; }
 @media (max-width:850px) { .ed-wrap { width: min(100% - 40px,740px); } }
 @media (max-width:610px) { .ed-wrap { width: calc(100% - 32px); } }
+@media (max-width:600px) {
+  .social-nav-inner,.websites-nav-inner,.erp-nav-inner { gap: 12px; }
+  .social-back-link span:last-child,.websites-back-link span:last-child,.erp-back-link span:last-child { display: none; }
+}

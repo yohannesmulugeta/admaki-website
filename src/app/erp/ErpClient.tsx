@@ -13,7 +13,7 @@ export default function ErpClient() {
       {/* Navigation */}
       <header className="erp-nav">
         <div className="ed-wrap erp-nav-inner">
-          <Link href="/#work" className="erp-back-link">
+          <Link href="/#work" className="erp-back-link" aria-label="Back to home">
             <span>←</span>
             <span>Back to Home</span>
           </Link>

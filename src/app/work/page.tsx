@@ -18,7 +18,7 @@ export default function WorkDirectoryPage() {
     <div className="websites-page">
       <header className="websites-nav">
         <div className="ed-wrap websites-nav-inner">
-          <Link href="/" className="websites-back-link">
+          <Link href="/" className="websites-back-link" aria-label="Back to home">
             <span>←</span>
             <span>Back to Home</span>
           </Link>

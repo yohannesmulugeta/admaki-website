@@ -26,7 +26,7 @@ export default function WebsitesClient() {
       {/* Navigation */}
       <header className="websites-nav">
         <div className="ed-wrap websites-nav-inner">
-          <Link href="/#work" className="websites-back-link">
+          <Link href="/#work" className="websites-back-link" aria-label="Back to home">
             <span>←</span>
             <span>Back to Home</span>
           </Link>
