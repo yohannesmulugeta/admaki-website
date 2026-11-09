@@ -6,6 +6,7 @@ import EditorialWork from '@/components/sections/EditorialWork';
 import './editorial.css';
 import './cursor-covers.css';
 import './social-showcase.css';
+import './products.css';
 
 const services = [
   { number: '01', title: 'Creative & social', subtitle: 'Stories with a reason to exist.', body: 'Campaign thinking, content strategy, visual direction and short-form video made to connect with people.', tags: ['Social media', 'Content production', 'Art direction'] },
@@ -30,12 +31,12 @@ export default function Home() {
         <div className="ed-wrap ed-nav-inner">
           <a href="#home" className="ed-logo" aria-label="ADMAKI, home">ADMAKI<span>®</span></a>
           <nav className="ed-nav-links" aria-label="Main navigation">
-            <a href="#work">Work</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
+            <a href="#work">Work</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
           </nav>
           <a className="ed-nav-cta" data-magnetic href="#contact">Start a project <span aria-hidden="true">↗</span></a>
           <details className="ed-mobile-menu">
             <summary aria-label="Open navigation">MENU <span aria-hidden="true">☰</span></summary>
-            <nav aria-label="Mobile navigation"><a href="#work">Work</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
+            <nav aria-label="Mobile navigation"><a href="#work">Work</a><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
           </details>
         </div>
       </header>
@@ -47,6 +48,36 @@ export default function Home() {
       </div>
 
       <EditorialWork />
+
+      <section id="products" className="ad-products ed-section" aria-labelledby="products-heading">
+        <div className="ed-wrap">
+          <div className="ad-products-head">
+            <span className="ed-kicker">DIGITAL PRODUCTS / ADMAKI</span>
+            <div><h2 id="products-heading">Simple for your customers.<br /><em>Powerful for your business.</em></h2>
+              <p className="ad-products-lead">Practical digital tools for Ethiopian businesses, built to make everyday service easier. Explore a live restaurant menu or ask about an NFC business card.</p></div>
+          </div>
+          <div className="ad-products-grid">
+            <article className="ad-product-card">
+              <div className="ad-product-number"><span>01 / RESTAURANTS</span><span className="ad-product-icon" aria-hidden="true">▦</span></div>
+              <div className="ad-product-body"><h3>Digital restaurant menus</h3><p>Give customers a mobile-friendly QR menu they can open without installing an app. See a real working menu and ask about creating one for your restaurant.</p></div>
+              <div className="ad-product-actions">
+                <a className="ad-product-action" href="https://menu.admakidigital.com/#/r/abol-coffee" target="_blank" rel="noopener noreferrer">Try live menu <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20a%20digital%20restaurant%20menu." target="_blank" rel="noopener noreferrer">Request a menu <span aria-hidden="true">↗</span></a>
+              </div>
+              <p className="ad-product-foot">Live demo: Abol Coffee · Restaurant menu platform</p>
+            </article>
+            <article className="ad-product-card card-dark">
+              <div className="ad-product-number"><span>02 / BUSINESS IDENTITY</span><span className="ad-product-icon" aria-hidden="true">◈</span></div>
+              <div className="ad-product-body"><h3>NFC digital business cards</h3><p>Share your contact details with a tap or QR code. Our planned customer dashboard will let card owners update their photos, phone numbers, and links without rewriting their NFC cards.</p></div>
+              <div className="ad-product-actions">
+                <a className="ad-product-action" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="mailto:yohannesmulugegta084@gmail.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
+              </div>
+              <p className="ad-product-foot">Customer editing portal is planned, not yet launched.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <section id="services" className="ed-section ed-services" aria-labelledby="services-heading">
         <div className="ed-wrap">
@@ -97,7 +128,11 @@ export default function Home() {
           <h2 id="contact-heading" data-reveal>Have an idea?<br /><em>Let's make it matter.</em></h2>
           <div className="ed-contact-bottom" data-reveal>
             <p>Tell us what you're building — a website, a campaign or a system that makes the work easier.</p>
-            <div className="ed-contact-actions"><a className="ed-btn ed-btn-white" data-magnetic href="#work">Explore selected projects <span aria-hidden="true">↗</span></a><span className="ed-contact-note">Email and WhatsApp inquiry links will be added when confirmed.</span></div>
+            <div className="ed-contact-actions"><div className="ad-contact-buttons">
+              <a className="ed-btn ed-btn-white" data-magnetic href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span aria-hidden="true">↗</span></a>
+              <a className="ed-btn ed-btn-white" data-magnetic href="mailto:yohannesmulugegta084@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20AdMaki%20Digital">Send an email <span aria-hidden="true">↗</span></a>
+              <a className="ed-btn ed-btn-white" href="tel:+251937928215">Call us <span aria-hidden="true">↗</span></a>
+            </div><p className="ad-contact-details">Phone / WhatsApp: <a href="tel:+251937928215">+251 93 792 8215</a> · Email: <a href="mailto:yohannesmulugegta084@gmail.com">yohannesmulugegta084@gmail.com</a></p></div>
           </div>
           <div className="ed-footer" data-reveal><a href="#home" className="ed-footer-wordmark">ADMAKI<span>®</span></a><div><span>CREATIVE THINKING. TECHNICAL EXECUTION.</span><a href="#home">BACK TO TOP ↑</a></div></div>
         </div>
