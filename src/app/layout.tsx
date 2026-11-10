@@ -1,21 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import { absoluteAssetUrl, basePath, siteUrl } from '@/lib/siteConfig';
 import './globals.css';
 import './portfolio-pages.css';
+import './brand.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+const manrope = localFont({
+  src: '../../public/fonts/manrope-variable.woff2',
+  variable: '--font-admaki',
+  weight: '200 800',
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
-  themeColor: '#f7f6f1',
+  themeColor: '#FAFAF8',
   colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
@@ -25,8 +23,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: { canonical: '/' },
   title: {
-    default: 'ADMAKI — Creative Technology Studio',
-    template: '%s | ADMAKI',
+    default: 'ADMAKI Digital — Build your digital advantage.',
+    template: '%s | ADMAKI Digital',
   },
   description:
     'ADMAKI creates websites, social media campaigns, QR restaurant menus, NFC business cards and custom ERP software for businesses in Ethiopia.',
@@ -44,9 +42,9 @@ export const metadata: Metadata = {
     'NFC Digital Business Cards Ethiopia',
     'Digital Menu Addis Ababa',
   ],
-  authors: [{ name: 'ADMAKI' }],
-  creator: 'ADMAKI',
-  publisher: 'ADMAKI',
+  authors: [{ name: 'ADMAKI Digital' }],
+  creator: 'ADMAKI Digital',
+  publisher: 'ADMAKI Digital',
   formatDetection: {
     email: false,
     address: false,
@@ -56,25 +54,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'ADMAKI',
-    title: 'ADMAKI — Creative Technology Studio',
+    siteName: 'ADMAKI Digital',
+    title: 'ADMAKI Digital — Build your digital advantage.',
     description:
       'Websites, creative campaigns, QR restaurant menus, NFC business cards and business software, built in Ethiopia.',
     images: [
       {
-        url: absoluteAssetUrl('/images/projects/project-02.svg'),
+        url: absoluteAssetUrl('/brand/social-preview.png'),
         width: 1200,
         height: 630,
-        alt: 'ADMAKI Creative Technology Studio',
+        alt: 'ADMAKI Digital - Connected creativity. Practical technology.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ADMAKI — Creative Technology Studio',
+    title: 'ADMAKI Digital — Build your digital advantage.',
     description:
       'Ideas that move. Systems that work. Explore ADMAKI websites, creative campaigns and practical business software.',
-    images: [absoluteAssetUrl('/images/projects/project-02.svg')],
+    images: [absoluteAssetUrl('/brand/social-preview.png')],
   },
   robots: {
     index: true,
@@ -88,7 +86,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: `${basePath}/favicon.ico`,
+    icon: [{ url: `${basePath}/favicon.svg`, type: 'image/svg+xml' }, { url: `${basePath}/favicon.ico` }],
+    apple: `${basePath}/brand/apple-touch-icon.png`,
   },
 };
 
@@ -100,7 +99,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-black text-white">{children}</body>
     </html>

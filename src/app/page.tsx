@@ -1,3 +1,4 @@
+import BrandLogo from '@/components/ui/BrandLogo';
 import Link from 'next/link';
 import IdeaEngine from '@/components/sections/IdeaEngine';
 import MotionSignals from '@/components/motion/MotionSignals';
@@ -31,7 +32,7 @@ export default function Home() {
       <a href="#social" className="ed-skip">Skip to campaigns</a>
       <header className="ed-nav">
         <div className="ed-wrap ed-nav-inner">
-          <a href="#home" className="ed-logo" aria-label="ADMAKI, home">ADMAKI<span>®</span></a>
+          <a href="#home" className="ed-logo" aria-label="ADMAKI Digital, home"><BrandLogo /></a>
           <nav className="ed-nav-links" aria-label="Main navigation">
             <Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
           </nav>
@@ -63,9 +64,9 @@ export default function Home() {
           <div className="ad-products-grid">
             <article className="ad-product-card">
               <div className="ad-product-number"><span>01 / RESTAURANTS</span><span className="ad-product-icon" aria-hidden="true">▦</span></div>
-              <div className="ad-product-body"><h3>Digital restaurant menus</h3><p>Give customers a mobile-friendly QR menu they can open without installing an app. See a real working menu and ask about creating one for your restaurant.</p></div>
+              <div className="ad-product-body"><h3>ADMAKI Menu</h3><p>Give customers a mobile-friendly QR menu they can open without installing an app. See a real working menu and ask about creating one for your restaurant.</p></div>
               <div className="ad-product-actions">
-                <a className="ad-product-action" href="https://menu.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore menu service <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action" href="https://menu.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore ADMAKI Menu <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="https://app.admakidigital.com/#/r/abol-coffee" target="_blank" rel="noopener noreferrer">Try live menu <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20would%20like%20a%20digital%20restaurant%20menu." target="_blank" rel="noopener noreferrer">Request a menu <span aria-hidden="true">↗</span></a>
               </div>
@@ -73,13 +74,13 @@ export default function Home() {
             </article>
             <article className="ad-product-card card-dark">
               <div className="ad-product-number"><span>02 / BUSINESS IDENTITY</span><span className="ad-product-icon" aria-hidden="true">◈</span></div>
-              <div className="ad-product-body"><h3>NFC digital business cards</h3><p>Share your contact details with a tap or QR code. Our planned customer dashboard will let card owners update their photos, phone numbers, and links without rewriting their NFC cards.</p></div>
+              <div className="ad-product-body"><h3>ADMAKI Digital Card</h3><p>Share your contact details with a tap or QR code. Your digital profile brings your contact details, photos and links together. We can update your online details while keeping the same card link.</p></div>
               <div className="ad-product-actions">
-                <a className="ad-product-action" href="https://nfc.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore NFC cards <span aria-hidden="true">↗</span></a>
-                <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about NFC cards <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action" href="https://nfc.admakidigital.com/" target="_blank" rel="noopener noreferrer">Explore ADMAKI Digital Card <span aria-hidden="true">↗</span></a>
+                <a className="ad-product-action secondary" href="https://wa.me/251937928215?text=Hello%20AdMaki%2C%20I%20am%20interested%20in%20NFC%20digital%20business%20cards." target="_blank" rel="noopener noreferrer">Ask about a digital card <span aria-hidden="true">↗</span></a>
                 <a className="ad-product-action secondary" href="mailto:sales@admakidigital.com?subject=AdMaki%20Digital%20Business%20Card%20Inquiry">Email us <span aria-hidden="true">↗</span></a>
               </div>
-              <p className="ad-product-foot">Customer editing portal is planned, not yet launched.</p>
+              <p className="ad-product-foot">For you, your business or your team. Details and support agreed before ordering.</p>
             </article>
           </div>
         </div>
@@ -107,7 +108,7 @@ export default function Home() {
       <section id="studio" className="ed-studio ed-section" aria-labelledby="studio-heading">
         <div className="ed-wrap ed-studio-grid">
           
-          <div data-reveal><span className="ed-kicker">04 / THE STUDIO</span><div className="ed-studio-seal" aria-hidden="true"><span>AD.</span><i>MAKING IDEAS USEFUL</i></div></div>
+          <div data-reveal><span className="ed-kicker">04 / THE STUDIO</span><div className="ed-studio-seal" aria-hidden="true"><BrandLogo symbol /><i>CONNECTED CREATIVITY</i></div></div>
           <div data-reveal><h2 id="studio-heading">Not more noise.<br /><em>More meaning.</em></h2>
             <p className="ed-studio-lead">ADMAKI connects creative communication with practical technology. Based in Ethiopia, we work where strong ideas and everyday business challenges meet.</p>
             <p>We care about the details people see — the identity, layout, interaction and story — and the systems they rely on when the screen closes.</p>
@@ -148,7 +149,7 @@ export default function Home() {
               </dl>
             </div>
           </div>
-          <div className="ed-footer" data-reveal><a href="#home" className="ed-footer-wordmark">ADMAKI<span>®</span></a><div><span>CREATIVE THINKING. TECHNICAL EXECUTION.</span><a href="#home">BACK TO TOP ↑</a></div></div>
+          <div className="ed-service-family"><a href="https://admakidigital.com">ADMAKI Digital</a><a href="https://menu.admakidigital.com">ADMAKI Menu ↗</a><a href="https://nfc.admakidigital.com">ADMAKI Digital Card ↗</a></div><div className="ed-footer" data-reveal><a href="#home" className="ed-footer-wordmark" aria-label="ADMAKI Digital, back to top"><BrandLogo light /></a><div><span>CONNECTED CREATIVITY. PRACTICAL TECHNOLOGY.</span><a href="#home">BACK TO TOP ↑</a></div></div>
         </div>
       </section>
     </main>

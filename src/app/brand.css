@@ -1,0 +1,18 @@
+/* ADMAKI Digital / Connected AD identity */
+@font-face{font-family:'Noto Sans Ethiopic';src:url('/fonts/noto-sans-ethiopic.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+1200-137F,U+1380-139F,U+2D80-2DDF,U+AB00-AB2F}
+:root{--font-geist-sans:var(--font-admaki);--font-geist-mono:var(--font-admaki);--background:#0B1220;--surface:#101B2E;--surface-muted:#16243A;--foreground:#FAFAF8;--ink:#0B1220;--ink-muted:#526078;--light-background:#FAFAF8;--light-surface:#FFFFFF;--light-muted:#EFF4FC;--light-border:#DCE3ED;--accent:#AFC9FF;--accent-strong:#2563EB;--blue:#2563EB}
+body{font-family:var(--font-admaki),'Noto Sans Ethiopic',Arial,sans-serif}
+body .editorial-site{--paper:#FAFAF8;--ink:#0B1220;--muted:#526078;--orange:#2563EB;--blue:#2563EB;--line:#DCE3ED}
+.brand-logo{display:block;width:280px;max-width:100%;height:auto;flex-shrink:0}.brand-symbol{width:112px}.brand-footer-logo{width:min(100%,680px)}
+body .ed-logo{display:inline-flex;align-items:center;flex-shrink:0}body .ed-nav-inner{gap:24px}body .ed-nav-links{gap:24px}
+body .ed-footer-wordmark{display:block;padding:22px 0}body .ed-footer-wordmark .brand-logo{width:min(100%,850px)}
+body .ed-contact,body .ad-product-card.card-dark,body .erp-page,body .erp-nav{background:#0B1220}
+body .ed-contact{color:#FAFAF8}body .ed-contact h2 em{color:#AFC9FF}body .ed-contact-bottom>p,body .ad-contact-details,body .ed-contact-note,body .ed-footer>div{color:#CCD8EA}
+body .ed-nav-cta,body .ed-btn-dark,body .ad-product-action{border-radius:10px;background:#2563EB;border-color:#2563EB;color:#FFFFFF}
+body .ad-product-card{border-radius:16px}body .ad-product-action.secondary{background:transparent;color:#0B1220;border-color:#94A4BC}body .card-dark .ad-product-action.secondary{color:white;border-color:#AFC9FF}
+body .idea-copy h1 em,body .ed-section-head h2 em,body .ed-studio h2 em,body .ed-contact h2 em,body .ad-products h2 em{font-family:var(--font-admaki),sans-serif;font-style:normal;font-weight:600}
+.ed-service-family{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:60px;padding-top:24px;border-top:1px solid #31415B;font-size:13px;font-weight:600;color:#DCE7FA}.ed-service-family a:hover{color:#AFC9FF}
+body .social-logo .brand-logo,body .websites-logo .brand-logo,body .erp-logo .brand-logo{width:220px}
+:lang(am),:lang(ti){font-family:'Noto Sans Ethiopic',var(--font-admaki),sans-serif}
+@media(max-width:1050px){body .ed-nav-links,body .ed-nav-cta{display:none}body .ed-mobile-menu{display:block;margin-left:auto;position:relative}body .ed-mobile-menu summary{list-style:none;cursor:pointer;font-size:12px;font-weight:700;display:flex;gap:11px}body .ed-mobile-menu nav{position:absolute;right:0;top:31px;width:min(300px,86vw);display:flex;flex-direction:column;background:#FAFAF8;padding:10px 22px;border:1px solid #DCE3ED;box-shadow:0 16px 30px #0B122020}body .ed-mobile-menu nav a{padding:15px 0;color:#0B1220;border-bottom:1px solid #DCE3ED;text-decoration:none}}
+@media(max-width:650px){.brand-logo{width:220px}body .ed-nav{height:78px}.ed-service-family{gap:16px;font-size:12px}body .social-logo .brand-logo,body .websites-logo .brand-logo,body .erp-logo .brand-logo{width:155px}.social-cta-btn,.websites-cta-btn,.erp-cta-btn{display:none!important}body .ed-studio-seal .brand-logo{width:96px}}

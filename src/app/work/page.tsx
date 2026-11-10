@@ -1,3 +1,4 @@
+import BrandLogo from '@/components/ui/BrandLogo';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -23,7 +24,7 @@ export default function WorkDirectoryPage() {
             <span>Back to Home</span>
           </Link>
           <Link href="/" className="websites-logo" aria-label="ADMAKI Home">
-            ADMAKI<span>®</span>
+            <BrandLogo />
           </Link>
           <Link href="/#contact" className="websites-cta-btn">
             Start a project ↗

@@ -1,5 +1,6 @@
 'use client';
 
+import BrandLogo from '@/components/ui/BrandLogo';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
@@ -92,10 +93,7 @@ export default function Header({ scrollProgress = 0 }: HeaderProps) {
             className="group inline-flex items-center gap-2.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
             aria-label="ADMAKI Home"
           >
-            <span className="h-2 w-2 rounded-full bg-[#69dceb] shadow-[0_0_10px_rgba(105,220,235,0.65)]" />
-            <span className="font-black text-base sm:text-lg tracking-[0.18em] uppercase text-white">
-              ADMAKI
-            </span>
+            <BrandLogo light />
           </Link>
 
           <nav

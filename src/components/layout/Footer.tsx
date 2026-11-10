@@ -1,3 +1,4 @@
+import BrandLogo from '@/components/ui/BrandLogo';
 import React from 'react';
 import Link from 'next/link';
 
@@ -5,6 +6,8 @@ const navigation = [
   { label: 'Campaigns', href: '/social' },
   { label: 'Websites', href: '/websites' },
   { label: 'ERP Systems', href: '/erp' },
+  { label: 'ADMAKI Menu', href: 'https://menu.admakidigital.com' },
+  { label: 'ADMAKI Digital Card', href: 'https://nfc.admakidigital.com' },
   { label: 'Services', href: '/#services' },
   { label: 'Studio', href: '/#studio' },
   { label: 'Contact', href: '/#contact' },
@@ -49,15 +52,13 @@ export default function Footer() {
           className="group mt-14 sm:mt-20 block border-y border-white/12 py-5 sm:py-7 focus:outline-none"
           aria-label="ADMAKI Home"
         >
-          <span className="block text-[clamp(4.6rem,17vw,15rem)] font-black uppercase tracking-[-0.075em] leading-[0.72] text-white transition-colors group-hover:text-[#dff9fc]">
-            ADMAKI
-          </span>
+          <BrandLogo light className="brand-footer-logo" />
         </Link>
 
         <div className="pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[10px] sm:text-xs font-mono tracking-[0.14em] uppercase text-zinc-600">
-          <span>© ADMAKI</span>
+          <span>© ADMAKI Digital</span>
           <div className="flex items-center gap-5">
-            <span>Ideas → Systems → Impact</span>
+            <span>Build your digital advantage.</span>
             <a href="#" className="text-zinc-500 hover:text-white transition-colors">
               Back to top ↑
             </a>

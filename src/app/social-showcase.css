@@ -1,7 +1,7 @@
 /* ADMAKI / TikTok campaign reel — lightweight editorial design. */
 .ad-social-showcase {
   overflow: clip;
-  background: #eceee6;
+  background: #EFF4FC;
 }
 .ad-social-showcase .ed-section-head { margin-bottom: clamp(24px, 4vw, 55px); }
 
@@ -33,13 +33,13 @@
   transition: color .2s ease, border-color .2s ease;
 }
 .ad-campaign-tab:hover, .ad-campaign-tab.is-selected { color: #1e2d24; }
-.ad-campaign-tab.is-selected { border-color: #3156e9; }
+.ad-campaign-tab.is-selected { border-color: #2563EB; }
 .ad-campaign-tab-index {
   color: #8b998d;
   font: 500 10px/1 var(--font-geist-mono), monospace;
   margin-right: 10px;
 }
-.ad-campaign-tab.is-selected .ad-campaign-tab-index { color: #3156e9; }
+.ad-campaign-tab.is-selected .ad-campaign-tab-index { color: #2563EB; }
 .ad-campaign-counter {
   font: 600 10px/1.3 var(--font-geist-mono), monospace;
   color: #758179;
@@ -280,7 +280,7 @@
 .ad-error-symbol { font-size: 34px; line-height:1; }
 .ad-video-error button {
   border: 1px solid #e5ede3;
-  background: #f7f6f1;
+  background: #FAFAF8;
   color: #18291d;
   cursor: pointer;
   padding: 10px 16px;
@@ -472,7 +472,7 @@
 
 .ad-video-sound-toggle:hover {
   background: #1d3523;
-  border-color: #8dcda1;
+  border-color: #AFC9FF;
 }
 
 .ad-video-sound-toggle.is-unmuted {

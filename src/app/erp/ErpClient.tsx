@@ -1,5 +1,7 @@
 'use client';
 
+import BrandLogo from '@/components/ui/BrandLogo';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import TelegramBotSimulator from '@/components/interactive/TelegramBotSimulator';
@@ -18,7 +20,7 @@ export default function ErpClient() {
             <span>Back to Home</span>
           </Link>
           <Link href="/" className="erp-logo" aria-label="ADMAKI Home">
-            ADMAKI<span>®</span>
+            <BrandLogo light />
           </Link>
           <Link href="/#contact" className="erp-cta-btn">
             Start a project ↗

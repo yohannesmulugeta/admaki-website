@@ -6,8 +6,8 @@
   letter-spacing: .08em; text-transform: uppercase; padding: 14px 28px;
   border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center;
 }
-.social-cta-btn-white { background: #f7f6f1; color: #0b1510; }
-.social-cta-btn-ghost { border: 1px solid #ffffff40; color: #f7f6f1; }
+.social-cta-btn-white { background: #FAFAF8; color: #0B1220; }
+.social-cta-btn-ghost { border: 1px solid #ffffff40; color: #FAFAF8; }
 .social-cta-btn-white:hover { background: #d7e7fc; }
 .social-cta-btn-ghost:hover { background: #ffffff14; border-color: #fff; }
 @media (max-width:850px) { .ed-wrap { width: min(100% - 40px,740px); } }

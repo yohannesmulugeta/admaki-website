@@ -1,5 +1,7 @@
 'use client';
 
+import BrandLogo from '@/components/ui/BrandLogo';
+
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -81,7 +83,7 @@ export default function SocialGalleryClient() {
             <span>Back to Home</span>
           </Link>
           <Link href="/" className="social-logo" aria-label="ADMAKI Home">
-            ADMAKI<span>®</span>
+            <BrandLogo />
           </Link>
           <Link href="/#contact" className="social-cta-btn">
             Start a project ↗

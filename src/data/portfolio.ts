@@ -72,12 +72,12 @@ export const workProjects: WorkProject[] = [
     screenshot: '/images/covers/hayked-trading.webp',
   },
   {
-    id: 'gurshamenu', title: 'GurshaMenu', eyebrow: 'Restaurant technology',
+    id: 'gurshamenu', title: 'ADMAKI Menu', eyebrow: 'Restaurant technology',
     category: 'Websites', status: 'Product', theme: 'food', featured: true,
     description: 'A QR-menu product website built to make restaurant menus easier to update.',
     liveUrl: 'https://menu.admakidigital.com/',
     
-    screenshot: '/images/covers/gurshamenu.webp',
+    screenshot: '/brand/menu-preview.png',
   },
   {
     id: 'getfit', title: 'Get Fit with JO', eyebrow: 'Fitness / Coaching',

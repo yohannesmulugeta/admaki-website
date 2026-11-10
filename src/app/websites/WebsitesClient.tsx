@@ -1,5 +1,7 @@
 'use client';
 
+import BrandLogo from '@/components/ui/BrandLogo';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,7 +33,7 @@ export default function WebsitesClient() {
             <span>Back to Home</span>
           </Link>
           <Link href="/" className="websites-logo" aria-label="ADMAKI Home">
-            ADMAKI<span>®</span>
+            <BrandLogo />
           </Link>
           <Link href="/#contact" className="websites-cta-btn">
             Start a project ↗
