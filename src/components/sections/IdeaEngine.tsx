@@ -1,5 +1,7 @@
 'use client';
 
+import BrandLogo from '@/components/ui/BrandLogo';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const moments = [
@@ -216,7 +218,7 @@ export default function IdeaEngine() {
             <div className="engine-blade engine-blade-right" ref={bladeRightRef} />
             <div className="engine-blueprint" />
             <div className="engine-square" ref={squareRef} />
-            <div className="engine-disc" ref={discRef}><div className="engine-disc-inner"><span>AD.</span></div></div>
+            <div className="engine-disc" ref={discRef}><div className="engine-disc-inner"><BrandLogo light symbol className="engine-brand-mark" /></div></div>
             <div className="engine-rail engine-rail-top" />
             <div className="engine-rail engine-rail-bottom" />
             <div className="engine-mini-ui" ref={cardRef} aria-hidden="true">
@@ -225,7 +227,7 @@ export default function IdeaEngine() {
               <span className="engine-ui-block" />
             </div>
             <div className="engine-small-note"><span className="engine-small-mark" /> FROM POSSIBILITY<br/>TO PURPOSE</div>
-            <div className="engine-label">THE <strong>IDEA ENGINE</strong> <span>®</span></div>
+            <div className="engine-label">THE <strong>IDEA ENGINE</strong> </div>
           </div>
         </div>
 
