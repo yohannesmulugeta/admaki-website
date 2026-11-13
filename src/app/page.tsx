@@ -96,7 +96,7 @@ export default function Home() {
             </div>
           </div>
           <nav aria-label="Explore ADMAKI services" style={{display:"flex",flexWrap:"wrap",gap:"16px",marginBottom:"32px"}}>{servicePages.map(s => <Link key={s.slug} href={`/services/${s.slug}`}>{s.short} ↗</Link>)}</nav>
-          <div className="ed-service-list">{services.map((service) => (
+          <p style={{marginBottom:"24px"}}><Link href="/guides/digital-tools-for-ethiopian-businesses">Digital tools: questions answered ↗</Link> · <Link href="/am/guides/digital-tools-for-ethiopian-businesses" lang="am">በአማርኛ ያንብቡ ↗</Link></p><div className="ed-service-list">{services.map((service) => (
             <article className="ed-service" data-reveal key={service.number}>
               <span className="ed-service-num">{service.number} / 03</span>
               <div><h3>{service.title}</h3><strong>{service.subtitle}</strong></div>

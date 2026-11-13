@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.85,
     },
-    ...['/services', '/guides/choosing-a-digital-partner-in-ethiopia', ...servicePages.map(s => `/services/${s.slug}`)].map(path => ({ url: `${siteUrl}${path}`, changeFrequency: 'monthly' as const, priority: 0.8 })),
+    ...['/guides/digital-tools-for-ethiopian-businesses', '/am/guides/digital-tools-for-ethiopian-businesses', '/services', '/guides/choosing-a-digital-partner-in-ethiopia', ...servicePages.map(s => `/services/${s.slug}`)].map(path => ({ url: `${siteUrl}${path}`, changeFrequency: 'monthly' as const, priority: 0.8 })),
     ...projectRoutes,
   ];
 }
