@@ -23,6 +23,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  verification: { other: { 'msvalidate.01': '17D642D20BB0FCA5537572E1F8AE45D1' } },
   alternates: { canonical: '/' },
   title: {
     default: 'Websites, Content & Custom Software in Ethiopia | ADMAKI Digital',
