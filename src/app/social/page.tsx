@@ -3,9 +3,8 @@ import SocialGalleryClient from './SocialGalleryClient';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/social' },
-  title: 'Social & Creative Campaigns',
-  description:
-    'Explore all ADMAKI video campaigns, creator collaborations, and product storytelling for Universal Electronics, Finder Tools, and KKGT.',
+  title: "Social Media Management & Content Creation in Ethiopia",
+  description: "Social media content and creative campaigns in Ethiopia. Explore ADMAKI work for Universal Electronics, KKGT and Finder Tools.",
   openGraph: {
     url: '/social',
     title: 'Social & Creative Campaigns | ADMAKI',

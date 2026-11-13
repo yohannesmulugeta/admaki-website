@@ -10,6 +10,7 @@ import './editorial.css';
 import './cursor-covers.css';
 import './social-showcase.css';
 import './products.css';
+import { servicePages } from '@/data/services';
 
 const services = [
   { number: '01', title: 'Creative & social', subtitle: 'Stories with a reason to exist.', body: 'Campaign thinking, content strategy, visual direction and short-form video made to connect with people.', tags: ['Social media', 'Content production', 'Art direction'] },
@@ -34,12 +35,12 @@ export default function Home() {
         <div className="ed-wrap ed-nav-inner">
           <a href="#home" className="ed-logo" aria-label="ADMAKI Digital, home"><BrandLogo /></a>
           <nav className="ed-nav-links" aria-label="Main navigation">
-            <Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a>
+            <Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="/services">Services</a><a href="#studio">Studio</a>
           </nav>
           <a className="ed-nav-cta" data-magnetic href="#contact">Start a project <span aria-hidden="true">↗</span></a>
           <details className="ed-mobile-menu">
             <summary aria-label="Open navigation">MENU <span aria-hidden="true">☰</span></summary>
-            <nav aria-label="Mobile navigation"><Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="#services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
+            <nav aria-label="Mobile navigation"><Link href="/work">Work</Link><a href="#products">Products</a><a href="#social">Campaigns</a><a href="/services">Services</a><a href="#studio">Studio</a><a href="#contact">Start a project</a></nav>
           </details>
         </div>
       </header>
@@ -94,6 +95,7 @@ export default function Home() {
               <p>Three disciplines, one connected way of thinking. We match the craft and the technology to the problem — not the other way around.</p>
             </div>
           </div>
+          <nav aria-label="Explore ADMAKI services" style={{display:"flex",flexWrap:"wrap",gap:"16px",marginBottom:"32px"}}>{servicePages.map(s => <Link key={s.slug} href={`/services/${s.slug}`}>{s.short} ↗</Link>)}</nav>
           <div className="ed-service-list">{services.map((service) => (
             <article className="ed-service" data-reveal key={service.number}>
               <span className="ed-service-num">{service.number} / 03</span>

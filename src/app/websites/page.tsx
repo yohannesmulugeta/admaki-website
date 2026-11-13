@@ -3,9 +3,8 @@ import WebsitesClient from './WebsitesClient';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/websites' },
-  title: 'Websites & Digital Experiences',
-  description:
-    'Explore ADMAKI websites for Ethiopian coffee origins, electronics, agriculture, luxury furniture, and technology platforms.',
+  title: "Website Design & Development in Ethiopia",
+  description: "Website design and development for Ethiopian businesses. Explore ADMAKI websites for coffee, electronics, agriculture and interiors.",
   openGraph: {
     url: '/websites',
     title: 'Websites & Digital Experiences | ADMAKI',

@@ -3,9 +3,8 @@ import ErpClient from './ErpClient';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/erp' },
-  title: 'Custom ERP & Business Systems',
-  description:
-    'Custom warehouse ERP, coffee export ledgers, inventory traceability, and automated Telegram bots built for Ethiopian operations.',
+  title: "Custom Software & ERP Development in Ethiopia",
+  description: "Custom software and ERP development for Ethiopian businesses, including coffee warehouse custody, inventory and operational workflows.",
   openGraph: {
     url: '/erp',
     title: 'Custom ERP & Business Systems | ADMAKI',

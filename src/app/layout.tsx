@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { absoluteAssetUrl, basePath, siteUrl } from '@/lib/siteConfig';
 import './globals.css';
+import JsonLd from '@/components/seo/JsonLd';
+import { business } from '@/lib/business';
 import './portfolio-pages.css';
 import './brand.css';
 
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: { canonical: '/' },
   title: {
-    default: 'ADMAKI Digital — Build your digital advantage.',
+    default: 'Websites, Content & Custom Software in Ethiopia | ADMAKI Digital',
     template: '%s | ADMAKI Digital',
   },
   description:
@@ -55,7 +57,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'ADMAKI Digital',
-    title: 'ADMAKI Digital — Build your digital advantage.',
+    title: 'Websites, Content & Custom Software in Ethiopia | ADMAKI Digital',
     description:
       'Websites, creative campaigns, QR restaurant menus, NFC business cards and business software, built in Ethiopia.',
     images: [
@@ -69,7 +71,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ADMAKI Digital — Build your digital advantage.',
+    title: 'Websites, Content & Custom Software in Ethiopia | ADMAKI Digital',
     description:
       'Ideas that move. Systems that work. Explore ADMAKI websites, creative campaigns and practical business software.',
     images: [absoluteAssetUrl('/brand/social-preview.png')],
@@ -101,7 +103,7 @@ export default function RootLayout({
       lang="en"
       className={`${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-black text-white">{children}</body>
+      <body className="min-h-full flex flex-col bg-black text-white"><JsonLd data={business} />{children}</body>
     </html>
   );
 }
