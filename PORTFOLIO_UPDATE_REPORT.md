@@ -64,7 +64,8 @@ The website gallery and work directory continue with Enkupanet Agro Trading, Hay
 | Comparison against base data | Passed: all nine video objects retain exact metadata; all other 15 project objects are unchanged |
 | Existing website live links | All 13 returned HTTP 200 |
 | `git diff --check` | Passed |
-| Browser interaction and layout QA | Passed for the scoped checks below using the static production export. Physical-device, mobile touch/swipe and third-party TikTok checks remain outstanding. |\n| GitHub Actions verification | Passed: Verify website build, run 43727798435 |
+| Browser interaction and layout QA | Passed for the scoped checks below using the static production export. Physical-device, mobile touch/swipe and third-party TikTok checks remain outstanding. |
+| GitHub Actions verification | Passed: Verify website build, run 43727798435 |
 
 Added the content regression script to the existing PR verification workflow. No existing test command is defined in package.json; no video testing dependency was added.
 
