@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <title>Coffee processing and warehouse workflow</title>
+  <desc>Original ADMAKI workflow illustration with coffee sacks, receiving, lots, processing and movement history. No real dashboard or business records.</desc>
+  <!-- Original illustration for ADMAKI. No third-party imagery or customer data. -->
+  <rect width="1200" height="800" fill="#FAFAF8"/>
+  <rect x="64" y="132" width="1072" height="536" rx="24" fill="white" stroke="#DCE3ED" stroke-width="2"/>
+  <g font-family="Manrope, Arial, sans-serif">
+    <text x="108" y="192" fill="#2563EB" font-size="16" font-weight="700" letter-spacing="2">COFFEE / OPERATIONS</text>
+    <text x="108" y="244" fill="#0B1220" font-size="36" font-weight="700">From receipt to traceable records.</text>
+    <text x="108" y="280" fill="#526078" font-size="18">Custom ERP / Business Software</text>
+    <g fill="#EFF4FC" stroke="#DCE3ED" stroke-width="2">
+      <rect x="430" y="330" width="280" height="100" rx="14"/>
+      <rect x="754" y="330" width="280" height="100" rx="14"/>
+      <rect x="430" y="470" width="280" height="100" rx="14"/>
+      <rect x="754" y="470" width="280" height="100" rx="14"/>
+    </g>
+    <g fill="#0B1220" font-size="23" font-weight="600">
+      <text x="462" y="376">Receiving</text><text x="786" y="376">Coffee lots</text>
+      <text x="462" y="516">Movement history</text><text x="786" y="516">Processing</text>
+    </g>
+    <g fill="#526078" font-size="16">
+      <text x="462" y="406">Goods Received Notes</text><text x="786" y="406">Inventory and client custody</text>
+      <text x="462" y="546">Lot traceability</text><text x="786" y="546">Controlled workflows</text>
+    </g>
+    <g stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M716 380h30m-8-7 8 7-8 7M894 438v24m-7-8 7 8 7-8M746 520h-30m8-7-8 7 8 7"/>
+    </g>
+    <g stroke="#526078" stroke-width="2">
+      <path d="M131 452q-8-33 9-55h99q17 22 9 55l19 93q6 25-22 25H134q-28 0-22-25z" fill="#EFF4FC"/>
+      <path d="M240 449q-8-33 9-55h66q17 22 9 55l18 96q6 25-22 25h-54" fill="#EFF4FC"/>
+      <path d="M153 397l-5-21h82l-6 21M261 394l-4-20h50l-4 20M105 583h251"/>
+      <ellipse cx="185" cy="480" rx="19" ry="29" transform="rotate(25 185 480)" fill="white"/>
+      <path d="M192 457q-20 18-16 45"/>
+    </g>
+    <text x="108" y="625" fill="#526078" font-size="15" letter-spacing="1">WORKFLOW ILLUSTRATION / NO CUSTOMER DATA</text>
+  </g>
+</svg>

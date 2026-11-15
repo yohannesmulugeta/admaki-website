@@ -16,7 +16,7 @@ type TikTokPlayerEvent = {
 };
 
 function playerUrl(id: string) {
-  return `${PLAYER_ORIGIN}/player/v1/${id}?autoplay=1&muted=1&loop=1&controls=1&volume_control=0&rel=0&description=0&music_info=0`;
+  return `${PLAYER_ORIGIN}/player/v1/${id}?autoplay=1&muted=1&loop=1&controls=1&volume_control=1&rel=0&description=0&music_info=0`;
 }
 
 function sendPlayerCommand(player: HTMLIFrameElement | null, type: 'play' | 'pause' | 'mute') {
@@ -163,13 +163,26 @@ export default function SocialShowcase() {
   const [paused, setPaused] = useState(false);
   const [playerPlaying, setPlayerPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [visiblePlayer, setVisiblePlayer] = useState({ key: '', visible: false });
 
   const sectionRef = useRef<HTMLElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const brand = socialBrands[brandIndex];
-  const permittedToStart = sectionVisible && pageVisible && (!reducedMotion || manualPlay);
+  const playerKey = `${brand.id}-${brand.videos[videoIndex].id}`;
+  const playerVisible = visiblePlayer.key === playerKey && visiblePlayer.visible;
+  const permittedToStart = sectionVisible && playerVisible && pageVisible && (!reducedMotion || manualPlay);
   const shouldPlay = permittedToStart && !paused;
+
+  useEffect(() => {
+    const stage = carouselRef.current?.querySelector(`[data-video-index="${videoIndex}"] .ad-video-stage`);
+    if (!stage || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisiblePlayer({ key: playerKey, visible: entry.isIntersecting && entry.intersectionRatio >= 0.1 });
+    }, { threshold: [0, 0.1] });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [playerKey, videoIndex]);
 
   useEffect(() => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');

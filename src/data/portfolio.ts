@@ -137,12 +137,12 @@ export const workProjects: WorkProject[] = [
     screenshot: '/images/covers/bethager.webp',
   },
   {
-    id: 'hayked', title: 'Hayked Coffee Warehouse ERP', eyebrow: 'Warehouse / ERP',
+    id: 'coffee-warehouse-erp', title: 'Coffee Processing & Warehouse Management System', eyebrow: 'Custom ERP / Business Software',
     category: 'Business systems', status: 'Product', theme: 'software', featured: true,
-    description: 'Warehouse receipts, client custody, lot traceability and stock workflows in one system.',
-    caseStudyUrl: '/work/hayked-coffee-warehouse-erp',
+    description: 'A specialized digital management system for coffee receiving, inventory tracking, processing operations, lot traceability, and warehouse workflows.',
+    caseStudyUrl: '/work/coffee-processing-warehouse-management-system',
     
-    screenshot: '/images/projects/hayked-coffee-warehouse-erp.webp',
+    screenshot: '/images/projects/coffee-processing-warehouse-management-system.webp',
   },
   {
     id: 'beanledger', title: 'BeanLedger', eyebrow: 'Coffee export / ERP',
@@ -153,6 +153,20 @@ export const workProjects: WorkProject[] = [
     screenshot: '/images/projects/beanledger-coffee-export-erp.webp',
   },
 ];
+
+/** Shared priority by stable project ID; unlisted projects keep their input order. */
+export const websiteProjectPriority = [
+  'sibu', 'maison-debrah', 'universal', 'kkgt-coffee', 'kkgt-trade', 'bethager',
+] as const;
+
+export function orderPortfolioProjects(projects: readonly WorkProject[]): WorkProject[] {
+  const priority = new Map<string, number>(websiteProjectPriority.map((id, index) => [id, index]));
+  return [...projects].sort((left, right) =>
+    (priority.get(left.id) ?? priority.size) - (priority.get(right.id) ?? priority.size)
+  );
+}
+
+export const orderedWorkProjects = orderPortfolioProjects(workProjects);
 
 /**
  * Nine selected, published TikTok posts. Keep creator attribution for content
@@ -192,6 +206,14 @@ export const socialBrands: SocialBrand[] = [
     profileUrl: 'https://www.tiktok.com/@universal_electronics',
     videos: [
       {
+        id: 'universal-03',
+        url: 'https://www.tiktok.com/@universal_electronics/video/7618627966997695751',
+        creator: '@universal_electronics',
+        label: 'Campaign video 03',
+        videoSrc: '/videos/campaigns/universal/universal-03.mp4',
+        poster: '/images/campaigns/universal/universal-03.jpg',
+      },
+      {
         id: 'universal-01',
         url: 'https://www.tiktok.com/@kebromneguseofficial/video/7697672470446345504',
         creator: '@kebromneguseofficial',
@@ -206,14 +228,6 @@ export const socialBrands: SocialBrand[] = [
         label: 'Campaign video 02',
         videoSrc: '/videos/campaigns/universal/universal-02.mp4',
         poster: '/images/campaigns/universal/universal-02.jpg',
-      },
-      {
-        id: 'universal-03',
-        url: 'https://www.tiktok.com/@universal_electronics/video/7618627966997695751',
-        creator: '@universal_electronics',
-        label: 'Campaign video 03',
-        videoSrc: '/videos/campaigns/universal/universal-03.mp4',
-        poster: '/images/campaigns/universal/universal-03.jpg',
       },
     ],
   },

@@ -71,9 +71,9 @@ export const servicePages = [
       "Role-aware operational controls",
       "Reporting, handover and support planning"
     ],
-    "example": "The Hayked Coffee Warehouse ERP case study explains a receipt-to-lot workflow, client custody records, processing and inventory traceability.",
-    "link": "/work/hayked-coffee-warehouse-erp",
-    "linkText": "Read the Hayked ERP case study",
+    "example": "The Coffee Processing & Warehouse Management System case study explains a receipt-to-lot workflow, client custody records, processing and inventory traceability.",
+    "link": "/work/coffee-processing-warehouse-management-system",
+    "linkText": "Read the coffee warehouse ERP case study",
     "questions": [
       [
         "Should I choose custom software or an existing ERP?",
@@ -81,7 +81,7 @@ export const servicePages = [
       ],
       [
         "Can you build software for coffee operations?",
-        "Our Hayked case study covers third-party coffee warehouse custody, receipt records, processing and lot traceability. We scope new projects against the actual business requirements."
+        "Our coffee warehouse case study covers third-party coffee warehouse custody, receipt records, processing and lot traceability. We scope new projects against the actual business requirements."
       ],
       [
         "What do you need before quoting?",

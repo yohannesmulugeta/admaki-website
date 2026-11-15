@@ -30,7 +30,9 @@ export default function CampaignVideoPlayer({
     if (!element) return;
     let cancelled = false;
     if (shouldPlay) {
-      element.play().catch((error: unknown) => {
+      element.play().then(() => {
+        if (cancelled) element.pause();
+      }).catch((error: unknown) => {
         if (cancelled || (error instanceof DOMException && error.name === 'AbortError')) return;
         onPlayingChange?.(false);
         setFailure('blocked');
@@ -39,7 +41,7 @@ export default function CampaignVideoPlayer({
       element.pause();
       onPlayingChange?.(false);
     }
-    return () => { cancelled = true; };
+    return () => { cancelled = true; element.pause(); };
   }, [shouldPlay, onPlayingChange]);
 
   const resume = () => {
