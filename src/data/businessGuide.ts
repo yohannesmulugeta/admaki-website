@@ -55,8 +55,8 @@ export const businessGuideTopics = [
     "amBody": "መጀመሪያ የእውነተኛውን የሥራ ሂደት ይዘርዝሩ። መረጃ ማን ይመዘግባል? ማን ያጸድቃል? ምን ዓይነት ሪፖርቶች ያስፈልጋሉ? ዝግጁ ሲስተምን ከብጁ ልማት ጋር ያወዳድሩ። በግልጽ የመጀመሪያ ምዕራፍ መጀመር፣ ወደ ትልቅ ትግበራ ከመግባት በፊት የሥራ ሂደቱን ለመገምገም ይረዳል።",
     "enPrepare": "Bring sample forms and reports with private customer data removed. Discuss user permissions, audit history, backups, data export, training, ownership and support before development.",
     "amPrepare": "የደንበኞችን የግል መረጃ አስወግደው የቅጾችና የሪፖርቶች ናሙናዎችን ያዘጋጁ። ከልማት በፊት የተጠቃሚ ፈቃዶች፣ የለውጥ ታሪክ፣ ምትኬ፣ መረጃን ማውጣት፣ ሥልጠና፣ ባለቤትነትና ድጋፍ ላይ ይወያዩ።",
-    "demo": "/work/hayked-coffee-warehouse-erp",
-    "demoEn": "Read the Hayked warehouse case study",
-    "demoAm": "የHayked መጋዘን ሲስተም ጥናትን ያንብቡ"
+    "demo": "/work/coffee-processing-warehouse-management-system",
+    "demoEn": "Read the coffee warehouse case study",
+    "demoAm": "የቡና መጋዘን ሲስተም ጥናትን ያንብቡ"
   }
 ];

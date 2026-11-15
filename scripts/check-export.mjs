@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFile, stat } from 'node:fs/promises';
 
-for (const route of ['social', 'websites', 'erp', 'work', 'work/hayked-coffee-warehouse-erp', 'work/beanledger']) {
+for (const route of ['social', 'websites', 'erp', 'work', 'work/coffee-processing-warehouse-management-system', 'work/beanledger']) {
   const html = await readFile(`out/${route}.html`, 'utf8');
   const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1];
   assert.equal(canonical, `https://admakidigital.com/${route}`, `${route} must not canonicalize to the homepage`);
@@ -20,6 +20,19 @@ for (const video of videos) {
   assert(info.size > 0 && info.size < 25 * 1024 * 1024, `Video missing or exceeds Cloudflare static asset limit: ${video}`);
 }
 const home = await readFile('out/index.html', 'utf8');
+const priority = ['sibu', 'maison-debrah', 'universal', 'kkgt-coffee', 'kkgt-trade', 'bethager'];
+assert.deepEqual([...home.matchAll(/data-project="([^"]+)"/g)].map(match => match[1]), priority,
+  'Homepage must feature the six requested projects in order');
+for (const route of ['websites', 'work']) {
+  const html = await readFile(`out/${route}.html`, 'utf8');
+  const titles = [...html.matchAll(/<h2 class="website-title">(.*?)<\/h2>/g)].map(match => match[1]);
+  assert.deepEqual(titles.slice(0, 6), ['Sibu Trading PLC', 'Maison Debrah Ethiopia', 'Universal Electronics', 'KKGT Coffee', 'KKGT Import &amp; Export', 'Bethager Furniture']);
+}
+for (const route of ['erp', 'work/coffee-processing-warehouse-management-system', 'services/custom-software-ethiopia']) {
+  const html = await readFile(`out/${route}.html`, 'utf8');
+  assert(!/hayked/i.test(html), `${route} still exposes the warehouse client`);
+  assert(html.includes('Coffee Processing &amp; Warehouse Management System'), `${route} is missing the generic project title`);
+}
 for (const url of ['https://nfc.admakidigital.com/', 'https://menu.admakidigital.com/', 'https://app.admakidigital.com/#/r/abol-coffee']) {
   assert(home.includes(url), `Homepage product link is missing: ${url}`);
 }

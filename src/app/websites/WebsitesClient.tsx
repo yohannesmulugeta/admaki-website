@@ -5,7 +5,7 @@ import BrandLogo from '@/components/ui/BrandLogo';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { workProjects } from '@/data/portfolio';
+import { orderedWorkProjects as workProjects } from '@/data/portfolio';
 import { withBasePath } from '@/lib/siteConfig';
 import Footer from '@/components/layout/Footer';
 import './websites.css';

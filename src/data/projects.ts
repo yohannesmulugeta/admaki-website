@@ -41,17 +41,17 @@
 export const projectsData: Project[] = [
   {
     id: 'project-01',
-    slug: 'hayked-coffee-warehouse-erp',
+    slug: 'coffee-processing-warehouse-management-system',
     number: '01',
-    title: 'Hayked Coffee Warehouse ERP',
-    category: 'CUSTOM SOFTWARE',
+    title: 'Coffee Processing & Warehouse Management System',
+    category: 'Custom ERP / Business Software',
     tagline: 'Warehouse Operations, Traceability & Client Custody',
     year: '2026',
     clientType: 'Coffee Warehouse Operations',
     description:
-      'End-to-end warehouse management for Ethiopian coffee, covering goods receipt, lots, processing, stock, client custody, movements, reporting and operational traceability.',
+      'A specialized digital management system for coffee receiving, inventory tracking, processing operations, lot traceability, and warehouse workflows.',
     overview:
-      'Hayked Coffee Warehouse ERP was designed around real third-party coffee warehouse operations. The system replaces fragmented records with one operational flow from goods receipt through lot custody, processing, movement history, stock reporting and controlled release.',
+      'ADMAKI developed a customized digital solution designed to organize coffee warehouse operations, including goods receiving, lot management, inventory movement tracking, processing workflows, and operational documentation.',
     challenge: {
       title: 'Warehouse Accuracy Across Multiple Owners and Lots',
       description:
@@ -67,9 +67,14 @@ export const projectsData: Project[] = [
       description:
         'The ERP connects receipt, lot management, processing, inventory, movement history and reporting in one workflow built around practical warehouse controls.',
       points: [
-        'Database-generated GRN and lot references with printable operational records',
-        'Client-to-lot custody and processing workflows with stock-limit validation',
-        'Movement history, stock views and lot detail pages for day-to-day traceability',
+        'Goods Received Notes (GRN)',
+        'Coffee receiving workflows',
+        'Coffee lot tracking',
+        'Warehouse inventory management',
+        'Processing workflow management',
+        'Client management',
+        'Inventory movement history and traceability',
+        'Role-based operational controls',
       ],
     },
     architecture: {
@@ -91,9 +96,8 @@ export const projectsData: Project[] = [
     metricsOrOutcomes: [],
     services: ['ERP Design', 'Warehouse Workflow', 'Inventory & Traceability', 'Reporting'],
     technologies: ['React', 'TypeScript', 'Supabase', 'PostgreSQL'],
-    image: '/images/projects/hayked-coffee-warehouse-erp.webp',
-    href: '/work/hayked-coffee-warehouse-erp',
-    liveUrl: 'https://hayked-coffee-warehouse-erp.vercel.app/',
+    image: '/images/projects/coffee-processing-warehouse-management-system.webp',
+    href: '/work/coffee-processing-warehouse-management-system',
   },
   {
     id: 'project-02',

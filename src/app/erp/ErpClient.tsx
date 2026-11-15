@@ -6,8 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TelegramBotSimulator from '@/components/interactive/TelegramBotSimulator';
 import Footer from '@/components/layout/Footer';
+import { projectsData } from '@/data/projects';
 import { withBasePath } from '@/lib/siteConfig';
 import './erp.css';
+
+const warehouseProject = projectsData.find((project) => project.id === 'project-01')!;
 
 export default function ErpClient() {
   return (
@@ -64,7 +67,7 @@ export default function ErpClient() {
       {/* Systems Showcase */}
       <section className="erp-showcase-section">
         <div className="ed-wrap">
-          {/* System 01: Hayked Coffee Warehouse ERP */}
+          {/* System 01: Coffee Processing & Warehouse Management System */}
           <article className="erp-system-card">
             <div className="erp-card-header">
               <span className="erp-card-index">SYSTEM 01 // WAREHOUSE ERP</span>
@@ -73,50 +76,36 @@ export default function ErpClient() {
             <div className="erp-card-content">
               <div className="erp-card-graphic">
                 <Image
-                  src={withBasePath('/images/projects/hayked-coffee-warehouse-erp.webp')}
-                  alt="Hayked Coffee Warehouse ERP interface preview"
+                  src={withBasePath(warehouseProject.image)}
+                  alt="Illustrated coffee warehouse workflow; no customer records"
                   fill
                   sizes="(max-width: 950px) 100vw, 55vw"
                   unoptimized
                 />
               </div>
               <div className="erp-card-info">
-                <h2>Hayked Coffee Warehouse ERP</h2>
+                <h2>{warehouseProject.title}</h2>
                 <div className="erp-card-tagline">
-                  Goods Receipt (GRN) · Lot Custody · Traceability
+                  {warehouseProject.category}
                 </div>
                 <p className="erp-card-desc">
-                  Designed for real third-party coffee warehouse operations in Ethiopia. Handles arrival goods receipts, multi-owner client custody, processing source validation, and printable operational documents.
+                  {warehouseProject.description}
                 </p>
                 <div className="erp-feature-list">
-                  <div className="erp-feature-item">
-                    <span className="erp-feature-check">✓</span>
-                    <span>Database-generated GRN and lot identity from arrival onward</span>
-                  </div>
-                  <div className="erp-feature-item">
-                    <span className="erp-feature-check">✓</span>
-                    <span>Multi-client custody separation and stock-limit validation</span>
-                  </div>
-                  <div className="erp-feature-item">
-                    <span className="erp-feature-check">✓</span>
-                    <span>Printable lot tags, operational forms, and release records</span>
-                  </div>
+                  {warehouseProject.solution.points.map((feature) => (
+                    <div className="erp-feature-item" key={feature}>
+                      <span className="erp-feature-check">✓</span>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
                 <div className="erp-card-links">
                   <Link
-                    href="/work/hayked-coffee-warehouse-erp"
+                    href="/work/coffee-processing-warehouse-management-system"
                     className="erp-btn-primary"
                   >
                     Read case study →
                   </Link>
-                  <a
-                    href="https://hayked-coffee-warehouse-erp.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="erp-btn-secondary"
-                  >
-                    Launch system ↗
-                  </a>
                 </div>
               </div>
             </div>

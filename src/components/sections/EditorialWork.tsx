@@ -4,7 +4,7 @@ import { useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { flushSync } from 'react-dom';
-import { workProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
+import { workProjects, orderPortfolioProjects, type WorkCategory, type WorkProject } from '@/data/portfolio';
 import { withBasePath } from '@/lib/siteConfig';
 
 type Filter = 'All work' | WorkCategory;
@@ -15,7 +15,7 @@ const filters: Filter[] = ['All work', 'Websites', 'Business systems'];
 // Draft sites with custom domains retain their explicit Preview status.
 const showcaseOrder = [
   'sibu', 'universal', 'enkupanet', 'kkgt-coffee', 'kkgt-trade', 'maison-debrah',
-  'gurshamenu', 'hayked', 'hayked-trading', 'getfit', 'orbit', 'beanledger',
+  'gurshamenu', 'coffee-warehouse-erp', 'hayked-trading', 'getfit', 'orbit', 'beanledger',
   'lobelia', 'ephrem', 'bethager', 'koffera',
 ];
 const order = new Map(showcaseOrder.map((id, index) => [id, index]));
@@ -28,11 +28,11 @@ const hasCustomDomain = (project: WorkProject): boolean => {
     return false;
   }
 };
-const orderedProjects = [...workProjects].sort(
+const orderedProjects = orderPortfolioProjects([...workProjects].sort(
   (left, right) =>
     Number(hasCustomDomain(right)) - Number(hasCustomDomain(left)) ||
     (order.get(left.id) ?? 99) - (order.get(right.id) ?? 99)
-);
+));
 
 function ProjectCard({ project, index }: { project: WorkProject; index: number }) {
   const primaryUrl = project.caseStudyUrl ? withBasePath(project.caseStudyUrl) : (project.liveUrl || '');
@@ -75,7 +75,7 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
           <Image
             className="ed-project-screenshot"
             src={withBasePath(project.screenshot)}
-            alt={project.title + ' — genuine homepage hero preview'}
+            alt={project.title + (project.category === 'Business systems' ? ' — workflow illustration' : ' — genuine homepage hero preview')}
             width={1440}
             height={900}
             unoptimized
@@ -85,7 +85,7 @@ function ProjectArtwork({ project }: { project: WorkProject }) {
             onError={() => setImageFailed(true)}
           />
           <span className="ed-cover-annotation">
-            {project.category === 'Business systems' ? 'PRODUCT PREVIEW' : project.status === 'Concept' ? 'CONCEPT HOMEPAGE' : project.status === 'Preview' ? 'DRAFT PREVIEW' : 'ACTUAL HOMEPAGE'}
+            {project.category === 'Business systems' ? 'WORKFLOW ILLUSTRATION' : project.status === 'Concept' ? 'CONCEPT HOMEPAGE' : project.status === 'Preview' ? 'DRAFT PREVIEW' : 'ACTUAL HOMEPAGE'}
           </span>
         </div>
       </div>
