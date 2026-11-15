@@ -64,13 +64,13 @@ The website gallery and work directory continue with Enkupanet Agro Trading, Hay
 | Comparison against base data | Passed: all nine video objects retain exact metadata; all other 15 project objects are unchanged |
 | Existing website live links | All 13 returned HTTP 200 |
 | `git diff --check` | Passed |
-| Desktop/tablet/mobile interaction and console QA | Unverified: managed preview injects `--host` and `--strictPort`, which Next.js rejects. No application/configuration workaround was introduced. |
+| Browser interaction and layout QA | Passed for the scoped checks below using the static production export. Physical-device, mobile touch/swipe and third-party TikTok checks remain outstanding. |\n| GitHub Actions verification | Passed: Verify website build, run 43727798435 |
 
 Added the content regression script to the existing PR verification workflow. No existing test command is defined in package.json; no video testing dependency was added.
 
 ## Manual review / remaining issues
 
-1. Browser interaction QA remains required for first-video autoplay, play/pause, sound, mobile swipe, viewport pausing, responsive layouts, console output and third-party TikTok behavior. Static/build checks do not prove runtime browser behavior.
+1. Browser checks on the unchanged production export confirmed Universal-03 is first and autoplays muted; pause/resume and mute/unmute; only one selected player; off-screen homepage player unmounting; gallery zero players initially and cleanup on brand filtering; portfolio order/filtering; anonymous ERP title, route and page text; no broken images or application console errors observed. Layout checks used CSS viewport widths of 1363, 909 and 454 pixels through browser zoom, with no horizontal page overflow on the tested views. Mobile next-video navigation and muted playback passed. These are desktop-browser responsive checks, not physical-device, touch/swipe, background-tab or third-party TikTok embed validation. The initial Next.js dev-preview issue was avoided by previewing a separate copy of the existing static export; application code and configuration were unchanged.
 2. The separate **Hayked General Trading website project** remains untouched, including its existing public website URL and screenshot. It is a distinct website entry, not the anonymized ERP. Confirm separately if wider client-brand removal is wanted; removing it would conflict with preserving other projects.
 3. The old client-named ERP case-study URL is no longer exported. Existing external bookmarks require a hosting-level redirect to the new route if continuity is needed. No redirect exposing that name was added to the new public presentation. Historical Git commits and deployed/cached copies are unaffected until reviewed/deployed.
 4. Quality verification and dispatch documentation need completion evidence before being added.
