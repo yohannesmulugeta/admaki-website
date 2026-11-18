@@ -6,6 +6,7 @@ import StudioCursor from '@/components/motion/StudioCursor';
 import type { CSSProperties } from 'react';
 import SocialShowcase from '@/components/sections/SocialShowcase';
 import EditorialWork from '@/components/sections/EditorialWork';
+import StudioFilm from '@/components/media/StudioFilm';
 import './editorial.css';
 import './cursor-covers.css';
 import './social-showcase.css';
@@ -109,8 +110,10 @@ export default function Home() {
 
       <section id="studio" className="ed-studio ed-section" aria-labelledby="studio-heading">
         <div className="ed-wrap ed-studio-grid">
-          
-          <div data-reveal><span className="ed-kicker">04 / THE STUDIO</span><div className="ed-studio-seal" aria-hidden="true"><BrandLogo symbol /><i>CONNECTED CREATIVITY</i></div></div>
+          <div className="ed-studio-media">
+            <span className="ed-kicker">04 / THE STUDIO</span>
+            <StudioFilm />
+          </div>
           <div data-reveal><h2 id="studio-heading">Not more noise.<br /><em>More meaning.</em></h2>
             <p className="ed-studio-lead">ADMAKI connects creative communication with practical technology. Based in Ethiopia, we work where strong ideas and everyday business challenges meet.</p>
             <p>We care about the details people see — the identity, layout, interaction and story — and the systems they rely on when the screen closes.</p>
